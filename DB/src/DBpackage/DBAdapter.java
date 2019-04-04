@@ -11,12 +11,12 @@ public class DBAdapter {
 
 	public JSONObject readUser(String id) {
 		//stub
-		return new JSONObject();
+		return null;
 	}
 
 	public JSONObject updateUser(String id, JSONObject data) {
 		//stub
-		return new JSONObject();
+		return null;
 	}
 
 	public boolean deleteUser(String id) {
