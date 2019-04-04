@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="WorkbenchPreferenceDialogSettings">
-		<item value="588" key="DIALOG_X_ORIGIN"/>
-		<item value="21" key="DIALOG_Y_ORIGIN"/>
+		<item value="978" key="DIALOG_X_ORIGIN"/>
+		<item value="27" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
 		<item value="-1" key="dialogHeight"/>
@@ -14,6 +14,18 @@
 		<list key="orderedProviders">
 		</list>
 		<list key="textArray">
+		</list>
+	</section>
+	<section name="PreferencesImportWizard">
+		<item value="C:\Users\alexv\Downloads\theme-1115.epf" key=""/>
+		<list key="WizardPreferencesExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\alexv\Downloads\theme-1115.epf"/>
+		</list>
+	</section>
+	<section name="ImportExportAction">
+		<item value="org.eclipse.ui.wizards.import.Preferences" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
+		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
 		</list>
 	</section>
 </section>
