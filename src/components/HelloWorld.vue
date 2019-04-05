@@ -1,14 +1,53 @@
 <template>
   <div class="hello">
+    <!-- Header 1 -->
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+    <!-- Header 2 -->
+    <h2>You Know Why You're Here</h2>
+    <!-- Unordered List -->
     <ul>
+      <!-- List item -->
       <li>
+        <!-- Hyperlink -->
         <a
-          href="LoginPageHere"
+          href="Login Page"
           target="_blank"
         >
           Login
+        </a>
+      </li>
+      <br>
+      <!-- leaving this for reference -->
+      <li>
+        <a
+          href="https://vuejs.org"
+          target="_blank"
+        >
+          Core Docs
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://forum.vuejs.org"
+          target="_blank"
+        >
+          Forum
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://chat.vuejs.org"
+          target="_blank"
+        >
+          Community Chat
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://twitter.com/vuejs"
+          target="_blank"
+        >
+          Twitter
         </a>
       </li>
       <br>
