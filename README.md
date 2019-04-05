@@ -3,11 +3,11 @@
 > The Web Front End of Members Only
 
 ## Build Setup
-
+You will need NodeJS installed to run the following commands. 
 ``` bash
 # install dependencies
 npm install
-npm install vue
+npm install -g vue
 
 # serve with hot reload at localhost:8080
 npm run dev
