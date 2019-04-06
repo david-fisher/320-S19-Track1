@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class DBAdapter {
 	
-	private String DBAddress = null;
+	private String DBAddress = null; //access address for database. figure out l8tr
 	
 	private Connection getConnection() {
 		//function used to get connection to database
