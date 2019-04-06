@@ -1,5 +1,6 @@
 package DBpackage;
 import org.json.*;
+import java.io.*;
 import java.sql.*;
 
 
@@ -13,10 +14,9 @@ public class DBAdapter {
 		return null;
 	}
 	
-	/*
-	 * USER FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
-	 * 
-	 */
+/*
+* USER FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS 
+*/
 	public JSONObject createUser(JSONObject usr){
 		//stub
 		return null;
@@ -29,7 +29,7 @@ public class DBAdapter {
 	}
 	
 	public boolean setUser(String id, JSONObject user) { 
-		//general function - sets entire user based on new json object.
+		//general function - sets all fields of user based on input object.
 		//stub
 		return true;
 	}
@@ -144,6 +144,16 @@ public class DBAdapter {
 		return true;
 	}
 	
+	public boolean getUserCanLogin(String id) {
+		//stub
+		return true;
+	}
+	
+	public boolean setUserCanLogin(String id, boolean state) {
+		//stub
+		return true;
+	}
+	
 	public boolean getUserPrivate(String id){
 		//stub
 		return true;
@@ -154,11 +164,131 @@ public class DBAdapter {
 		return true;
 	}
 	
+	public int[] getUserPosts(String id) {
+		//returns post IDs, not post
+		//stub
+		return null;
+	}
+	
+	public boolean setUserPosts(String id, int[] posts) {
+		//stub
+		return true;
+	}
+	
 	public boolean deleteUser(String id) {
 		//stub
 		return true;
 	}
+	
+/*
+* POST FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
+*/
+	
+	public JSONObject createPost(JSONObject post) {
+		//stub
+		return new JSONObject();
+	}
 
+	public JSONObject getPost(String id) {
+		//general function - returns entire post object.
+		//stub
+		return new JSONObject();
+	}
+
+	public JSONObject setPost(String id, JSONObject post) {
+		//general function - sets all post fields based on input object
+		//stub
+		return new JSONObject();
+	}
+	
+	public String getPostType(String id) {
+		//stub
+		return null;
+	}
+	
+	public boolean setPostType(String id, String type) {
+		//stub
+		return true;
+	}
+	
+	public int getPostAuthor(String id) {
+		//stub
+		return 0;
+	}
+	
+	
+	public boolean setPostAuthor(String id) {
+		//stub
+		return true;
+	}
+	
+	public int getPostImage(String id) {
+		//returns image ID, not image
+		//stub
+		return 0;
+	}
+	
+	public boolean setPostImage(String id, int picId) {
+		//sets image ID, not image
+		//stub
+		return true;
+	}
+	
+	public JSONObject getPostUserView(String id) {
+		//stub
+		return null;
+	}
+	
+	public boolean setPostUserView(String id, JSONObject data) {
+		//stub
+		return true;
+	}
+	
+	public JSONObject getPostWorldView(String id) {
+		//stub
+		return null;
+	}
+	
+	public boolean setPostWorldView(String id, JSONObject data) {
+		//stub
+		return true;
+	}
+	
+	public boolean getPostIsExplicit(String id) {
+		//stub
+		return true;
+	}
+	
+	public boolean setPostIsExplicit(String id) {
+		//stub
+		return true;
+	}
+	
+	public boolean getPostVisibility(String id) {
+		//stub
+		return true;
+	}
+	
+	public boolean setPostVisibility(String id, boolean state) {
+		//stub
+		return true;
+	}
+	
+	public JSONObject getPostComments(String id) {
+		//stub
+		return null;
+	}
+	
+	public boolean setPostComments(String id, JSONObject comments) {
+		//stub
+		return true;
+	}
+	
+	public boolean deletePost(JSONObject post){
+		//stub
+		return true;
+	}
+	
 	public JSONObject[] getPopularPosts() {
 		//stub
 		return null;
@@ -168,34 +298,68 @@ public class DBAdapter {
 		//stub
 		return null;
 	}
-
-	public JSONObject createPost(JSONObject post) {
-		//stub
-		return new JSONObject();
-	}
-
-	public JSONObject readPost(String str) {
-		//stub
-		return new JSONObject();
-	}
-
-	public JSONObject updatePost(String str, JSONObject post) {
-		//stub
-		return new JSONObject();
-	}
-
-	public boolean deletePost(JSONObject post){
+	
+/*
+* ASSET FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
+*/
+	
+	public boolean createAsset(InputStream photo) {
 		//stub
 		return true;
 	}
 	
-	public boolean createURL (JSONObject url) {
-		//stub
-		return true;
-	}
-	
-	public String getOrgURL (String id) {
+	public JSONObject getAsset(String id) {
 		//stub
 		return null;
+	}
+	
+	public InputStream getAssetPhoto(String id) {
+		//stub
+		return null;
+	}
+	
+	public boolean setAssetPhoto(InputStream pic) {
+		//stub
+		return true;
+	}
+/*
+* URL FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
+*/
+	
+	public boolean createURL(JSONObject url) {
+		//stub
+		return true;
+	}
+	
+	public JSONObject getURL(String id) {
+		//general function - returns all fields in a URL JSONObject
+		//stub
+		return null;
+	}
+	
+	public boolean setURL(JSONObject url) {
+		//general function - sets all fields in a URL JSONObject
+		//stub
+		return true;
+	}
+	
+	public String getURLOrg(String id) {
+		//stub
+		return null;
+	}
+	
+	public boolean setURLOrg(String id, String address) {
+		//stub
+		return true;
+	}
+	
+	public String getURLShort(String id) {
+		//stub
+		return null;
+	}
+	
+	public boolean setURLShort(String id, String address) {
+		//stub
+		return true;
 	}
 }
