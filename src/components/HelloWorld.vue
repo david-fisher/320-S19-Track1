@@ -10,8 +10,7 @@
       <li>
         <!-- Hyperlink -->
         <a
-          href="Login Page"
-          target="_blank"
+          href="#/login"
         >
           Login
         </a>
