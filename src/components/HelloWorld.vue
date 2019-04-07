@@ -17,6 +17,15 @@
         </a>
       </li>
       <br>
+      <li>
+        <a
+          href="Password Reset"
+          target="_blank"
+        >
+          Password Reset
+        </a>
+      </li>
+      <br>
       <!-- leaving this for reference -->
       <!--<li>
         <a
@@ -93,8 +102,8 @@
         >
           awesome-vue
         </a>
-      </li>
-    </ul>-->
+      </li>-->
+    </ul>
   </div>
 </template>
 
