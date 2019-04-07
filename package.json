@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@vue/cli": "^3.5.5",
     "semantic-ui": "^2.4.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
