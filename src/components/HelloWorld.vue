@@ -18,7 +18,7 @@
       </li>
       <br>
       <!-- leaving this for reference -->
-      <li>
+      <!--<li>
         <a
           href="https://vuejs.org"
           target="_blank"
@@ -94,7 +94,7 @@
           awesome-vue
         </a>
       </li>
-    </ul>
+    </ul>-->
   </div>
 </template>
 
