@@ -1,5 +1,7 @@
 package DBpackage;
 import org.json.*;
+
+import java.awt.Image;
 import java.io.*;
 import java.sql.*;
 
@@ -313,12 +315,13 @@ public class DBAdapter {
 		return null;
 	}
 	
-	public InputStream getAssetPhoto(String id) {
+	public Image getAssetPhoto(String id) {
+		//we will save image paths in the database and fetch them from disk
 		//stub
 		return null;
 	}
 	
-	public boolean setAssetPhoto(InputStream pic) {
+	public boolean setAssetPhoto(Image pic) {
 		//stub
 		return true;
 	}
