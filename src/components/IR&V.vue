@@ -111,7 +111,7 @@
               <div class="select">
                 <select v-model="form.inquiry_type">
                   <option disabled value="">Nothing selected</option>
-                  <option v-for="option in options.inquiry" v-bind:value="option.value">
+                  <option v-for="option in options.inquiry" v-bind:value="option.value" :key="option.id">
                     {{ option.text }}
                   </option>
                 </select>
@@ -179,7 +179,7 @@
         <div class="box">
           <ul>
             <!-- loop through all the `form` properties and show their values -->
-            <li v-for="(item, k) in form">
+            <li v-for="(item, k) in form" :key="item">
                 <strong>{{ k }}:</strong> {{ item }}
             </li>
           </ul>
@@ -187,7 +187,7 @@
       </section>
     </div>
   </div>
-</template>
+</template>s
 
 <script>
 export default {
