@@ -261,7 +261,7 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public boolean setPostIsExplicit(String id) {
+	public boolean setPostIsExplicit(String id, boolean state) {
 		//stub
 		return true;
 	}

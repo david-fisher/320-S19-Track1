@@ -12,6 +12,16 @@ class DBTestSuite {
 		//stub
 	}
 	
+	@Test
+	public void popularPosts(){
+		//stub
+	}
+	
+	@Test
+	public void flaggedPosts(){
+		//stub
+	}
+	
 /*
 * USER TESTS
 */
@@ -27,7 +37,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getNonexistingUser(){
+	public void getNonexistentUser(){
 		//stub
 	}
 	
@@ -47,13 +57,13 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidInfo(){
+	public void setNonexistentUserValidInfo(){
 		//stub
 	}
 	
 	
 	@Test
-	public void setUnexistingUserInvalidInfo(){
+	public void setNonexistentUserInvalidInfo(){
 		//stub
 	}
 	
@@ -63,7 +73,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserType(){
+	public void getNonexistentUserType(){
 		//stub
 	}
 	
@@ -78,12 +88,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidType(){
+	public void setNonexistentUserValidType(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidType(){
+	public void setNonexistentUserInvalidType(){
 		//stub
 	}
 	
@@ -93,7 +103,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserName(){
+	public void getNonexistentUserName(){
 		//stub
 	}
 	
@@ -108,12 +118,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidName(){
+	public void setNonexistentUserValidName(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidName(){
+	public void setNonexistentUserInvalidName(){
 		//stub
 	}
 	
@@ -123,7 +133,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserAddress(){
+	public void getNonexistentUserAddress(){
 		//stub
 	}
 	
@@ -138,12 +148,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidAddress(){
+	public void setNonexistentUserValidAddress(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidAddress(){
+	public void setNonexistentUserInvalidAddress(){
 		//stub
 	}
 	
@@ -153,7 +163,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserPhone(){
+	public void getNonexistentUserPhone(){
 		//stub
 	}
 	
@@ -168,12 +178,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidPhone(){
+	public void setNonexistentUserValidPhone(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidPhone(){
+	public void setNonexistentUserInvalidPhone(){
 		//stub
 	}
 	
@@ -183,7 +193,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserBirthday(){
+	public void getNonexistentUserBirthday(){
 		//stub
 	}
 	
@@ -198,12 +208,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidBirthday(){
+	public void setNonexistentUserValidBirthday(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidBirthday(){
+	public void setNonexistentUserInvalidBirthday(){
 		//stub
 	}
 	
@@ -213,7 +223,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserPoints(){
+	public void getNonexistentUserPoints(){
 		//stub
 	}
 	
@@ -228,12 +238,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidPoints(){
+	public void setNonexistentUserValidPoints(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidPoints(){
+	public void setNonexistentUserInvalidPoints(){
 		//stub
 	}
 	
@@ -243,7 +253,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserFollowing(){
+	public void getNonexistentUserFollowing(){
 		//stub
 	}
 	
@@ -258,12 +268,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidFollowing(){
+	public void setNonexistentUserValidFollowing(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidFollowing(){
+	public void setNonexistentUserInvalidFollowing(){
 		//stub
 	}
 	
@@ -273,7 +283,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserInviter(){
+	public void getNonexistentUserInviter(){
 		//stub
 	}
 	
@@ -288,12 +298,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidInviter(){
+	public void setNonexistentUserValidInviter(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidInviter(){
+	public void setNonexistentUserInvalidInviter(){
 		//stub
 	}
 	
@@ -303,7 +313,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserInvitedUsers(){
+	public void getNonexistentUserInvitedUsers(){
 		//stub
 	}
 	
@@ -318,12 +328,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidInvitedUsers(){
+	public void setNonexistentUserValidInvitedUsers(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidInvitedUsers(){
+	public void setNonexistentUserInvalidInvitedUsers(){
 		//stub
 	}
 	
@@ -333,7 +343,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserCardInfo(){
+	public void getNonexistentUserCardInfo(){
 		//stub
 	}
 	
@@ -348,12 +358,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidCardInfo(){
+	public void setNonexistentUserValidCardInfo(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidCardInfo(){
+	public void setNonexistentUserInvalidCardInfo(){
 		//stub
 	}
 	
@@ -363,7 +373,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserCanLogin(){
+	public void getNonexistentUserCanLogin(){
 		//stub
 	}
 	
@@ -378,12 +388,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidCanLogin(){
+	public void setNonexistentUserValidCanLogin(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidCanLogin(){
+	public void setNonexistentUserInvalidCanLogin(){
 		//stub
 	}
 	
@@ -393,7 +403,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserPrivacy(){
+	public void getNonexistentUserPrivacy(){
 		//stub
 	}
 	
@@ -408,12 +418,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidPrivacy(){
+	public void setNonexistentUserValidPrivacy(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidPrivacy(){
+	public void setNonexistentUserInvalidPrivacy(){
 		//stub
 	}
 	
@@ -423,7 +433,7 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void getUnexistingUserPosts(){
+	public void getNonexistentUserPosts(){
 		//stub
 	}
 	
@@ -438,12 +448,12 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void setUnexistingUserValidPosts(){
+	public void setNonexistentUserValidPosts(){
 		//stub
 	}
 	
 	@Test
-	public void setUnexistingUserInvalidPosts(){
+	public void setNonexistentUserInvalidPosts(){
 		//stub
 	}
 	
@@ -454,8 +464,303 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void deleteUnexistingUser(){
+	public void deleteNonexistentUser(){
 		//stub
 	}
+	
+/*
+* POST TESTS
+*/
+		
+		@Test
+		public void createPostIncompleteData(){
+			//stub
+		}
+		
+		@Test
+		public void createPostCompleteData(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPost(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPost(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidInfo(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidInfo(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidInfo(){
+			//stub
+		}
+		
+		
+		@Test
+		public void setNonexistentPostInvalidInfo(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPostType(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPostType(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidType(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidType(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidType(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostInvalidType(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPostAuthor(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPostAuthor(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidAuthor(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidAuthor(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidAuthor(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostInvalidAuthor(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPostImage(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPostImage(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidImage(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidImage(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidImage(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostInvalidImage(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPostUserView(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPostUserView(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidUserView(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidUserView(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidUserView(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostInvalidUserView(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPostWorldView(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPostWorldView(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidWorldView(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidWorldView(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidWorldView(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostInvalidWorldView(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPostExplicit(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPostExplicit(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidExplicit(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidExplicit(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidExplicit(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostInvalidExplicit(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPostVisibility(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPostVisibility(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidVisibility(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidVisibility(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidVisibility(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostInvalidVisibility(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingPostComments(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentPostComments(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostValidComments(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingPostInvalidComments(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostValidComments(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentPostInvalidComments(){
+			//stub
+		}
+		
+		@Test
+		public void deleteExistingPost(){
+			//stub
+		}
+		
+		@Test
+		public void deleteNonexistentPost(){
+			//stub
+		}
 	
 }
