@@ -9,86 +9,49 @@
         </p>
         <hr>
         <!-- form starts here -->
-        <section class="form">
+        <form class="form">
           <div class="field">
             <label class="label">Name:</label>
             <br>
             <div class="ui fluid input">
-              <input name="firstName"
-              v-model="form.firstName"
-              class="input" type="text" placeholder="First"/>
-              <input name="lastName"
-              v-model="form.lastName"
-              class="input" type="text" placeholder="Last"/>
+              <input name="firstName" v-model="form.firstName" class="input" type="text" placeholder="First" required/>
+              <input name="lastName" v-model="form.lastName" class="input" type="text" placeholder="Last" required/>
             </div>
           </div>
           <div class="field">
             <label class="label">Address:</label>
             <br>
             <div class="ui fluid input">
-              <input name="addressLineOne"
-              v-model="form.addressLineOne"
-              class="input" type="text" placeholder="Address Line 1">
-              <input name="addressLineTwo"
-              v-model="form.addressLineTwo"
-              class="input" type="text" placeholder="Address Line 2">
+              <input name="addressLineOne" v-model="form.addressLineOne" class="input" type="text" placeholder="Address Line 1" required>
+              <input name="addressLineTwo" v-model="form.addressLineTwo" class="input" type="text" placeholder="Address Line 2">
             </div>
             <div class="ui fluid input">
-              <input name="city"
-              v-model="form.city"
-              class="input" type="text" placeholder="City">
-              <input name="state"
-              v-model="form.state"
-              class="input" type="text" placeholder="State">
-              <input name="zipCode"
-              v-model="form.zipCode"
-              class="input" type="text" placeholder="Zip Code">
+              <input name="city" v-model="form.city" class="input" type="text" placeholder="City" required>
+              <input name="state" v-model="form.state" class="input" type="text" placeholder="State" required>
+              <input name="zipCode" v-model="form.zipCode" class="input" type="text" placeholder="Zip Code" required>
             </div>
           </div>
           <div class="field">
             <label class="label">Phone:</label>
             <br>
             <div class="ui input">
-              <input name="phoneNumber"
-              v-model="form.phoneNumber"
-              id="phone"
-              class="input" type="text" placeholder="Phone (US)">
+              <input name="phoneNumber" v-model="form.phoneNumber" id="phone" class="input" type="text" placeholder="Phone (US)" required>
             </div>
           </div>
           <div class="field">
             <label class="label">Email:</label>
             <br>
             <div class="ui input">
-              <input name="email"
-              v-model="form.email"
-              class="input"
-              type="text"
-              placeholder="Email"
-              >
+              <input name="email" v-model="form.email" class="input" type="text" placeholder="Email" required>
             </div>
           </div>
           <div class="field">
             <label class="label">Credit Card:</label>
             <br>
             <div class="ui fluid input">
-              <input name="creditCardNumber"
-              v-model="form.creditCardNumber"
-              class="input"
-              type="text"
-              placeholder="Credit Card Number"
-              >
-              <input name="expiration"
-              v-model="form.expiration"
-              class="input"
-              type="text"
-              placeholder="Expiration (MM/YY) Maybe Use Dropdowns?"
-              >
-              <input name="CVV"
-              v-model="form.CVV"
-              class="input"
-              type="text"
-              placeholder="CVV"
-              >
+              <input name="creditCardNumber" v-model="form.creditCardNumber" class="input" type="text" placeholder="Credit Card Number" required>
+              <input name="expiration" v-model="form.expiration" class="input" type="text" placeholder="Expiration (MM/YY) Maybe Use Dropdowns?" required>
+              <input name="CVV" v-model="form.CVV" class="input" type="text" placeholder="CVV" required>
             </div>
           </div>
           <br>
@@ -173,7 +136,7 @@
               </label>
             </div>
           </div>-->
-        </section>
+        </form>
       </section>
     </div>
 
@@ -194,16 +157,17 @@
 
 <script>
 // Create WebSocket connection.
-const socket = new WebSocket('ws://localhost:9999');
+const socket = new WebSocket('ws://localhost:9999')
 
 // Connection opened
 socket.addEventListener('open', function (event) {
-    socket.send('Hello Server!');
+    socket.send('Hello Server!')
 });
 
 // Listen for messages
 socket.addEventListener('message', function (event) {
-    console.log('Message from server ', event.data);
+    var tokens = event.data.split(' ')
+    console.log('Message from server ', event.data)
 });
 
 export default {
@@ -244,33 +208,11 @@ export default {
     submit: function (event) {
       // `this` inside methods points to the Vue instance
       // Verify account data and submit
-      if (this.form.firstName.length == 0) {
-        this.form.submitText = 'You must fill in your first name!'
-      } else if (this.form.lastName.length == 0) {
-        this.form.submitText = 'You must fill in your last name!'
-      } else if (this.form.addressLineOne.length == 0) {
-        this.form.submitText = 'You must fill in your address!'
-      } else if (this.form.city.length == 0) {
-        this.form.submitText = 'You must fill in your city!'
-      } else if (this.form.state.length == 0) {
-        this.form.submitText = 'You must fill in your state!'
-      } else if (this.form.zipCode.length == 0) {
-        this.form.submitText = 'You must fill in your zip code!'
-      } else if (this.form.phoneNumber.length == 0) {
-        this.form.submitText = 'You must fill in your phone number!'
-      } else if (!validPhone(this.form.phoneNumber)) {
+      if (!validPhone(this.form.phoneNumber)) {
         this.form.submitText = 'You must fill in a valid phone number!'
-      } else if (this.form.email.length == 0) {
-        this.form.submitText = 'You must fill in your email!'
       } else if (!validEmail(this.form.email)) {
         this.form.submitText = 'You must fill in a valid email!'
-      } else if (this.form.creditCardNumber.length == 0) {
-        this.form.submitText = 'You must fill in your credit card number!'
-      } else if (this.form.expiration.length == 0) {
-        this.form.submitText = 'You must fill in your credit card expiration!'
-      } else if (this.form.CVV.length == 0) {
-        this.form.submitText = 'You must fill in your CVV!'
-      } 
+      }
       else{
         // Send data to the server and display the resultant message
         var sendData = ''
@@ -296,18 +238,18 @@ export default {
 
 function validPhone(number){
   if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number)){
-    return true;
+    return true
   }
-  return false;
+  return false
 }
 
 function validEmail(email){
-  return /\S+@\S+\.\S+/.test(email); 
+  return /\S+@\S+\.\S+/.test(email)
 }
 
 function storeInfo(inputs){
   socket.send('storeInfo' + ' ' + inputs)
-  return "";
+  return ''
 }
 </script>
 
