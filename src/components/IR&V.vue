@@ -92,9 +92,14 @@
             </div>
           </div>
           <br>
-          <button class="ui gold button">
-            Submit
-          </button>
+          <div class="submit button">
+            <button class="ui black button" style="color:#D6A200" v-on:click="submit">
+              Submit
+            </button>
+          </div>
+          <div class="submission check">
+            <p style="color:#FF0000">{{ form.submitText }}</p>
+          </div>
           <!-- Leaving this in for reference:
           <div class="field">
             <label class="label">Message</label>
@@ -188,11 +193,23 @@
 </template>s
 
 <script>
+// Create WebSocket connection.
+const socket = new WebSocket('ws://localhost:9999');
+
+// Connection opened
+socket.addEventListener('open', function (event) {
+    socket.send('Hello Server!');
+});
+
+// Listen for messages
+socket.addEventListener('message', function (event) {
+    console.log('Message from server ', event.data);
+});
+
 export default {
-  name: 'HelloWorld',
+  name: 'InformationRequisitionAndVerification',
   data () {
     return {
-      icon: '\uf0a1',
       form: {
         firstName: '',
         lastName: '',
@@ -205,7 +222,8 @@ export default {
         email: '',
         creditCardNumber: '',
         expiration: '',
-        CVV: ''/*,
+        CVV: '',
+        submitText: ''/*,
         inquiry_type: '',
         logrocket_usecases: [],
         terms: false,
@@ -221,7 +239,75 @@ export default {
         ]
       }
     }
+  },
+  methods: {
+    submit: function (event) {
+      // `this` inside methods points to the Vue instance
+      // Verify account data and submit
+      if (this.form.firstName.length == 0) {
+        this.form.submitText = 'You must fill in your first name!'
+      } else if (this.form.lastName.length == 0) {
+        this.form.submitText = 'You must fill in your last name!'
+      } else if (this.form.addressLineOne.length == 0) {
+        this.form.submitText = 'You must fill in your address!'
+      } else if (this.form.city.length == 0) {
+        this.form.submitText = 'You must fill in your city!'
+      } else if (this.form.state.length == 0) {
+        this.form.submitText = 'You must fill in your state!'
+      } else if (this.form.zipCode.length == 0) {
+        this.form.submitText = 'You must fill in your zip code!'
+      } else if (this.form.phoneNumber.length == 0) {
+        this.form.submitText = 'You must fill in your phone number!'
+      } else if (!validPhone(this.form.phoneNumber)) {
+        this.form.submitText = 'You must fill in a valid phone number!'
+      } else if (this.form.email.length == 0) {
+        this.form.submitText = 'You must fill in your email!'
+      } else if (!validEmail(this.form.email)) {
+        this.form.submitText = 'You must fill in a valid email!'
+      } else if (this.form.creditCardNumber.length == 0) {
+        this.form.submitText = 'You must fill in your credit card number!'
+      } else if (this.form.expiration.length == 0) {
+        this.form.submitText = 'You must fill in your credit card expiration!'
+      } else if (this.form.CVV.length == 0) {
+        this.form.submitText = 'You must fill in your CVV!'
+      } 
+      else{
+        // Send data to the server and display the resultant message
+        var sendData = ''
+        sendData += this.form.firstName + ' '
+        sendData += this.form.lastName + ' '
+        sendData += this.form.addressLineOne + ' '
+        sendData += this.form.addressLineTwo + ' '
+        sendData += this.form.city + ' '
+        sendData += this.form.state + ' '
+        sendData += this.form.zipCode + ' '
+        sendData += this.form.phoneNumber + ' '
+        sendData += this.form.email + ' '
+        sendData += this.form.creditCardNumber + ' '
+        sendData += this.form.expiration + ' '
+        sendData += this.form.CVV
+        if(storeInfo(sendData).length == 0){
+          alert('Valid data')
+        }
+      }
+    }
   }
+}
+
+function validPhone(number){
+  if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number)){
+    return true;
+  }
+  return false;
+}
+
+function validEmail(email){
+  return /\S+@\S+\.\S+/.test(email); 
+}
+
+function storeInfo(inputs){
+  socket.send('storeInfo' + ' ' + inputs)
+  return "";
 }
 </script>
 
