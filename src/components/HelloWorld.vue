@@ -18,13 +18,22 @@
       <br>
       <li>
         <a
-          href="Password Reset"
+          href="#/passwordreset"
           target="_blank"
         >
           Password Reset
         </a>
       </li>
       <br>
+      <h3>The following links are temporary:</h3>
+      <li>
+        <a
+          href="#/irv"
+          target="_blank"
+        >
+          Information Requisition and Verification
+        </a>
+      </li>
       <!-- leaving this for reference -->
       <!--<li>
         <a
