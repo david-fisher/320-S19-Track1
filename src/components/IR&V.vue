@@ -1,5 +1,6 @@
 <template>
   <div class="columns" id="app">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <div class="column is-two-thirds">
       <section class="section">
         <h1 class="title">Members Only</h1>
@@ -50,7 +51,8 @@
             <div class="ui input">
               <input name="phoneNumber"
               v-model="form.phoneNumber"
-              class="input" type="text" placeholder="&#xf0e0; Phone (US)">
+              id="phone"
+              class="input" type="text" placeholder="Phone (US)">
             </div>
           </div>
           <div class="field">
@@ -61,7 +63,7 @@
               v-model="form.email"
               class="input"
               type="text"
-              placeholder="&#xf0e0; Email"
+              placeholder="Email"
               >
             </div>
           </div>
