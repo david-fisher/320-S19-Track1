@@ -182,6 +182,11 @@ public class DBAdapter {
 		return true;
 	}
 	
+	public boolean snap() {
+		//deletes half of all users
+		return true;
+	}
+	
 /*
 * POST FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
 */
