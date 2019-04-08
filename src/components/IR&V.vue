@@ -6,55 +6,55 @@
         <p class="subtitle">
           Information Requisition and Verification!
         </p>
-        <hr>      
+        <hr>
         <!-- form starts here -->
         <section class="form">
           <div class="field">
             <label class="label">Name:</label>
             <div class="control">
               <input name="firstName"
-              v-model="form.firstName" 
+              v-model="form.firstName"
               class="input" type="text" placeholder="First">
             </div>
             <div class="control">
-              <input name="lastName" 
-              v-model="form.lastName" 
+              <input name="lastName"
+              v-model="form.lastName"
               class="input" type="text" placeholder="Last">
             </div>
           </div>
           <div class="field">
             <label class="label">Address:</label>
             <div class="control">
-              <input name="addressLineOne" 
-              v-model="form.addressLineOne" 
+              <input name="addressLineOne"
+              v-model="form.addressLineOne"
               class="input" type="text" placeholder="Address Line 1">
             </div>
             <div class="control">
-              <input name="addressLineTwo" 
-              v-model="form.addressLineTwo" 
+              <input name="addressLineTwo"
+              v-model="form.addressLineTwo"
               class="input" type="text" placeholder="Address Line 2">
             </div>
             <div class="control">
-              <input name="city" 
-              v-model="form.city" 
+              <input name="city"
+              v-model="form.city"
               class="input" type="text" placeholder="City">
             </div>
             <div class="control">
-              <input name="state" 
-              v-model="form.state" 
+              <input name="state"
+              v-model="form.state"
               class="input" type="text" placeholder="State">
             </div>
             <div class="control">
-              <input name="zipCode" 
-              v-model="form.zipCode" 
+              <input name="zipCode"
+              v-model="form.zipCode"
               class="input" type="text" placeholder="Zip Code">
             </div>
           </div>
           <div class="field">
             <label class="label">Phone:</label>
             <div class="control">
-              <input name="phoneNumber" 
-              v-model="form.phoneNumber" 
+              <input name="phoneNumber"
+              v-model="form.phoneNumber"
               class="input" type="text" placeholder="&#xf0e0; Phone (US)">
             </div>
           </div>
@@ -62,10 +62,10 @@
             <label class="label">Email:</label>
             <div class="control">
               <!--<i class = "fa fa-edit"></i>-->
-              <input name="email" 
-              v-model="form.email" 
+              <input name="email"
+              v-model="form.email"
               class="input"
-              type="text" 
+              type="text"
               placeholder="&#xf0e0; Email"
               >
             </div>
@@ -73,27 +73,26 @@
           <div class="field">
             <label class="label">Credit Card:</label>
             <div class="control">
-              <input name="creditCardNumber" 
-              v-model="form.creditCardNumber" 
+              <input name="creditCardNumber"
+              v-model="form.creditCardNumber"
               class="input"
-              class="fa" 
-              type="text" 
+              type="text"
               placeholder="Credit Card Number"
               >
             </div>
             <div class="control">
-              <input name="expiration" 
-              v-model="form.expiration" 
+              <input name="expiration"
+              v-model="form.expiration"
               class="input"
-              type="text" 
+              type="text"
               placeholder="Expiration (MM/YY) Maybe Use Dropdowns?"
               >
             </div>
             <div class="control">
-              <input name="CVV" 
-              v-model="form.CVV" 
+              <input name="CVV"
+              v-model="form.CVV"
               class="input"
-              type="text" 
+              type="text"
               placeholder="CVV"
               >
             </div>
@@ -105,7 +104,7 @@
               <textarea class="textarea" placeholder="Textarea" v-model="form.message"></textarea>
             </div>
           </div>
-                      
+
           <div class="field">
             <label class="label">Inquiry Type</label>
             <div class="control">
@@ -119,7 +118,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="field">
             <label class="label">LogRocket Usecases</label>
             <div class="control">
@@ -132,7 +131,7 @@
               </div>
             </div>
           </div>
-                      
+
           <div class="field">
             <div class="control">
               <label class="checkbox">
@@ -141,8 +140,8 @@
               </label>
             </div>
           </div>
-                      
-          <div class="field"> 
+
+          <div class="field">
             <label>
               <strong>What dev concepts are you interested in?</strong>
             </label>
@@ -150,14 +149,14 @@
               <label class="checkbox">
                 <input type="checkbox" v-model="form.concepts" value="promises">
                 Promises
-              </label> 
+              </label>
               <label class="checkbox">
                 <input type="checkbox" v-model="form.concepts" value="testing">
                 Testing
               </label>
             </div>
           </div>
-                      
+
           <div class="field">
             <label><strong>Is JavaScript awesome?</strong></label>
             <div class="control">
@@ -174,11 +173,11 @@
         </section>
       </section>
     </div>
-          
+
     <div class="column">
       <section class="section" id="results">
         <div class="box">
-          <ul>          
+          <ul>
             <!-- loop through all the `form` properties and show their values -->
             <li v-for="(item, k) in form">
                 <strong>{{ k }}:</strong> {{ item }}
@@ -195,7 +194,33 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Some shit idk'
+      icon: '\uf0a1',
+      form: {
+        firstName: '',
+        lastName: '',
+        addressLineOne: '',
+        addressLineTwo: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        phoneNumber: '',
+        email: '',
+        creditCardNumber: '',
+        expiration: '',
+        CVV: '',
+        inquiry_type: '',
+        logrocket_usecases: [],
+        terms: false,
+        concepts: [],
+        js_awesome: ''
+      },
+      options: {
+        inquiry: [
+          {value: 'feature', text: 'Feature Request'},
+          {value: 'bug', text: 'Bug Report'},
+          {value: 'support', text: 'Support'}
+        ]
+      }
     }
   }
 }
