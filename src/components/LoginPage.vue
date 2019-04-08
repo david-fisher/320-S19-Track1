@@ -1,5 +1,20 @@
 <template>
-<h1>{{ msg }}</h1>
+  <div align="center" style="border:1px solid black">
+    <h1>Login</h1>
+    <form>
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Username" name="username" required>
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Password" name="password" required>
+
+        <button type="submit">Login</button>
+        <label>
+        
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+    </form>
+  </div>
 </template>
 
 <script>
