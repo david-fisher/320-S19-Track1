@@ -13,7 +13,7 @@
         <!-- Hyperlink -->
         <a
           href="#/login"
-          style="width:150px; margin-bottom:5px; color:#8F721B"
+          style="width:150px; margin-bottom:5px; color:#D6A200"
           class="ui black button"
         >
           Login
@@ -24,7 +24,7 @@
         <a
           href="#/passwordreset"
           target="_blank"
-          style="width:150px; color:#8F721B"
+          style="width:150px; color:#D6A200"
           class="ui black button"
         >
           Password Reset
@@ -144,5 +144,8 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
+}
+a {
+  color: #D6A200;
 }
 </style>
