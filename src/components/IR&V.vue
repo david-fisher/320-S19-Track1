@@ -92,7 +92,7 @@
             </div>
           </div>
           <br>
-          <button class="ui primary button">
+          <button class="ui gold button">
             Submit
           </button>
           <!-- Leaving this in for reference:
@@ -238,7 +238,7 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: #8F721B;
 }
 .form {
   clear: both;

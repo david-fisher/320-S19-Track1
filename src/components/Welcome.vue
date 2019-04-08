@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <!-- Image -->
-    <img src="../assets/logo.png">
+    <img src="../assets/light_logo.png">
     <!-- Header 1 -->
     <h1>{{ msg }}</h1>
     <!-- Header 2 -->
@@ -13,6 +13,8 @@
         <!-- Hyperlink -->
         <a
           href="#/login"
+          style="width:150px; margin-bottom:5px; color:#8F721B"
+          class="ui black button"
         >
           Login
         </a>
@@ -22,6 +24,8 @@
         <a
           href="#/passwordreset"
           target="_blank"
+          style="width:150px; color:#8F721B"
+          class="ui black button"
         >
           Password Reset
         </a>
@@ -140,8 +144,5 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>
