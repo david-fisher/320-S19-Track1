@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <!-- Common elements get put here, such as a header bar or something -->
     <router-view/>
   </div>
 </template>

@@ -3,11 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import 'semantic-ui/dist/semantic.min.css'
+import sui from 'semantic-ui/dist/semantic.min.css'
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+Vue.use(sui)
 new Vue({
   el: '#app',
   router,

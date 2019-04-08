@@ -11,40 +11,34 @@
         <section class="form">
           <div class="field">
             <label class="label">Name:</label>
-            <div class="control">
+            <br>
+            <div class="ui fluid input">
               <input name="firstName"
               v-model="form.firstName"
-              class="input" type="text" placeholder="First">
-            </div>
-            <div class="control">
+              class="input" type="text" placeholder="First"/>
               <input name="lastName"
               v-model="form.lastName"
-              class="input" type="text" placeholder="Last">
+              class="input" type="text" placeholder="Last"/>
             </div>
           </div>
           <div class="field">
             <label class="label">Address:</label>
-            <div class="control">
+            <br>
+            <div class="ui fluid input">
               <input name="addressLineOne"
               v-model="form.addressLineOne"
               class="input" type="text" placeholder="Address Line 1">
-            </div>
-            <div class="control">
               <input name="addressLineTwo"
               v-model="form.addressLineTwo"
               class="input" type="text" placeholder="Address Line 2">
             </div>
-            <div class="control">
+            <div class="ui fluid input">
               <input name="city"
               v-model="form.city"
               class="input" type="text" placeholder="City">
-            </div>
-            <div class="control">
               <input name="state"
               v-model="form.state"
               class="input" type="text" placeholder="State">
-            </div>
-            <div class="control">
               <input name="zipCode"
               v-model="form.zipCode"
               class="input" type="text" placeholder="Zip Code">
@@ -52,7 +46,8 @@
           </div>
           <div class="field">
             <label class="label">Phone:</label>
-            <div class="control">
+            <br>
+            <div class="ui input">
               <input name="phoneNumber"
               v-model="form.phoneNumber"
               class="input" type="text" placeholder="&#xf0e0; Phone (US)">
@@ -60,8 +55,8 @@
           </div>
           <div class="field">
             <label class="label">Email:</label>
-            <div class="control">
-              <!--<i class = "fa fa-edit"></i>-->
+            <br>
+            <div class="ui input">
               <input name="email"
               v-model="form.email"
               class="input"
@@ -72,23 +67,20 @@
           </div>
           <div class="field">
             <label class="label">Credit Card:</label>
-            <div class="control">
+            <br>
+            <div class="ui fluid input">
               <input name="creditCardNumber"
               v-model="form.creditCardNumber"
               class="input"
               type="text"
               placeholder="Credit Card Number"
               >
-            </div>
-            <div class="control">
               <input name="expiration"
               v-model="form.expiration"
               class="input"
               type="text"
               placeholder="Expiration (MM/YY) Maybe Use Dropdowns?"
               >
-            </div>
-            <div class="control">
               <input name="CVV"
               v-model="form.CVV"
               class="input"
@@ -97,7 +89,10 @@
               >
             </div>
           </div>
-
+          <br>
+          <button class="ui primary button">
+            Submit
+          </button>
           <!-- Leaving this in for reference:
           <div class="field">
             <label class="label">Message</label>
@@ -229,7 +224,6 @@ export default {
 </script>
 
 <style scoped>
-import /semantic/dist/semantic.min.css
 h1, h2 {
   font-weight: normal;
 }
@@ -243,5 +237,24 @@ li {
 }
 a {
   color: #42b983;
+}
+.form {
+  clear: both;
+}
+.form .ui.fluid.input{
+  margin-inline-start: 20%;
+  margin-inline-end: 20%;
+  clear: both;
+}
+.form .ui.fluid.input .input {
+  margin-left: 0.1%;
+  margin-right: 0.1%;
+  clear: both;
+}
+.form .field{
+  align-items: right;
+}
+.form .label{
+  font-weight: bold;
 }
 </style>
