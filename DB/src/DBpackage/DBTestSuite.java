@@ -472,459 +472,458 @@ class DBTestSuite {
 * POST TESTS
 */
 		
-		@Test
-		public void createPostIncompleteData(){
-			//stub
-		}
-		
-		@Test
-		public void createPostCompleteData(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPost(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPost(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidInfo(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidInfo(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidInfo(){
-			//stub
-		}
-		
-		
-		@Test
-		public void setNonexistentPostInvalidInfo(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPostType(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPostType(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidType(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidType(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidType(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostInvalidType(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPostAuthor(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPostAuthor(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidAuthor(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidAuthor(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidAuthor(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostInvalidAuthor(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPostImage(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPostImage(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidImage(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidImage(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidImage(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostInvalidImage(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPostUserView(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPostUserView(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidUserView(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidUserView(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidUserView(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostInvalidUserView(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPostWorldView(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPostWorldView(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidWorldView(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidWorldView(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidWorldView(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostInvalidWorldView(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPostExplicit(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPostExplicit(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidExplicit(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidExplicit(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidExplicit(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostInvalidExplicit(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPostVisibility(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPostVisibility(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidVisibility(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidVisibility(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidVisibility(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostInvalidVisibility(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingPostComments(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentPostComments(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostValidComments(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingPostInvalidComments(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostValidComments(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentPostInvalidComments(){
-			//stub
-		}
-		
-		@Test
-		public void deleteExistingPost(){
-			//stub
-		}
-		
-		@Test
-		public void deleteNonexistentPost(){
-			//stub
-		}
-		
+	@Test
+	public void createPostIncompleteData(){
+		//stub
+	}
+	
+	@Test
+	public void createPostCompleteData(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPost(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPost(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidInfo(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidInfo(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidInfo(){
+		//stub
+	}
+	
+	
+	@Test
+	public void setNonexistentPostInvalidInfo(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPostType(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPostType(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidType(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidType(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidType(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostInvalidType(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPostAuthor(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPostAuthor(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidAuthor(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidAuthor(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidAuthor(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostInvalidAuthor(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPostImage(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPostImage(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidImage(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidImage(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidImage(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostInvalidImage(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPostUserView(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPostUserView(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidUserView(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidUserView(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidUserView(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostInvalidUserView(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPostWorldView(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPostWorldView(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidWorldView(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidWorldView(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidWorldView(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostInvalidWorldView(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPostExplicit(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPostExplicit(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidExplicit(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidExplicit(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidExplicit(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostInvalidExplicit(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPostVisibility(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPostVisibility(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidVisibility(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidVisibility(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidVisibility(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostInvalidVisibility(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingPostComments(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentPostComments(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostValidComments(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingPostInvalidComments(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostValidComments(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentPostInvalidComments(){
+		//stub
+	}
+	
+	@Test
+	public void deleteExistingPost(){
+		//stub
+	}
+	
+	@Test
+	public void deleteNonexistentPost(){
+		//stub
+	}
+	
 /*
 * ASSET TESTS
 */
-				
-		@Test
-		public void createAssetIncompleteData(){
-			//stub
-		}
-				
-		@Test
-		public void createAssetCompleteData(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentAsset(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingAsset(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingAssetPhoto(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentAssetPhoto(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingAssetValidPhoto(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingAssetInvalidPhoto(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentAssetValidPhoto(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentAssetInvalidPhoto(){
-			//stub
-		}
-		
+			
+	@Test
+	public void createAssetIncompleteData(){
+		//stub
+	}
+			
+	@Test
+	public void createAssetCompleteData(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentAsset(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingAsset(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingAssetPhoto(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentAssetPhoto(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingAssetValidPhoto(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingAssetInvalidPhoto(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentAssetValidPhoto(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentAssetInvalidPhoto(){
+		//stub
+	}
+	
 /*
 * URL TESTS
 */
-				
-		@Test
-		public void createURLIncompleteData(){
-			//stub
-		}
-				
-		@Test
-		public void createURLCompleteData(){
-			//stub
-		}
-				
-		@Test
-		public void getNonexistentURL(){
-			//stub
-		}
-				
-		@Test
-		public void getExistingURL(){
-			//stub
-		}
-				
-		@Test
-		public void setExistingURLValidInfo(){
-			//stub
-		}
-				
-		@Test
-		public void setExistingURLInvalidInfo(){
-			//stub
-		}
-				
-		@Test
-		public void setNonexistentURLValidInfo(){
-			//stub
-		}
-				
-				
-		@Test
-		public void setNonexistentURLInvalidInfo(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingURLOrgLink(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentURLOrgLink(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingURLValidOrgLink(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingURLInvalidOrgLink(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentURLValidOrgLink(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentURLInvalidOrgLink(){
-			//stub
-		}
-		
-		@Test
-		public void getExistingURLShortLink(){
-			//stub
-		}
-		
-		@Test
-		public void getNonexistentURLShortLink(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingURLValidShortLink(){
-			//stub
-		}
-		
-		@Test
-		public void setExistingURLInvalidShortLink(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentURLValidShortLink(){
-			//stub
-		}
-		
-		@Test
-		public void setNonexistentURLInvalidShortLink(){
-			//stub
-		}
-		
-		@Test
-		public void deleteURL(){
-			//stub
-		}
+			
+	@Test
+	public void createURLIncompleteData(){
+		//stub
+	}
+			
+	@Test
+	public void createURLCompleteData(){
+		//stub
+	}
+			
+	@Test
+	public void getNonexistentURL(){
+		//stub
+	}
+			
+	@Test
+	public void getExistingURL(){
+		//stub
+	}
+			
+	@Test
+	public void setExistingURLValidInfo(){
+		//stub
+	}
+			
+	@Test
+	public void setExistingURLInvalidInfo(){
+		//stub
+	}
+			
+	@Test
+	public void setNonexistentURLValidInfo(){
+		//stub
+	}
+			
+			
+	@Test
+	public void setNonexistentURLInvalidInfo(){
+		//stub
+	}
 	
+	@Test
+	public void getExistingURLOrgLink(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentURLOrgLink(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingURLValidOrgLink(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingURLInvalidOrgLink(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentURLValidOrgLink(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentURLInvalidOrgLink(){
+		//stub
+	}
+	
+	@Test
+	public void getExistingURLShortLink(){
+		//stub
+	}
+	
+	@Test
+	public void getNonexistentURLShortLink(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingURLValidShortLink(){
+		//stub
+	}
+	
+	@Test
+	public void setExistingURLInvalidShortLink(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentURLValidShortLink(){
+		//stub
+	}
+	
+	@Test
+	public void setNonexistentURLInvalidShortLink(){
+		//stub
+	}
+	
+	@Test
+	public void deleteURL(){
+		//stub
+	}
 }
