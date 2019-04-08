@@ -762,5 +762,169 @@ class DBTestSuite {
 		public void deleteNonexistentPost(){
 			//stub
 		}
+		
+/*
+* ASSET TESTS
+*/
+				
+		@Test
+		public void createAssetIncompleteData(){
+			//stub
+		}
+				
+		@Test
+		public void createAssetCompleteData(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentAsset(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingAsset(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingAssetPhoto(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentAssetPhoto(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingAssetValidPhoto(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingAssetInvalidPhoto(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentAssetValidPhoto(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentAssetInvalidPhoto(){
+			//stub
+		}
+		
+/*
+* URL TESTS
+*/
+				
+		@Test
+		public void createURLIncompleteData(){
+			//stub
+		}
+				
+		@Test
+		public void createURLCompleteData(){
+			//stub
+		}
+				
+		@Test
+		public void getNonexistentURL(){
+			//stub
+		}
+				
+		@Test
+		public void getExistingURL(){
+			//stub
+		}
+				
+		@Test
+		public void setExistingURLValidInfo(){
+			//stub
+		}
+				
+		@Test
+		public void setExistingURLInvalidInfo(){
+			//stub
+		}
+				
+		@Test
+		public void setNonexistentURLValidInfo(){
+			//stub
+		}
+				
+				
+		@Test
+		public void setNonexistentURLInvalidInfo(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingURLOrgLink(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentURLOrgLink(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingURLValidOrgLink(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingURLInvalidOrgLink(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentURLValidOrgLink(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentURLInvalidOrgLink(){
+			//stub
+		}
+		
+		@Test
+		public void getExistingURLShortLink(){
+			//stub
+		}
+		
+		@Test
+		public void getNonexistentURLShortLink(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingURLValidShortLink(){
+			//stub
+		}
+		
+		@Test
+		public void setExistingURLInvalidShortLink(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentURLValidShortLink(){
+			//stub
+		}
+		
+		@Test
+		public void setNonexistentURLInvalidShortLink(){
+			//stub
+		}
+		
+		@Test
+		public void deleteURL(){
+			//stub
+		}
 	
 }

@@ -286,7 +286,7 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public boolean deletePost(JSONObject post){
+	public boolean deletePost(JSONObject post) {
 		//stub
 		return true;
 	}
@@ -310,11 +310,6 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public JSONObject getAsset(String id) {
-		//stub
-		return null;
-	}
-	
 	public Image getAssetPhoto(String id) {
 		//we will save image paths in the database and fetch them from disk
 		//stub
@@ -322,6 +317,11 @@ public class DBAdapter {
 	}
 	
 	public boolean setAssetPhoto(Image pic) {
+		//stub
+		return true;
+	}
+	
+	public boolean deleteAsset(String id) {
 		//stub
 		return true;
 	}
@@ -362,6 +362,11 @@ public class DBAdapter {
 	}
 	
 	public boolean setURLShort(String id, String address) {
+		//stub
+		return true;
+	}
+	
+	public boolean deleteURL(String id) {
 		//stub
 		return true;
 	}
