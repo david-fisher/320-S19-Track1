@@ -98,6 +98,7 @@
             </div>
           </div>
 
+          <!-- Leaving this in for reference:
           <div class="field">
             <label class="label">Message</label>
             <div class="control">
@@ -169,7 +170,7 @@
                 Yeap!
               </label>
             </div>
-          </div>
+          </div>-->
         </section>
       </section>
     </div>
@@ -207,13 +208,14 @@ export default {
         email: '',
         creditCardNumber: '',
         expiration: '',
-        CVV: '',
+        CVV: ''/*,
         inquiry_type: '',
         logrocket_usecases: [],
         terms: false,
         concepts: [],
-        js_awesome: ''
+        js_awesome: '' */
       },
+      // needed for the unused options
       options: {
         inquiry: [
           {value: 'feature', text: 'Feature Request'},
@@ -227,6 +229,7 @@ export default {
 </script>
 
 <style scoped>
+import /semantic/dist/semantic.min.css
 h1, h2 {
   font-weight: normal;
 }
