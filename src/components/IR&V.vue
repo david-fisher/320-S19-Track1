@@ -156,19 +156,7 @@
 </template>s
 
 <script>
-// Create WebSocket connection.
-const socket = new WebSocket('ws://localhost:9999')
 
-// Connection opened
-socket.addEventListener('open', function (event) {
-    socket.send('Hello Server!')
-});
-
-// Listen for messages
-socket.addEventListener('message', function (event) {
-    var tokens = event.data.split(' ')
-    console.log('Message from server ', event.data)
-});
 
 export default {
   name: 'InformationRequisitionAndVerification',
