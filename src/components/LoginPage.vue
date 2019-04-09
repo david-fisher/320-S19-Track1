@@ -61,9 +61,7 @@ a {
   margin-inline-start: 20%;
   margin-inline-end: 20%;
   vertical-align: middle;
-  display: table-cell;
-  display: table-cell;
-  vertical-align: middle;
+  /*display: table-cell;*/
   height: 50px;
 }
 .form .ui.fluid.input .input {
