@@ -9,7 +9,7 @@
         </p>
         <hr>
         <!-- form starts here -->
-        <form class="form" action="/storeInfo" method="post" v-on:submit="hi($event)">
+        <form class="form" action="/storeInfo" method="post" v-on:submit="verifyForm($event)">
           <div class="field">
             <label class="label">Name:</label>
             <br>
@@ -189,7 +189,7 @@ export default {
     }
   },
   methods: {
-    hi: function(event){
+    verifyForm: function(event){
       if(!submit(this.form.phoneNumber, this.form.email, this.form)){
         event.preventDefault()
       }
@@ -203,10 +203,6 @@ function validPhone(number){
 
 function validEmail(email){
   return /\S+@\S+\.\S+/.test(email)
-}
-
-function hi(){
-  return false
 }
 
 function submit(number, email, form) {
