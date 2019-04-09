@@ -9,10 +9,6 @@
         <input type="password" placeholder="Password" name="password" required>
 
         <button type="submit">Login</button>
-        <label>
-        
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
     </form>
   </div>
 </template>
