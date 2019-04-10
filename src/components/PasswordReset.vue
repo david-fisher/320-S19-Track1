@@ -3,12 +3,12 @@
     <h1>Reset Password</h1>
     <form class="form" action="/storeInfo" method="post" v-on:submit="resetPassword($event)">
       <div class="ui fluid input">
-        <label class="label" for="email"><b>Email:</b></label>
+        <label class="label" for="email"><b>Email: </b></label>
         <input type="email" v-model="form.name" placeholder="Email" id="email" required>
       </div>
       <br>
       <div>
-        <button type="submit">Reset Password</button>
+        <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Reset Password</button>
       </div>
     </form>
   </div>
