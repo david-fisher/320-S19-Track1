@@ -3,8 +3,8 @@
     <h1>Reset Password</h1>
     <form class="form" action="/storeInfo" method="post" v-on:submit="resetPassword($event)">
       <div class="ui fluid input">
-        <label class="label" for="email"><b>Email: </b></label>
-        <input type="email" v-model="form.name" placeholder="Email" id="email" required>
+        <label  class="label" for="email"><b>Email: </b></label>
+        <input type="email" v-model="form.email" placeholder="Email" id="email" required>
       </div>
       <br>
       <div>
@@ -32,6 +32,20 @@ export default {
       }
     }
   }
+}
+
+function submit(form) {
+  console.log(form.email)
+    // Send data to the server and display the resultant message
+  var sendData = form.email
+  if(storeInfo(sendData).length == 0){
+    return true
+  }
+  return false
+}
+
+function storeInfo(inputs){
+  return ''
 }
 </script>
 
