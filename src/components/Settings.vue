@@ -2,7 +2,6 @@
   <div align="center" style="border:1px solid black">
     <h1>Settings</h1>
     <form class="form" action="/storeInfo" method="post" v-on:submit="verifyForm($event)">
-      
       <br>
       <div class="field">
         <label class="label">Update Credit Card</label>
@@ -12,16 +11,16 @@
         <input type="text" v-model="form.expiration" placeholder="Expiration (MM/YY)" id="expiration" required>
         <input type="text" v-model="form.CVV" placeholder="CVV" id="CVV" required>
       </div>
-
-      <br><br>
+      <br>
+      <br>
       <div class="field">
         <label class="label">Update Description</label>
       </div>
       <div class="ui fluid input">
         <input type="description" v-model="form.description" placeholder="Profile Description" id="description" required>
       </div>
-
-      <br><br>
+      <br>
+      <br>
       <div class="field">
         <label class="label">Update Visibility</label>
       </div>
@@ -35,14 +34,14 @@
           </select>
         </div>
       </div>
-
-      <br><br>
+      <br>
+      <br>
       <div>
         <button type="invite" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Generate Invite</button>
         <label class="label">"Invitation Link"</label>
       </div>
-
-      <br><br>
+      <br>
+      <br>
       <div>
         <button type="feed" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Feed</button>
         <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Submit</button>
