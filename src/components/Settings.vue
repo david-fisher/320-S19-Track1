@@ -37,15 +37,15 @@
       <br>
       <br>
       <div>
-        <button type="invite" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Generate Invite</button>
+        <button type="button" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Generate Invite</button>
         <label class="label">"Invitation Link"</label>
       </div>
       <br>
       <br>
       <div>
-        <button type="feed" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Feed</button>
+        <button type="button" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Feed</button>
         <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Submit</button>
-        <button type="profile" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Profile</button>
+        <button type="button" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Profile</button>
       </div>
     </form>
   </div>
