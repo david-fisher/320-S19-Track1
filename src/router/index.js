@@ -4,6 +4,7 @@ import Welcome from '@/components/Welcome'
 import LoginPage from '@/components/LoginPage'
 import Irv from '@/components/IR&V'
 import PasswordReset from '@/components/PasswordReset'
+import Settings from '@/components/Settings'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/passwordreset',
       name: 'PasswordReset',
       component: PasswordReset
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings
     }
   ]
 })
