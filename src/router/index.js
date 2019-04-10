@@ -31,7 +31,7 @@ export default new Router({
       component: PasswordReset
     },
     {
-      path: '/settings',
+      path: '/user/settings',
       name: 'Settings',
       component: Settings
     }

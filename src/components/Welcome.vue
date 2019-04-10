@@ -40,6 +40,14 @@
           Information Requisition and Verification
         </a>
       </li>
+      <li>
+        <a
+          href="#/user/settings"
+          target="_blank"
+        >
+          Settings
+        </a>
+      </li>
       <!-- leaving this for reference -->
       <!--<li>
         <a
