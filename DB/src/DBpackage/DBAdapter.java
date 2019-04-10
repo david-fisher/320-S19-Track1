@@ -25,160 +25,160 @@ public class DBAdapter {
 		return null;
 	}
 
-	public JSONObject getUser(String id) { 
+	public JSONObject getUser(int id) { 
 		//general function- returns entire user.
 		//stub
 		return null;
 	}
 	
-	public boolean setUser(String id, JSONObject user) { 
+	public boolean setUser(int id, JSONObject user) { 
 		//general function - sets all fields of user based on input object.
 		//stub
 		return true;
 	}
 	
-	public String getUserType(String id) {
+	public String getUserType(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setUserType(String id, String type) {
+	public boolean setUserType(int id, String type) {
 		//stub
 		return true;
 	}
 
-	public String getUserName(String id) {
+	public String getUserName(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setUserName(String id, String name) {
+	public boolean setUserName(int id, String name) {
 		//stub
 		return true;
 	}
 	
-	public JSONObject getUserAddress(String id) {
+	public JSONObject getUserAddress(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setUserAddress(String id, JSONObject address) {
+	public boolean setUserAddress(int id, JSONObject address) {
 		//stub
 		return true;
 	}
 	
-	public int getUserPhone(String id) {
+	public int getUserPhone(int id) {
 		//stub
 		return 0;
 	}
 	
-	public boolean setUserPhone(String id, int number) {
+	public boolean setUserPhone(int id, int number) {
 		//stub
 		return true;
 	}
 	
-	public String getUserBirthday(String id) {
+	public String getUserBirthday(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setUserBirthday(String id, String bday) {
+	public boolean setUserBirthday(int id, String bday) {
 		//stub
 		return true;
 	}
 	
-	public int getUserPoints(String id) {
+	public int getUserPoints(int id) {
 		//stub
 		return 0;
 	}
 	
-	public boolean setUserPoints(String id, int amt) {
+	public boolean setUserPoints(int id, int amt) {
 		//stub
 		return true;
 	}
 	
-	public int[] getUserFollowing(String id) {
+	public int[] getUserFollowing(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setUserFollowing(String id, int[] users) {
+	public boolean setUserFollowing(int id, int[] users) {
 		//stub
 		return true;
 	}
 	
-	public int getUserInviter(String id) {
+	public int getUserInviter(int id) {
 		//stub
 		return 0;
 	}
 	
-	public boolean setUserInviter(String id, int inviter) {
+	public boolean setUserInviter(int id, int inviter) {
 		//stub
 		return true;
 	}
 	
-	public int[] getUsersInvited(String id) {
+	public int[] getUsersInvited(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setUsersInvited(String id, int[] users) {
+	public boolean setUsersInvited(int id) {
 		//stub
 		return true;
 	}
 	
-	public boolean getUserHasInvited(String id) {
+	public boolean getUserHasInvited(int id) {
 		//stub
 		return true;
 	}
 	
-	public boolean setUserHasInvited(String id, boolean status) {
+	public boolean setUserHasInvited(int id, boolean status) {
 		//stub
 		return true;
 	}
 	
-	public JSONObject getUserCard(String id) {
+	public JSONObject getUserCard(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setUserCard(String id, JSONObject card) {
+	public boolean setUserCard(int id, JSONObject card) {
 		//stub
 		return true;
 	}
 	
-	public boolean getUserCanLogin(String id) {
+	public boolean getUserCanLogin(int id) {
 		//stub
 		return true;
 	}
 	
-	public boolean setUserCanLogin(String id, boolean state) {
+	public boolean setUserCanLogin(int id, boolean state) {
 		//stub
 		return true;
 	}
 	
-	public boolean getUserPrivate(String id){
+	public boolean getUserPrivate(int id){
 		//stub
 		return true;
 	}
 
-	public boolean setUserPrivate(String id, boolean state) {
+	public boolean setUserPrivate(int id, boolean state) {
 		//stub
 		return true;
 	}
 	
-	public int[] getUserPosts(String id) {
+	public int[] getUserPosts(int id) {
 		//returns post IDs, not post
 		//stub
 		return null;
 	}
 	
-	public boolean setUserPosts(String id, int[] posts) {
+	public boolean setUserPosts(int id, int[] posts) {
 		//stub
 		return true;
 	}
 	
-	public boolean deleteUser(String id) {
+	public boolean deleteUser(int id) {
 		//stub
 		return true;
 	}
@@ -197,97 +197,97 @@ public class DBAdapter {
 		return new JSONObject();
 	}
 
-	public JSONObject getPost(String id) {
+	public JSONObject getPost(int id) {
 		//general function - returns entire post object.
 		//stub
 		return new JSONObject();
 	}
 
-	public JSONObject setPost(String id, JSONObject post) {
+	public JSONObject setPost(int id, JSONObject post) {
 		//general function - sets all post fields based on input object
 		//stub
 		return new JSONObject();
 	}
 	
-	public String getPostType(String id) {
+	public String getPostType(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setPostType(String id, String type) {
+	public boolean setPostType(int id, String type) {
 		//stub
 		return true;
 	}
 	
-	public int getPostAuthor(String id) {
+	public int getPostAuthor(int id) {
 		//stub
 		return 0;
 	}
 	
 	
-	public boolean setPostAuthor(String id) {
+	public boolean setPostAuthor(int id) {
 		//stub
 		return true;
 	}
 	
-	public int getPostImage(String id) {
+	public int getPostImage(int id) {
 		//returns image ID, not image
 		//stub
 		return 0;
 	}
 	
-	public boolean setPostImage(String id, int picId) {
+	public boolean setPostImage(int id, int picId) {
 		//sets image ID, not image
 		//stub
 		return true;
 	}
 	
-	public JSONObject getPostUserView(String id) {
+	public JSONObject getPostUserView(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setPostUserView(String id, JSONObject data) {
+	public boolean setPostUserView(int id, JSONObject data) {
 		//stub
 		return true;
 	}
 	
-	public JSONObject getPostWorldView(String id) {
+	public JSONObject getPostWorldView(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setPostWorldView(String id, JSONObject data) {
+	public boolean setPostWorldView(int id, JSONObject data) {
 		//stub
 		return true;
 	}
 	
-	public boolean getPostIsExplicit(String id) {
+	public boolean getPostIsExplicit(int id) {
 		//stub
 		return true;
 	}
 	
-	public boolean setPostIsExplicit(String id, boolean state) {
+	public boolean setPostIsExplicit(int id, boolean state) {
 		//stub
 		return true;
 	}
 	
-	public boolean getPostVisibility(String id) {
+	public boolean getPostVisibility(int id) {
 		//stub
 		return true;
 	}
 	
-	public boolean setPostVisibility(String id, boolean state) {
+	public boolean setPostVisibility(int id, boolean state) {
 		//stub
 		return true;
 	}
 	
-	public JSONObject getPostComments(String id) {
+	public JSONObject getPostComments(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setPostComments(String id, JSONObject comments) {
+	public boolean setPostComments(int id, JSONObject comments) {
 		//stub
 		return true;
 	}
@@ -316,18 +316,18 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public ImageIO getAssetPhoto(String id) {
+	public ImageIO getAssetPhoto(int id) {
 		//we will save image paths in the database and fetch them from disk
 		//stub
 		return null;
 	}
 	
-	public boolean setAssetPhoto(Image pic) {
+	public boolean setAssetPhoto(ImageIO pic) {
 		//stub
 		return true;
 	}
 	
-	public boolean deleteAsset(String id) {
+	public boolean deleteAsset(int id) {
 		//stub
 		return true;
 	}
@@ -340,7 +340,7 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public JSONObject getURL(String id) {
+	public JSONObject getURL(int id) {
 		//general function - returns all fields in a URL JSONObject
 		//stub
 		return null;
@@ -352,27 +352,27 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public String getURLOrg(String id) {
+	public String getURLOrg(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setURLOrg(String id, String address) {
+	public boolean setURLOrg(int id, String address) {
 		//stub
 		return true;
 	}
 	
-	public String getURLShort(String id) {
+	public String getURLShort(int id) {
 		//stub
 		return null;
 	}
 	
-	public boolean setURLShort(String id, String address) {
+	public boolean setURLShort(int id, String address) {
 		//stub
 		return true;
 	}
 	
-	public boolean deleteURL(String id) {
+	public boolean deleteURL(int id) {
 		//stub
 		return true;
 	}
