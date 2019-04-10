@@ -2,8 +2,9 @@ package DBpackage;
 import org.json.*;
 
 import java.awt.Image;
-import java.io.*;
 import java.sql.*;
+
+import javax.imageio.ImageIO;
 
 
 public class DBAdapter {
@@ -310,12 +311,12 @@ public class DBAdapter {
 * ASSET FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
 */
 	
-	public boolean createAsset(InputStream photo) {
+	public boolean createAsset(ImageIO photo) {
 		//stub
 		return true;
 	}
 	
-	public Image getAssetPhoto(String id) {
+	public ImageIO getAssetPhoto(String id) {
 		//we will save image paths in the database and fetch them from disk
 		//stub
 		return null;
