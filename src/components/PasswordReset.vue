@@ -1,14 +1,29 @@
 <template>
   <div align="center" style="border:1px solid black">
     <h1>Reset Password</h1>
-    <form class="form" action="/storeInfo" method="post" v-on:submit="resetPassword($event)">
-      <div class="ui fluid input">
-        <label  class="label" for="email"><b>Email: </b></label>
-        <input type="email" v-model="form.email" placeholder="Email" id="email" required>
+    <form class="form" action="/sendResetCode" method="post" v-on:submit="sendCode($event)">
+      <div>
+        <div style="text-align: left">
+          <label  class="label" align="left" style="margin-inline-start: 20%;" for="email"><b>Email: </b></label>
+        </div>
+        <div class="ui fluid input">
+          <input type="email" v-model="form.email" placeholder="Email" id="email" required>
+        </div>
       </div>
       <br>
       <div>
-        <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Reset Password</button>
+        <button type="submit" style="width:200px; margin-bottom:5px; color:#D6A200" class="ui black button">Send Verification Code</button>
+      </div>
+    </form>
+    <form class="form" action="/updatePassword" method="post" v-on:submit="sendPass($event)">
+      <div class="ui fluid input">
+        <input v-model="form.code" placeholder="Verification Code" id="vcode" required>
+        <input type="password" v-model="form.pass" placeholder="New password" id="pass" required>
+        <input type="password" v-model="form.confPass" placeholder="Confirm password" id="cpass" required>
+      </div>
+      <br>
+      <div>
+        <button type="submit" style="width:200px; margin-bottom:5px; color:#D6A200" class="ui black button">Reset Password</button>
       </div>
     </form>
   </div>
@@ -20,12 +35,19 @@ export default {
   data () {
     return {
       form: {
-        name: '',
-        pass: ''
+        email: '',
+        pass: '',
+        confPass: ''
       }
     }
   },
   methods: {
+    sendCode: function(event){
+      if(!sendResetCode(this.form.email)){
+        event.preventDefault()
+      }
+
+    },
     resetPassword: function(event){
       if(!submit(this.form)){
         event.preventDefault()
@@ -35,8 +57,7 @@ export default {
 }
 
 function submit(form) {
-  console.log(form.email)
-    // Send data to the server and display the resultant message
+  // Send data to the server and display the resultant message
   var sendData = form.email
   if(storeInfo(sendData).length == 0){
     return true
@@ -44,8 +65,8 @@ function submit(form) {
   return false
 }
 
-function storeInfo(inputs){
-  return ''
+function sendResetCode(email){
+  return /\S+@\S+\.\S+/.test(email)
 }
 </script>
 
