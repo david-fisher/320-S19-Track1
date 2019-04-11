@@ -29,6 +29,9 @@
       <div>
         <button type="submit" style="width:200px; margin-bottom:5px; color:#D6A200" class="ui black button">Reset Password</button>
       </div>
+      <div class="submission check">
+        <p style="color:#FF0000">{{ form.submitText }}</p>
+      </div>
     </form>
   </div>
 </template>
@@ -41,32 +44,27 @@ export default {
       form: {
         email: '',
         pass: '',
-        confPass: ''
+        confPass: '',
+        submitText: ''
       }
     }
   },
   methods: {
     sendCode: function(event){
       if(!sendResetCode(this.form.email)){
+        this.form.submitText = ''
         event.preventDefault()
       }
-
+      this.form.submitText = 'Invalid email'
     },
     sendPass: function(event){
       if(!updatePassword(this.form)){
+        this.form.submitText = ''
         event.preventDefault()
       }
+      this.form.submitText = 'Passwords do not match'
     }
   }
-}
-
-function submit(form) {
-  // Send data to the server and display the resultant message
-  var sendData = form.email
-  if(storeInfo(sendData).length == 0){
-    return true
-  }
-  return false
 }
 
 function sendResetCode(email){
