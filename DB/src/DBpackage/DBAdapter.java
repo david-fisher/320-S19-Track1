@@ -1,10 +1,9 @@
 package DBpackage;
 import org.json.*;
-
-import java.awt.Image;
+import javax.imageio.ImageIO;
 import java.sql.*;
 
-import javax.imageio.ImageIO;
+
 
 
 public class DBAdapter {
