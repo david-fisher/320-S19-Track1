@@ -15,7 +15,11 @@
         <button type="submit" style="width:200px; margin-bottom:5px; color:#D6A200" class="ui black button">Send Verification Code</button>
       </div>
     </form>
+    <br>
     <form class="form" action="/updatePassword" method="post" v-on:submit="sendPass($event)">
+      <div style="text-align: left">
+        <label  class="label" align="left" style="margin-inline-start: 20%;"><b>Info: </b></label>
+      </div>
       <div class="ui fluid input">
         <input v-model="form.code" placeholder="Verification Code" id="vcode" required>
         <input type="password" v-model="form.pass" placeholder="New password" id="pass" required>
@@ -48,8 +52,8 @@ export default {
       }
 
     },
-    resetPassword: function(event){
-      if(!submit(this.form)){
+    sendPass: function(event){
+      if(!updatePassword(this.form)){
         event.preventDefault()
       }
     }
@@ -67,6 +71,13 @@ function submit(form) {
 
 function sendResetCode(email){
   return /\S+@\S+\.\S+/.test(email)
+}
+
+function updatePassword(form){
+  if(form.pass == form.confPass){
+    return true;
+  }
+  return false;
 }
 </script>
 
