@@ -9,7 +9,7 @@
         </p>
         <hr>
         <!-- form starts here -->
-        <form class="form" action="/storeInfo" method="post" v-on:submit="verifyForm($event)">
+        <form class="form" v-on:submit="verifyForm($event)">
           <div class="field">
             <label class="label">Name:</label>
             <br>
@@ -191,12 +191,13 @@ export default {
     }
   },
   mounted() {
-
+    //Method to run on page load goes here.
   },
   methods: {
     verifyForm: function(event){
-      if(!submit(this.form.phoneNumber, this.form.email, this.form)){
-        event.preventDefault()
+      event.preventDefault()
+      if(submit(this.form.phoneNumber, this.form.email, this.form)){
+        storeInfos()
       }
     }
   }
@@ -211,7 +212,6 @@ function validEmail(email){
 }
 
 function submit(number, email, form) {
-  console.log('ech')
   // `this` inside methods points to the Vue instance
   // Verify account data and submit
   if (!validPhone(number)) {
@@ -224,6 +224,7 @@ function submit(number, email, form) {
   }
   else{
     // Send data to the server and display the resultant message
+    // 
     var sendData = ''
     sendData += form.firstName + ' '
     sendData += form.lastName + ' '
@@ -237,7 +238,7 @@ function submit(number, email, form) {
     sendData += form.creditCardNumber + ' '
     sendData += form.expiration + ' '
     sendData += form.CVV
-    if(storeInfo(sendData).length == 0){
+    if(storeInfo(form).length == 0){
       return true
     }
     return false
@@ -246,8 +247,29 @@ function submit(number, email, form) {
   return false
 }
 
-function storeInfo(inputs){
-  return ''
+function storeInfo(form){
+  alert('WOohoo')
+  console.log("WOOHOO")
+  axios.get('/storeInfo', {
+      params: {
+        form
+      }
+    })
+    .then(function(response) {
+      //On Success
+      console.log(response.data)
+      return response.data
+    })
+    .catch(function(error) {
+      //handle error
+      console.error(error);
+      return "error"
+    })
+}
+
+function storeInfos(){
+  alert('hi')
+  console.log('hi')
 }
 </script>
 
