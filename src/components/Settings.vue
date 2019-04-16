@@ -27,10 +27,14 @@
       <div class="control">
         <div class="select">
           <select v-model="form.whoCanSeeMe">
-            <option disabled value=" ">Who can see my posts.</option>
+            <option disabled value="">Who can see my posts.</option>
+            <option>Everyone</option>
+            <option>Only people who follow me (and invitees)</option>
           </select>
           <select v-model="form.whoDoISee">
-            <option disabled value=" ">Whose posts do I see.</option>
+            <option disabled value="">Whose posts do I see.</option>
+            <option>Everyone</option>
+            <option>Only those I follow</option>
           </select>
         </div>
       </div>

@@ -154,6 +154,8 @@
 </template>s
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'InformationRequisitionAndVerification',
   data () {
@@ -187,6 +189,9 @@ export default {
         ]
       }
     }
+  },
+  mounted() {
+
   },
   methods: {
     verifyForm: function(event){
