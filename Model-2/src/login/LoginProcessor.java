@@ -2,6 +2,8 @@ package login;
 
 import org.junit.Test;
 
+import user.User;
+
 public class LoginProcessor {
 	
 	private String email;
@@ -22,7 +24,11 @@ public class LoginProcessor {
 	 */
 
 	public boolean login() {
-		return true;
+		User currentUser = DBAdapter.getUser(email); // TODO placeholder for DBAdapter for now
+		if(currentUser.email == email && currentUser.password == password) {
+			if(createSessionCookie()) return true;
+			else return false;
+		} else return false;
 	}
 
 	/**
@@ -35,7 +41,9 @@ public class LoginProcessor {
 	 */
 
 	public boolean createSessionCookie() {
-		return true;
+		User currentUser = DBAdapter.getUser(email); // TODO placeholder for DBAdapter for now
+		if(server.newSession(currentUser)) return true; // TODO figure out how to call newSesssion
+		else return false;
 	}
 
 	/**
@@ -51,7 +59,14 @@ public class LoginProcessor {
 	 */
 
 	public boolean resetPassword(String password, String newPassword) {
-		return true;
+		User currentUser = DBAdapter.getUser(email); // TODO placeholder for DBAdapter for now
+		String currentPassword = DBAdapter.getPassword(currentUser); // TODO placeholder for DBAdapter for now
+		if(password == currentPassword) {
+			DBAdapter.setPassword(currentUser, newPassword); // TODO placeholder for DBAdapter for now
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/* LoginProcessor - Testing */
