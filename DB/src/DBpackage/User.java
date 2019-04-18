@@ -2,18 +2,16 @@ package DBpackage;
 
 public class User {
 	//Instance variables
+	int ID;
 	private String email;
-	private String firstName;
-	private String lastName;
-	int points;
-	int idKey;
-	
+	private String password;
+	private String type;
+		
 	//Constructor
-	public User(String email, String firstName, String lastName, int points, int idKey) {
+	public User(int ID, String email, String password, String type) {
+		this.ID = ID;
 		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.points = points;
-		this.idKey = idKey;
+		this.password = password;
+		this.type = type;
 	}
 }
