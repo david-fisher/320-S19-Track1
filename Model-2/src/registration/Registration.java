@@ -40,11 +40,30 @@ public class Registration {
 		this.zipCode = zipCode;
 		this.choosePassword = choosePassword;
 		this.verifyPassword = verifyPassword;
-		this.creditCardNumber = creditCardNumber;
-		this.cvv = cvv;
-		this.expirationMonth = expirationMonth;
-		this.expirationYear = expirationYear;
-		storeData();
+
+		verify_result = this.verify()
+
+		if (verify_result){
+			//continue
+		}else{
+			return;
+			//Do not run any of the below code. 
+		}
+
+		CreditCard card = new StripeCreditCard(email, creditCardNumber, zipCode, creditCardNumber, cvv, expirationMonth, expirationYear);
+		cc_verification_result = card.verify();
+
+		if (cc_verification_result != null){
+			this.stripeID = cc_verification_result;
+			storeData();
+		}else{
+			return;
+			//If the credit card is invalid, handle this somehow...
+			//DO NOT call storeData();
+		}
+
+		
+		
 	}
 	
 	/** 
@@ -64,11 +83,11 @@ public class Registration {
 	 *  @return boolean indicating if all the checks pass
 	 */
 	
-	public boolean verify() {
+	private boolean verify() {
 		boolean result = false;
 		if (emailCheck()) result = true; 
 		if (passwordCheck()) result = true;
-		if (creditCardCheck()) result = true;
+		//if (creditCardCheck()) result = true;
 		return result;
 	}
 	
@@ -100,20 +119,6 @@ public class Registration {
 	}
 	
 	/**
-	 *  Returns a boolean value indicating whether the credit card 
-	 *  can be charged, indicated by checking the return value for
-	 *  the creditCardAdapter().
-	 *
-	 *  @param  none 
-	 *  @return boolean indicating if the checks pass
-	 */
-	
-	private boolean creditCardCheck() {
-		// verify that CC is correct
-		return true;
-	}
-
-	/**
 	 *  Sends the credentials to the database for new User 
 	 *  creation and storage. Returns boolean indicating
 	 *  whether it is successful, as determined by the DB.
@@ -122,7 +127,7 @@ public class Registration {
 	 *  @return boolean indicating if the DB has stored the data
 	 */
 
-	public boolean storeData() {
+	private boolean storeData() {
 		return true;
 	}
 
