@@ -7,6 +7,7 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.model.Customer;
+import com.stripe.model.Subscription;
 import com.stripe.model.Token;
 
 public class StripeCreditCard implements CreditCard {
@@ -14,7 +15,32 @@ public class StripeCreditCard implements CreditCard {
 	/**
 	 * The email of the associated member
 	 */
-	public String email;
+	private String email;
+	
+	/**
+	 * The credit card number of the associated member
+	 */
+	private String cardNumber;
+	
+	/**
+	 * The cvv code of the associated credit card
+	 */
+	private String cvv;
+	
+	/**
+	 * The expiration month of the associated credit card
+	 */
+	private String exp_month;
+	
+	/**
+	 * The expiration year of the associated credit card
+	 */
+	private String exp_year;
+	
+	/**
+	 * The zip code of the associated member
+	 */
+	private String zipCode;
 	
 	/**
 	 * The randomized amount to be charged to a member's credit card
@@ -27,37 +53,48 @@ public class StripeCreditCard implements CreditCard {
 	private boolean isBanned;
 	
 	/**
-	 * The Stripe ID of the member
+	 * The Stripe Id of the member
 	 */
-	private String stripeID;
+	private String stripeId;
 	
 	/**
-	 * The newMember who's credit card information we're referencing
+	 * The Customer object storing member information
 	 */
-	private Customer newMember;
+	private Customer member;
 	
 	/**
-	 * Constructor which takes in a member's email
-	 * @param email the email of the member
+	 * Creates a credit card object given the appropriate information
+	 * @param email
+	 * @param cardNumber
+	 * @param zipCode
+	 * @param cvv
+	 * @param exp_month
+	 * @param exp_year
 	 */
-	public StripeCreditCard(String email) {
+	public StripeCreditCard(String email, 
+							String cardNumber, 
+							String zipCode, 
+							String cvv, 
+							String exp_month, 
+							String exp_year) {
 		Stripe.apiKey = "sk_test_gCabH088eiNoFnUbVBwfKCLV00p4slRZXy";
 		this.email = email;
-		this.isBanned = false;
+		this.cardNumber = cardNumber;
+		this.zipCode = zipCode;
+		this.cvv = cvv;
+		this.exp_month = exp_month;
+		this.exp_year = exp_year;
+		this.isBanned = false; // default
 		
-		// Map to allow Stripe to store customer details
+		// Store the member in Stripe
     	Map<String, Object> customerParameters = new HashMap<String, Object>();
-    	
-    	// Add the member's email to the parameters
-    	customerParameters.put("email", email);
-    	
-    	// Try catch to avoid throwing an exception
+    	customerParameters.put("email", this.email);
     	try {
-			Customer newMember = Customer.create(customerParameters);
-			this.newMember = newMember;
-			this.stripeID = newMember.getId();
+			Customer member = Customer.create(customerParameters);
+			this.member = member;
+			this.stripeId = member.getId();
 		} catch (StripeException e) {
-			// Should never get here TEST THIS
+			// Generic error message
 		}
 	}
 	
@@ -72,58 +109,46 @@ public class StripeCreditCard implements CreditCard {
 	
 	/**
 	 * Creates a Stripe Charge object which stores the details of currency and amount charged to a customer
-	 * @param newCustomer
 	 * @return a new Stripe Charge object storing the details of the charge (amount, customer, currency type)
-	 * @throws StripeException
 	 */
 	private Charge generateCharge() {
 		// Generate random amount between 20-45 cents
-		int amount = (int) (Math.random() * 25 + 20);
+		int amount = (int) (Math.random() * 20 + 50);
 		this.amount = amount;
 		
 		Map<String, Object> chargeParameters = new HashMap<String, Object>();
     	chargeParameters.put("amount", Integer.toString(amount));
     	chargeParameters.put("currency", "usd");
-    	chargeParameters.put("customer", newMember.getId());
+    	chargeParameters.put("customer", member.getId());
     	try {
 			return Charge.create(chargeParameters);
 		} catch (StripeException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			// Generic error message
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
 	
 	/**
 	 * Creates a Stripe Token object to store member credit card details (used in charging)
-	 * @param newCustomer
 	 * @return a new Stripe Token object which stores a member's credit card details
-	 * @throws StripeException
 	 */
 	private Token createCard() {
-		// Store the details of a member's card
     	Map<String, Object> cardParameters = new HashMap<String, Object>();
-    	
-    	// ** NEED TO EITHER HAVE THESE PASSED IN OR LOOKUP FROM THE DATABASE **
-    	
-    	// Required fields of a valid CC
-    	cardParameters.put("number", "4000056655665556");
-    	cardParameters.put("exp_month", "01");
-    	cardParameters.put("exp_year", "2020");
-    	cardParameters.put("cvc", "123");
+    	cardParameters.put("number", cardNumber);
+    	cardParameters.put("exp_month", exp_month);
+    	cardParameters.put("exp_year", exp_year);
+    	cardParameters.put("cvc", cvv);
+    	cardParameters.put("address_zip", zipCode);
     	
     	// Create a token which stores the details of the card so that we can charge it
     	Map<String, Object> tokenParameters = new HashMap<String, Object>();
     	tokenParameters.put("card", cardParameters);
     	
-    	// Create and return the token
-    	Token tok;
 		try {
-			tok = Token.create(tokenParameters);
-			return tok;
+			return Token.create(tokenParameters);
 		} catch (StripeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Generic error message
 			return null;
 		}
 	}
@@ -136,15 +161,18 @@ public class StripeCreditCard implements CreditCard {
 	public boolean charge() {
 		Token chargeTok = createCard();
 		
-		// Link the token object to the customer
+		// Check if null
+		if (chargeTok == null)
+			return false;
+		
+		// Link the credit card (Token) object to the customer
         Map<String, Object> source = new HashMap<String, Object>();
     	source.put("source", chargeTok.getId());
     	
     	try {
-			newMember.getSources().create(source);
+			member.getSources().create(source);
 		} catch (StripeException e) {
-			// TODO Auto-generated catch block
-			// some error handling goes here
+			// Generic error message
 		}
 		return generateCharge() != null;
 	}
@@ -172,16 +200,32 @@ public class StripeCreditCard implements CreditCard {
 	 */
 	@Override
 	public void setSubscription(boolean on) {
-		// TODO Auto-generated method stub
+		Map<String, Object> item = new HashMap<String, Object>();
+		
+		Map<String, Object> items = new HashMap<String, Object>();
+		items.put("0", item);
+		
+		Map<String, Object> subscriptionParameters = new HashMap<String, Object>();
+		subscriptionParameters.put("customer", member.getId());
+		subscriptionParameters.put("items", item);
+		
+		try {
+			Subscription.create(subscriptionParameters);
+		} catch (StripeException e) {
+			// Generic error message
+		}
 	}
 
 	/**
-	 * Verifies the validity of a credit card
+	 * Verifies the validity of a credit card, and returns a Stripe ID if successfull, null if not
 	 */
 	@Override
-	public boolean verify() {
-		// TODO Auto-generated method stub
-		return false;
+	public String verify() {
+		if (createCard() != null) {
+			return stripeId;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -189,7 +233,7 @@ public class StripeCreditCard implements CreditCard {
 	 */
 	@Override
 	public String getId() {
-		return stripeID;
+		return stripeId;
 	}
 	
 }
