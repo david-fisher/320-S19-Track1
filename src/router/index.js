@@ -5,6 +5,7 @@ import LoginPage from '@/components/LoginPage'
 import Irv from '@/components/IR&V'
 import PasswordReset from '@/components/PasswordReset'
 import Settings from '@/components/Settings'
+import AccountCreation from '@/components/AccountCreation'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/user/settings',
       name: 'Settings',
       component: Settings
+    },
+    {
+      path: '/accountcreation',
+      name: 'AccountCreation',
+      component: AccountCreation
     }
   ]
 })
