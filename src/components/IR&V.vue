@@ -249,7 +249,7 @@ function submit(number, email, form) {
 
 function storeInfo(form){
   alert('WOohoo')
-  console.log("WOOHOO")
+  console.log("eww")
   axios.get('/storeInfo', {
       params: {
         form

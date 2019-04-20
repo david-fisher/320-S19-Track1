@@ -1,7 +1,7 @@
 <template>
   <div align="center" style="border:1px solid black">
     <h1>Login Page</h1>
-    <form class="form" action="/storeInfo" method="post" v-on:submit="verifyForm($event)">
+    <form class="form" action="/WebServ/dist/#/storeInfo" method="post" v-on:submit="verifyForm($event)">
       <div class="ui fluid input">
         <label class="label" for="username"><b>Username: </b></label>
         <input type="text" v-model="form.name" placeholder="Username" id="username" required>
