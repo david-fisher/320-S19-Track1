@@ -1,4 +1,4 @@
-package DBpackage;
+
 
 public class User {
 	//Instance variables

@@ -1,4 +1,3 @@
-package DBpackage;
 
 public class Photo extends UserPost{
 	//Variables

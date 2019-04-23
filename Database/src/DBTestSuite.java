@@ -1,4 +1,4 @@
-package DBpackage;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -144,6 +144,10 @@ class DBTestSuite {
 		//delete a URL, then fail to fetch that URL's info from the DB.
 				
 		//Also covers case if the image does not exist.
+	}
+	
+	public static void main(String[] args) {
+		DBTestSuite test = new DBTestSuite();
 	}
 	
 }

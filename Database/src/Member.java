@@ -1,4 +1,4 @@
-package DBpackage;
+
 
 public class Member extends User{
 	//Variables

@@ -1,16 +1,25 @@
-package DBpackage;
 import org.json.*;
+
+
 import javax.imageio.ImageIO;
 import java.sql.*;
 
+
 public class DBAdapter {
+
+private String DBAddress = null; //access address for database. figure out l8tr
 	
-	private String DBAddress = null; //access address for database. figure out l8tr
-	
-	private Connection getConnection() {
+	private Connection getConnection() throws ClassNotFoundException, SQLException {
 		//function used to get connection to database
-		//stub
-		return null;
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/localserver","root","root");
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("select * from user");
+		while(rs.next()) {
+			System.out.println(rs.getInt(1)+ " "+rs.getString(2));
+		}
+		con.close();
+		return con;
 	}
 	
 	//User class
@@ -445,4 +454,12 @@ public class DBAdapter {
 		//stub
 		return true;
 	}
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DBAdapter adapter = new DBAdapter();
+		
+	}
+
 }

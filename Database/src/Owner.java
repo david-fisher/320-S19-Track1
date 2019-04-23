@@ -1,4 +1,3 @@
-package DBpackage;
 
 public class Owner extends User{
 

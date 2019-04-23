@@ -1,4 +1,3 @@
-package DBpackage;
 
 public class Admin extends User{
 
