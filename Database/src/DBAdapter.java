@@ -1,5 +1,6 @@
 import org.json.*;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.imageio.ImageIO;
 import java.sql.*;
@@ -7,23 +8,28 @@ import java.sql.*;
 
 public class DBAdapter {
 
-private String DBAddress = null; //access address for database. figure out l8tr
+private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address for database. figure out l8tr
 	
-	private Connection getConnection() throws ClassNotFoundException, SQLException {
+	private Connection getConnection() throws SQLException{
 		//function used to get connection to database
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/localserver","root","root");
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("select * from user");
+		Connection conn = DriverManager.getConnection(DBAddress,"root","root");
+		System.out.println("Log: Connection Established!");
+		return conn;
+		/*ResultSet rs = conn.createStatement().executeQuery("select * from user");
+		ResultSetMetaData rsmd = rs.getMetaData();
+		
+		System.out.println("Query Results: \n\n");
+		
 		while(rs.next()) {
-			System.out.println(rs.getInt(1)+ " "+rs.getString(2));
-		}
-		con.close();
-		return con;
+			for (int i=1; i<=rsmd.getColumnCount(); i++) {
+				System.out.print(rs.getString(i)+"\t\t");
+			}
+			System.out.println();
+		}*/
 	}
 	
 	//User class
-	private class User {
+	/*private class User {
 		//Instance variables
 		int ID;
 		private String email;
@@ -37,7 +43,7 @@ private String DBAddress = null; //access address for database. figure out l8tr
 			this.password = password;
 			this.type = type;
 		}
-	}
+	}*/
 	
 	//Admin class
 	private class Admin extends User{
@@ -98,9 +104,21 @@ private String DBAddress = null; //access address for database. figure out l8tr
 /*
 * USER FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS 
 */
-	public JSONObject createUser(JSONObject usr){
+	public boolean createUser(User usr) throws SQLException{
 		//stub
-		return null;
+		Connection conn = getConnection();
+		ResultSet rs = conn.createStatement().executeQuery("INSERT INTO User (email, name,type) VALUES ("+usr.email + "," +usr.password+"," + usr.type);
+		ResultSetMetaData rsmd = rs.getMetaData();
+		
+		System.out.println("Query Results: \n\n");
+		
+		while(rs.next()) {
+			for (int i=1; i<=rsmd.getColumnCount(); i++) {
+				System.out.print(rs.getString(i)+"\t\t");
+			}
+			System.out.println();
+		}
+		return true;
 	}
 
 	public JSONObject getUser(int id) { 
@@ -456,10 +474,12 @@ private String DBAddress = null; //access address for database. figure out l8tr
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
 		DBAdapter adapter = new DBAdapter();
-		
+		adapter.getConnection();
+		User user1 = new User(11,"carolinekim@gmail.com","caroline kim","Member");
+		adapter.createUser(user1);
 	}
 
 }
