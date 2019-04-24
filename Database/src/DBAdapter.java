@@ -3,6 +3,8 @@ import org.json.*;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.imageio.ImageIO;
+
+import java.awt.Image;
 import java.sql.*;
 
 
@@ -102,6 +104,66 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		public Post(int id, String text, int author, String timeStamp, Comment[] comments) {
 			super(id, text, author, timeStamp);
 			this.comments = comments;
+		}
+	}
+	
+	//Photo class
+	private class Photo{
+		//Variables
+		private int photoId;
+		private String photoPath;
+		
+		//Constructor
+		public Photo(int photoId, String photoPath) {
+			super();
+			this.photoId = photoId;
+			this.photoPath = photoPath;
+		}
+		
+	}
+	
+	//Filter class
+	private class Filter extends Photo{
+		//Variables
+		private int xPos;
+		private int yPos;
+		private boolean visibleToUser;
+		
+		//Constructor
+		public Filter(int photoId, String photoPath, int xPos, int yPos, boolean visibleToUser) {
+			super(photoId, photoPath);
+			this.xPos = xPos;
+			this.yPos = yPos;
+			this.visibleToUser = visibleToUser;
+		}	
+	}
+	
+	//ImagePost class
+	private class ImagePost extends Post{
+		//Variables
+		private Photo photo;
+		private Filter[] filters;
+		
+		//Constructor
+		public ImagePost(int id, String text, int author, String timeStamp, Comment[] comments, Photo photo,
+				Filter[] filters) {
+			super(id, text, author, timeStamp, comments);
+			this.photo = photo;
+			this.filters = filters;
+		}
+	}
+	
+	//URL class
+	private class URL{
+		//Variable
+		private String shortURL;
+		private String longUrl;
+		
+		//Constructor
+		public URL(String shortURL, String longUrl) {
+			super();
+			this.shortURL = shortURL;
+			this.longUrl = longUrl;
 		}
 	}
 		//Mod class
