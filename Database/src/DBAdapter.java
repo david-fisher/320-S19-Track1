@@ -29,7 +29,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 	}
 	
 	//User class
-	/*private class User {
+	private class User {
 		//Instance variables
 		int ID;
 		private String email;
@@ -43,7 +43,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			this.password = password;
 			this.type = type;
 		}
-	}*/
+	}
 	
 	//Admin class
 	private class Admin extends User{
@@ -54,52 +54,102 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		}
 	}
 	
-	//Mod class
-	private class Mod extends User{
-
-		public Mod(int ID, String email, String password, String type) {
+	private class Owner extends User{
+	
+		public Owner(int ID, String email, String password, String type) {
 			super(ID, email, password, type);
 			// TODO Auto-generated constructor stub
 		}
 	}
 	
-	//Member class
-	private class Member extends User{
+	//Content parent class
+	private class Content{
 		//Variables
-		private String firstName;
-		private String lastName;
-		private String address1;
-		private String address2;
-		private String zipCode;
-		private String state;
-		private String stripeID;
-		private int phoneNum;
-		private int ccNum;
-		private int ccSec;
-		private int ccExpiryMonth;
-		private int ccExpiryYear;
-		private int points;
+		private int id;
+		private String text;
+		private int author;
+		private String timeStamp;	
 		
 		//Constructor
-		public Member(int ID, String email, String password, String type, String firstName, String lastName,
-				String address1, String address2, String zipCode, String state, String stripeID, int phoneNum, int ccNum,
-				int ccSec, int ccExpiryMonth, int ccExpiryYear, int points) {
-			super(ID, email, password, type);
-			this.firstName = firstName;
-			this.lastName = lastName;
-			this.address1 = address1;
-			this.address2 = address2;
-			this.zipCode = zipCode;
-			this.state = state;
-			this.stripeID = stripeID;
-			this.phoneNum = phoneNum;
-			this.ccNum = ccNum;
-			this.ccSec = ccSec;
-			this.ccExpiryMonth = ccExpiryMonth;
-			this.ccExpiryYear = ccExpiryYear;
-			this.points = points;
+		public Content(int id, String text, int author, String timeStamp) {
+			super();
+			this.id = id;
+			this.text = text;
+			this.author = author;
+			this.timeStamp = timeStamp;
 		}
 	}
+	
+	//Comment class
+	private class Comment extends Post{
+		//Variables
+		private int parent;
+
+		//Constructor
+		public Comment(int id, String text, int author, String timeStamp, Comment[] comments, int parent) {
+			super(id, text, author, timeStamp, comments);
+			this.parent = parent;
+		}	
+		
+	}
+	
+	//Post class
+	private class Post extends Content{
+		//Variables
+		private Comment[] comments;
+		
+		//Constructor
+		public Post(int id, String text, int author, String timeStamp, Comment[] comments) {
+			super(id, text, author, timeStamp);
+			this.comments = comments;
+		}
+	}
+		//Mod class
+		private class Mod extends User{
+	
+			public Mod(int ID, String email, String password, String type) {
+				super(ID, email, password, type);
+				// TODO Auto-generated constructor stub
+			}
+		}
+		
+		//Member class
+		private class Member extends User{
+			//Variables
+			private String firstName;
+			private String lastName;
+			private String address1;
+			private String address2;
+			private String zipCode;
+			private String state;
+			private String stripeID;
+			private int phoneNum;
+			private int ccNum;
+			private int ccSec;
+			private int ccExpiryMonth;
+			private int ccExpiryYear;
+			private int points;
+			
+			//Constructor
+			public Member(int ID, String email, String password, String type, String firstName, String lastName,
+					String address1, String address2, String zipCode, String state, String stripeID, int phoneNum, int ccNum,
+					int ccSec, int ccExpiryMonth, int ccExpiryYear, int points) {
+				super(ID, email, password, type);
+				this.firstName = firstName;
+				this.lastName = lastName;
+				this.address1 = address1;
+				this.address2 = address2;
+				this.zipCode = zipCode;
+				this.state = state;
+				this.stripeID = stripeID;
+				this.phoneNum = phoneNum;
+				this.ccNum = ccNum;
+				this.ccSec = ccSec;
+				this.ccExpiryMonth = ccExpiryMonth;
+				this.ccExpiryYear = ccExpiryYear;
+				this.points = points;
+			}
+		}
 
 /*
 * USER FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS 
