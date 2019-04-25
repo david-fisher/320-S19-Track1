@@ -6,6 +6,7 @@ import Irv from '@/components/IR&V'
 import PasswordReset from '@/components/PasswordReset'
 import Settings from '@/components/Settings'
 import AccountCreation from '@/components/AccountCreation'
+import ModeratorAndAdminCreation from '@/components/ModeratorAndAdminCreation'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/accountcreation',
       name: 'AccountCreation',
       component: AccountCreation
+    },
+    {
+      path: '/moderatorAndAdminCreation',
+      name: 'ModeratorAndAdminCreation',
+      component: ModeratorAndAdminCreation
     }
   ]
 })

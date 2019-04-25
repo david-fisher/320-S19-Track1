@@ -1,0 +1,76 @@
+<template>
+
+  <div align="center" style="border:1px solid black">
+    <h1>Member and Admin Creation Page</h1>
+    <form class="form" action="/WebServ/dist/#/storeInfo" method="post" v-on:submit="verifyForm($event)">
+      <div>
+        <select v-model="selected">
+          <option v-bind:value="{ role: moderator }">Moderator</option>
+          <option v-bind:value="{ role: admin }">Admin</option>
+        </select>
+      </div>
+      <br>
+      <div>
+        <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Create</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HelloWorld',
+  data () {
+    return {
+      form: {
+        role: ''
+      }
+    }
+  },
+  methods: {
+    verifyForm: function(event){
+      if(!submit(this.form)){
+        event.preventDefault()
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+h1, h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #8F721B;
+}
+.form {
+  clear: both;
+}
+.form .ui.fluid.input{
+  margin-inline-start: 20%;
+  margin-inline-end: 20%;
+  vertical-align: middle;
+  /*display: table-cell;*/
+  height: 50px;
+}
+.form .ui.fluid.input .input {
+  margin-left: 0.1%;
+  margin-right: 0.1%;
+  clear: both;
+}
+.form .field{
+  align-items: right;
+}
+.form .label{
+  font-weight: bold;
+}
+</style>

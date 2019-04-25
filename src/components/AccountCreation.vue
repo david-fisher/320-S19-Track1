@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     verifyPassword: function(event){
-      if(PasswordsEqual(this.form)){
+      if(PasswordsEqual(this.form)){ //TODO : Make this actually do something
         event.preventDefault()
       }
     }
