@@ -1,5 +1,3 @@
-import org.json.*;
-
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.imageio.ImageIO;
@@ -48,6 +46,55 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			this.type = type;
 			this.loggedIn = loggedIn;
 		}
+
+		//Setters and Getters
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public boolean isLoggedIn() {
+			return loggedIn;
+		}
+
+		public void setLoggedIn(boolean loggedIn) {
+			this.loggedIn = loggedIn;
+		}
+
+		public int getID() {
+			return ID;
+		}
+
+		public void setID(int iD) {
+			ID = iD;
+		}
 	}
 	
 	//Admin class
@@ -84,6 +131,47 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			this.text = text;
 			this.author = author;
 			this.timeStamp = timeStamp;
+		}
+
+		//Setters and Getters
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+
+		public int getFlag() {
+			return flag;
+		}
+
+		public void setFlag(int flag) {
+			this.flag = flag;
+		}
+
+		public String getText() {
+			return text;
+		}
+
+		public void setText(String text) {
+			this.text = text;
+		}
+
+		public int getAuthor() {
+			return author;
+		}
+
+		public void setAuthor(int author) {
+			this.author = author;
+		}
+
+		public String getTimeStamp() {
+			return timeStamp;
+		}
+
+		public void setTimeStamp(String timeStamp) {
+			this.timeStamp = timeStamp;
 		}	
 	}
 	
@@ -98,6 +186,16 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			this.parent = parent;
 		}
 		
+		//Setters and Getters
+		public int getParent() {
+			return parent;
+		}
+
+		public void setParent(int parent) {
+			this.parent = parent;
+		}
+		
+		
 	}
 	
 	//Post class
@@ -110,6 +208,15 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			super(flag, text, author, timeStamp);
 			this.comments = comments;
 		}
+
+		//Setters and Getters
+		public Comment[] getComments() {
+			return comments;
+		}
+
+		public void setComments(Comment[] comments) {
+			this.comments = comments;
+		}		
 	}
 	
 	//Photo class
@@ -124,7 +231,23 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			this.photoId = photoId;
 			this.photoPath = photoPath;
 		}
-		
+
+		//Setters and Getters
+		public int getPhotoId() {
+			return photoId;
+		}
+
+		public void setPhotoId(int photoId) {
+			this.photoId = photoId;
+		}
+
+		public String getPhotoPath() {
+			return photoPath;
+		}
+
+		public void setPhotoPath(String photoPath) {
+			this.photoPath = photoPath;
+		}
 	}
 	
 	//Filter class
@@ -139,6 +262,31 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			super(photoId, photoPath);
 			this.xPos = xPos;
 			this.yPos = yPos;
+			this.visibleToUser = visibleToUser;
+		}
+		
+		//Setters and Getters
+		public int getxPos() {
+			return xPos;
+		}
+
+		public void setxPos(int xPos) {
+			this.xPos = xPos;
+		}
+
+		public int getyPos() {
+			return yPos;
+		}
+
+		public void setyPos(int yPos) {
+			this.yPos = yPos;
+		}
+
+		public boolean isVisibleToUser() {
+			return visibleToUser;
+		}
+
+		public void setVisibleToUser(boolean visibleToUser) {
 			this.visibleToUser = visibleToUser;
 		}	
 	}
@@ -156,6 +304,23 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			this.photo = photo;
 			this.filters = filters;
 		}
+
+		//Setters and Getters
+		public Photo getPhoto() {
+			return photo;
+		}
+
+		public void setPhoto(Photo photo) {
+			this.photo = photo;
+		}
+
+		public Filter[] getFilters() {
+			return filters;
+		}
+
+		public void setFilters(Filter[] filters) {
+			this.filters = filters;
+		}
 	}
 	
 	//URL class
@@ -170,6 +335,23 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			this.shortURL = shortURL;
 			this.longUrl = longUrl;
 		}
+
+		//Setters and Getters
+		public String getShortURL() {
+			return shortURL;
+		}
+
+		public void setShortURL(String shortURL) {
+			this.shortURL = shortURL;
+		}
+
+		public String getLongUrl() {
+			return longUrl;
+		}
+
+		public void setLongUrl(String longUrl) {
+			this.longUrl = longUrl;
+		}
 	}
 	
 	//Mod class
@@ -181,43 +363,148 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		}
 	}
 		
-		//Member class
-		private class Member extends User{
-			//Variables
-			private String firstName;
-			private String lastName;
-			private String address1;
-			private String address2;
-			private String zipCode;
-			private String state;
-			private String stripeID;
-			private int phoneNum;
-			private int ccNum;
-			private int ccSec;
-			private int ccExpiryMonth;
-			private int ccExpiryYear;
-			private int points;
-			
-			//Constructor
-			public Member(String name, String email, String password, String type, boolean loggedIn, String firstName,
-					String lastName, String address1, String address2, String zipCode, String state, String stripeID,
-					int phoneNum, int ccNum, int ccSec, int ccExpiryMonth, int ccExpiryYear, int points) {
-				super(name, email, password, type, loggedIn);
-				this.firstName = firstName;
-				this.lastName = lastName;
-				this.address1 = address1;
-				this.address2 = address2;
-				this.zipCode = zipCode;
-				this.state = state;
-				this.stripeID = stripeID;
-				this.phoneNum = phoneNum;
-				this.ccNum = ccNum;
-				this.ccSec = ccSec;
-				this.ccExpiryMonth = ccExpiryMonth;
-				this.ccExpiryYear = ccExpiryYear;
-				this.points = points;
-			}
+	//Member class
+	private class Member extends User{
+		//Variables
+		private String firstName;
+		private String lastName;
+		private String address1;
+		private String address2;
+		private String zipCode;
+		private String state;
+		private String stripeID;
+		private int phoneNum;
+		private int ccNum;
+		private int ccSec;
+		private int ccExpiryMonth;
+		private int ccExpiryYear;
+		private int points;
+		
+		//Constructor
+		public Member(String name, String email, String password, String type, boolean loggedIn, String firstName,
+				String lastName, String address1, String address2, String zipCode, String state, String stripeID,
+				int phoneNum, int ccNum, int ccSec, int ccExpiryMonth, int ccExpiryYear, int points) {
+			super(name, email, password, type, loggedIn);
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.address1 = address1;
+			this.address2 = address2;
+			this.zipCode = zipCode;
+			this.state = state;
+			this.stripeID = stripeID;
+			this.phoneNum = phoneNum;
+			this.ccNum = ccNum;
+			this.ccSec = ccSec;
+			this.ccExpiryMonth = ccExpiryMonth;
+			this.ccExpiryYear = ccExpiryYear;
+			this.points = points;
 		}
+		
+		//Setters and Getters
+		public String getFirstName() {
+			return firstName;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
+		public String getLastName() {
+			return lastName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
+		public String getAddress1() {
+			return address1;
+		}
+
+		public void setAddress1(String address1) {
+			this.address1 = address1;
+		}
+
+		public String getAddress2() {
+			return address2;
+		}
+
+		public void setAddress2(String address2) {
+			this.address2 = address2;
+		}
+
+		public String getZipCode() {
+			return zipCode;
+		}
+
+		public void setZipCode(String zipCode) {
+			this.zipCode = zipCode;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		public String getStripeID() {
+			return stripeID;
+		}
+
+		public void setStripeID(String stripeID) {
+			this.stripeID = stripeID;
+		}
+
+		public int getPhoneNum() {
+			return phoneNum;
+		}
+
+		public void setPhoneNum(int phoneNum) {
+			this.phoneNum = phoneNum;
+		}
+
+		public int getCcNum() {
+			return ccNum;
+		}
+
+		public void setCcNum(int ccNum) {
+			this.ccNum = ccNum;
+		}
+
+		public int getCcSec() {
+			return ccSec;
+		}
+
+		public void setCcSec(int ccSec) {
+			this.ccSec = ccSec;
+		}
+
+		public int getCcExpiryMonth() {
+			return ccExpiryMonth;
+		}
+
+		public void setCcExpiryMonth(int ccExpiryMonth) {
+			this.ccExpiryMonth = ccExpiryMonth;
+		}
+
+		public int getCcExpiryYear() {
+			return ccExpiryYear;
+		}
+
+		public void setCcExpiryYear(int ccExpiryYear) {
+			this.ccExpiryYear = ccExpiryYear;
+		}
+
+		public int getPoints() {
+			return points;
+		}
+
+		public void setPoints(int points) {
+			this.points = points;
+		}
+	}
 
 /* OLD CODE
 
