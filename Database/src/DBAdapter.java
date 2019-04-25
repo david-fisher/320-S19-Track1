@@ -213,9 +213,8 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			}
 		}
 
-/*
-* USER FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS 
-*/
+/* OLD CODE
+
 	public boolean createUser(User usr) throws SQLException{
 		//stub
 		Connection conn = getConnection();
@@ -396,9 +395,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		return true;
 	}
 	
-/*
-* POST FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
-*/
+
 	
 	public JSONObject createPost(JSONObject post) {
 		//stub
@@ -515,9 +512,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		return null;
 	}
 	
-/*
-* ASSET FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
-*/
+
 	
 	public boolean createAsset(ImageIO photo) {
 		//stub
@@ -539,9 +534,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		//stub
 		return true;
 	}
-/*
-* URL FUNCTIONS - GETTERS & SETTERS FOR ALL FIELDS
-*/
+
 	
 	public boolean createURL(JSONObject url) {
 		//stub
@@ -584,7 +577,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		//stub
 		return true;
 	}
-	
+	*/
 	
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
