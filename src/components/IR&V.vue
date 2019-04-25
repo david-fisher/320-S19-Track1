@@ -154,13 +154,13 @@
 </template>s
 
 <script>
-import axios from "axios";
 
 export default {
   name: 'InformationRequisitionAndVerification',
   data () {
     return {
       form: {
+        serverAddress: '',
         firstName: '',
         lastName: '',
         addressLineOne: '',
@@ -194,82 +194,66 @@ export default {
     //Method to run on page load goes here.
   },
   methods: {
+    validPhone: function(number){
+      return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number))
+    },
+    validEmail: function(email){
+      return /\S+@\S+\.\S+/.test(email)
+    },
+    submit: function(number, email, form) {
+      // `this` inside methods points to the Vue instance
+      // Verify account data and submit
+      if (!this.validPhone(number)) {
+        form.submitText = 'You must fill in a valid phone number!'
+      } else if (!this.validEmail(email)) {
+        form.submitText = 'You must fill in a valid email!'
+        console.log('wee')
+      }
+      else{
+        // Send data to the server and display the resultant message
+        // 
+        var sendData = ''
+        sendData += form.firstName + ' '
+        sendData += form.lastName + ' '
+        sendData += form.addressLineOne + ' '
+        sendData += form.addressLineTwo + ' '
+        sendData += form.city + ' '
+        sendData += form.state + ' '
+        sendData += form.zipCode + ' '
+        sendData += form.phoneNumber + ' '
+        sendData += form.email + ' '
+        sendData += form.creditCardNumber + ' '
+        sendData += form.expiration + ' '
+        sendData += form.CVV
+        this.storeInfo(form)
+      }
+    },
+    storeInfo: function(form){
+      alert('WOohoo')
+      const path = 'http://9f1927bf.ngrok.io/members-only/storeInfo'
+  		
+      this.$http.post(path, form)
+      .then(response => {
+        var retVal = JSON.parse('{' + response.bodyText).loginResult
+        if(retVal.result.length == 0){
+          this.form.submitText = "Your card has been charged. Please check the amount and enter it into the box below."
+        } else {
+          this.form.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
+        }
+      })
+      .catch(error => {
+        console.log("Yeah nope")
+        console.log(error)
+      })
+    },
+    storeInfos: function(){
+      
+    },
     verifyForm: function(event){
       event.preventDefault()
-      if(submit(this.form.phoneNumber, this.form.email, this.form)){
-        storeInfos()
-      }
+      this.submit(this.form.phoneNumber, this.form.email, this.form)
     }
   }
-}
-
-function validPhone(number){
-  return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number))
-}
-
-function validEmail(email){
-  return /\S+@\S+\.\S+/.test(email)
-}
-
-function submit(number, email, form) {
-  // `this` inside methods points to the Vue instance
-  // Verify account data and submit
-  if (!validPhone(number)) {
-    form.submitText = 'You must fill in a valid phone number!'
-    return false
-  } else if (!validEmail(email)) {
-    form.submitText = 'You must fill in a valid email!'
-    console.log('wee')
-    return false
-  }
-  else{
-    // Send data to the server and display the resultant message
-    // 
-    var sendData = ''
-    sendData += form.firstName + ' '
-    sendData += form.lastName + ' '
-    sendData += form.addressLineOne + ' '
-    sendData += form.addressLineTwo + ' '
-    sendData += form.city + ' '
-    sendData += form.state + ' '
-    sendData += form.zipCode + ' '
-    sendData += form.phoneNumber + ' '
-    sendData += form.email + ' '
-    sendData += form.creditCardNumber + ' '
-    sendData += form.expiration + ' '
-    sendData += form.CVV
-    if(storeInfo(form).length == 0){
-      return true
-    }
-    return false
-  }
-  alert('You should not have made it here')
-  return false
-}
-
-function storeInfo(form){
-  alert('WOohoo')
-  console.log("eww")
-  axios.get('/storeInfo', {
-      params: {
-        form
-      }
-    })
-    .then(function(response) {
-      //On Success
-      console.log(response.data)
-      return response.data
-    })
-    .catch(function(error) {
-      //handle error
-      console.error(error);
-      return "error"
-    })
-}
-
-function storeInfos(){
-  alert('hi')
-  console.log('hi')
 }
 </script>
 
