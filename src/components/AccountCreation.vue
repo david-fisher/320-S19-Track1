@@ -1,15 +1,16 @@
 <template>
   <div align="center" style="border:1px solid black">
-    <h1>Login Page</h1>
-    <form class="form" action="/WebServ/dist/#/storeInfo" method="post" v-on:submit="verifyForm($event)">
-      <div class="ui fluid input">
-        <label class="label" for="username"><b>Username: </b></label>
-        <input type="text" v-model="form.name" placeholder="Username" id="username" required>
-      </div>
-      <br>
+    <h1>Account Creation</h1>
+    <form class="form" action="/storeInfo" method="post" v-on:submit="verifyPassword($event)">
       <div class="ui fluid input">
         <label class="label" for="password"><b>Password: </b></label>
         <input type="password" v-model="form.pass" placeholder="Password" id="password" required>
+      </div>
+      <br>
+      <br>
+      <div class="ui fluid input">
+        <label class="label" for="confirmPassword"><b>Confirm Password: </b></label>
+        <input type="password" v-model="form.confirmPass" placeholder="Confirmed Password" id="confirmPassword" required>
       </div>
       <br>
       <div>
@@ -21,22 +22,28 @@
 
 <script>
 export default {
+
   name: 'HelloWorld',
   data () {
     return {
       form: {
-        name: '',
-        pass: ''
+        pass: '',
+        confirmPass: ''
       }
     }
   },
   methods: {
-    verifyForm: function(event){
-      if(!submit(this.form)){
+    verifyPassword: function(event){
+      if(PasswordsEqual(this.form)){
         event.preventDefault()
       }
     }
   }
+}
+
+function PasswordsEqual(form){
+  console.log(form.pass == form.confirmPass);
+  return (form.pass == form.confirmPass);
 }
 </script>
 

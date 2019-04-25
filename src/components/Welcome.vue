@@ -40,6 +40,22 @@
           Information Requisition and Verification
         </a>
       </li>
+      <li>
+        <a
+          href="#/user/settings"
+          target="_blank"
+        >
+          Settings
+        </a>
+      </li>
+      <li>
+        <a
+          href="#/accountcreation"
+          target="_blank"
+        >
+          Account Creation
+        </a>
+      </li>
       <!-- leaving this for reference -->
       <!--<li>
         <a
@@ -146,6 +162,25 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #D6A200;
+  color: #8F721B;
+}
+.form {
+  clear: both;
+}
+.form .ui.fluid.input{
+  margin-inline-start: 20%;
+  margin-inline-end: 20%;
+  clear: both;
+}
+.form .ui.fluid.input .input {
+  margin-left: 0.1%;
+  margin-right: 0.1%;
+  clear: both;
+}
+.form .field{
+  align-items: right;
+}
+.form .label{
+  font-weight: bold;
 }
 </style>

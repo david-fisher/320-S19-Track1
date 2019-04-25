@@ -9,7 +9,7 @@
         </p>
         <hr>
         <!-- form starts here -->
-        <form class="form">
+        <form class="form" v-on:submit="verifyForm($event)">
           <div class="field">
             <label class="label">Name:</label>
             <br>
@@ -56,9 +56,7 @@
           </div>
           <br>
           <div class="submit button">
-            <button class="ui black button" style="color:#D6A200" v-on:click="submit">
-              Submit
-            </button>
+            <input class="ui black button" style="color:#D6A200" type="submit" value="Submit">
           </div>
           <div class="submission check">
             <p style="color:#FF0000">{{ form.submitText }}</p>
@@ -156,7 +154,7 @@
 </template>s
 
 <script>
-
+import axios from "axios";
 
 export default {
   name: 'InformationRequisitionAndVerification',
@@ -192,52 +190,86 @@ export default {
       }
     }
   },
+  mounted() {
+    //Method to run on page load goes here.
+  },
   methods: {
-    submit: function (event) {
-      // `this` inside methods points to the Vue instance
-      // Verify account data and submit
-      if (!validPhone(this.form.phoneNumber)) {
-        this.form.submitText = 'You must fill in a valid phone number!'
-      } else if (!validEmail(this.form.email)) {
-        this.form.submitText = 'You must fill in a valid email!'
-      }
-      else{
-        // Send data to the server and display the resultant message
-        var sendData = ''
-        sendData += this.form.firstName + ' '
-        sendData += this.form.lastName + ' '
-        sendData += this.form.addressLineOne + ' '
-        sendData += this.form.addressLineTwo + ' '
-        sendData += this.form.city + ' '
-        sendData += this.form.state + ' '
-        sendData += this.form.zipCode + ' '
-        sendData += this.form.phoneNumber + ' '
-        sendData += this.form.email + ' '
-        sendData += this.form.creditCardNumber + ' '
-        sendData += this.form.expiration + ' '
-        sendData += this.form.CVV
-        if(storeInfo(sendData).length == 0){
-          alert('Valid data')
-        }
+    verifyForm: function(event){
+      event.preventDefault()
+      if(submit(this.form.phoneNumber, this.form.email, this.form)){
+        storeInfos()
       }
     }
   }
 }
 
 function validPhone(number){
-  if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number)){
-    return true
-  }
-  return false
+  return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number))
 }
 
 function validEmail(email){
   return /\S+@\S+\.\S+/.test(email)
 }
 
-function storeInfo(inputs){
-  socket.send('storeInfo' + ' ' + inputs)
-  return ''
+function submit(number, email, form) {
+  // `this` inside methods points to the Vue instance
+  // Verify account data and submit
+  if (!validPhone(number)) {
+    form.submitText = 'You must fill in a valid phone number!'
+    return false
+  } else if (!validEmail(email)) {
+    form.submitText = 'You must fill in a valid email!'
+    console.log('wee')
+    return false
+  }
+  else{
+    // Send data to the server and display the resultant message
+    // 
+    var sendData = ''
+    sendData += form.firstName + ' '
+    sendData += form.lastName + ' '
+    sendData += form.addressLineOne + ' '
+    sendData += form.addressLineTwo + ' '
+    sendData += form.city + ' '
+    sendData += form.state + ' '
+    sendData += form.zipCode + ' '
+    sendData += form.phoneNumber + ' '
+    sendData += form.email + ' '
+    sendData += form.creditCardNumber + ' '
+    sendData += form.expiration + ' '
+    sendData += form.CVV
+    if(storeInfo(form).length == 0){
+      return true
+    }
+    return false
+  }
+  alert('You should not have made it here')
+  return false
+}
+
+function storeInfo(form){
+  alert('WOohoo')
+  console.log("eww")
+  axios.get('/storeInfo', {
+      params: {
+        form
+      }
+    })
+    .then(function(response) {
+      //On Success
+      console.log(response.data)
+      return response.data
+    })
+    .catch(function(error) {
+      //handle error
+      console.error(error);
+      return "error"
+    })
+}
+
+function storeInfos(){
+  alert('hi')
+  console.log('hi')
 }
 </script>
 
