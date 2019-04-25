@@ -37,6 +37,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		private String password;
 		private String type;
 		private boolean loggedIn;
+		private int ID;
 		
 		//Constructor
 		public User(String name, String email, String password, String type, boolean loggedIn) {
@@ -78,8 +79,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		private String timeStamp;
 		
 		//Constructor
-		public Content(int id, int flag, String text, int author, String timeStamp) {
-			this.id = id;
+		public Content(int flag, String text, int author, String timeStamp) {
 			this.flag = flag;
 			this.text = text;
 			this.author = author;
@@ -93,8 +93,8 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		private int parent;
 
 		//Constructor
-		public Comment(int id, int flag, String text, int author, String timeStamp, Comment[] comments, int parent) {
-			super(id, flag, text, author, timeStamp, comments);
+		public Comment(int flag, String text, int author, String timeStamp, Comment[] comments, int parent) {
+			super(flag, text, author, timeStamp, comments);
 			this.parent = parent;
 		}
 		
@@ -106,8 +106,8 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		private Comment[] comments;
 
 		//Constructor
-		public Post(int id, int flag, String text, int author, String timeStamp, Comment[] comments) {
-			super(id, flag, text, author, timeStamp);
+		public Post(int flag, String text, int author, String timeStamp, Comment[] comments) {
+			super(flag, text, author, timeStamp);
 			this.comments = comments;
 		}
 	}
@@ -150,9 +150,9 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		private Filter[] filters;
 		
 		//Constructor
-		public ImagePost(int id, int flag, String text, int author, String timeStamp, Comment[] comments, Photo photo,
+		public ImagePost(int flag, String text, int author, String timeStamp, Comment[] comments, Photo photo,
 				Filter[] filters) {
-			super(id, flag, text, author, timeStamp, comments);
+			super(flag, text, author, timeStamp, comments);
 			this.photo = photo;
 			this.filters = filters;
 		}
@@ -199,10 +199,10 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			private int points;
 			
 			//Constructor
-			public Member(int ID, String email, String password, String type, String firstName, String lastName,
-					String address1, String address2, String zipCode, String state, String stripeID, int phoneNum, int ccNum,
-					int ccSec, int ccExpiryMonth, int ccExpiryYear, int points) {
-				super(ID, email, password, type);
+			public Member(String name, String email, String password, String type, boolean loggedIn, String firstName,
+					String lastName, String address1, String address2, String zipCode, String state, String stripeID,
+					int phoneNum, int ccNum, int ccSec, int ccExpiryMonth, int ccExpiryYear, int points) {
+				super(name, email, password, type, loggedIn);
 				this.firstName = firstName;
 				this.lastName = lastName;
 				this.address1 = address1;
