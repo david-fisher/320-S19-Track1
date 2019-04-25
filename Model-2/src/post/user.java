@@ -1,10 +1,10 @@
-package posting;
+package post;
 
-public class user 
+public class user
 {
-	public void addPoints(int points) 
+	public void addPoints(int points)
 	{
-	
+
 	}
 
 }

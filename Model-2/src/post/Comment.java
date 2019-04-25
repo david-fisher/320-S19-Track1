@@ -1,4 +1,4 @@
-package posting;
+package post;
 
 public class Comment extends Post
 {
@@ -6,33 +6,33 @@ public class Comment extends Post
 	int pointsForComment;
 
 	/* The constructor for comment will extend from Post
-	 * 
+	 *
 	 * @param Post is the Post that this comment is associated with
 	 */
-	public Comment(user poster, String ID, String text, Post associatedPostID) 
+	public Comment(user poster, String ID, String text, Post associatedPostID)
 	{
 		super(poster, ID, text);
 		this.associatedPostID = associatedPostID;
 		super.pointsForPost = pointsForComment;
 	}
-	
+
 	/* This function will get the associated posts unique id
 	 * @param none
-	 * @return int that represents the associated post id
+	 * @return int that represents the associated test.post id
 	 */
-	Post getAssociatedPostID() 
+  public Post getAssociatedPostID()
 	{
 		return associatedPostID;
 	}
-	
+
    /* Adds Points to the users point stack
 	* @params none
 	* @return a boolean indicating success or failure
     */
-	void addPoints() 
+	void addPoints()
 	{
-		
+
 		return;
 	}
-	
+
 }

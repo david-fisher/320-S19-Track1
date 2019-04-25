@@ -1,0 +1,78 @@
+package post;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class ImagePost extends Post
+{
+	int pointsForPhoto;
+	File file;
+
+	public ImagePost(user poster, String postID, File file)
+	{
+		super(poster, postID, "");
+		this.file = file;
+
+		String extension = "";
+		int i = file.getName().lastIndexOf('.');
+		if (i >= 0)
+		{
+			extension = file.getName().substring(i+1);
+		}
+
+		if(this.checkFile(extension))
+		{
+			try
+			{
+				 BufferedImage image = ImageIO.read(file);
+         String newPhotoPath ="Model-2/images/src/" + file.getName();
+         ImageIO.write(image, "png",new File(newPhotoPath));
+         sendAddressToBD(newPhotoPath);
+			}
+			catch (IOException ex)
+			{
+			    System.out.println("failed to upload image");
+			    ex.printStackTrace();
+			}
+		}
+		else
+    {
+		 System.out.println("wrong file type");
+    }
+
+	}
+  /*Helper funciton to check file extention
+   *@param String the extention
+   *@return boolean true if png false if other;
+   */
+	public boolean checkFile(String extension)
+	{
+		if(extension.equals("png"))
+    {
+			return true;
+		}
+		return false;
+	}
+	/* Sends path of newly saved image to the DB
+	 * @ Params String the path of the new file
+	 * @ return void
+	 */
+
+	public void sendAddressToBD(String path)
+  {
+	  //send path to bd
+  }
+
+  /* Adds Points to the users point stack
+	* @params none
+	* @return a boolean indicating success or failure
+	*/
+	void addPoints()
+	{
+		//user.addpoints(this.pointsForPhoto)
+		return;
+	}
+}
