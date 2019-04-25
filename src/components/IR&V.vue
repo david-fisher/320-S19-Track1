@@ -175,7 +175,7 @@ export default {
     },
     storeInfo: function(form){
       alert('WOohoo')
-      const path = 'http://9f1927bf.ngrok.io/members-only/storeInfo'
+      const path = 'http://9f1927bf.ngrok.io/members-only/chargeVerify'
   		
       this.$http.post(path, form)
       .then(response => {
