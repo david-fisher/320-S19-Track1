@@ -132,7 +132,7 @@ export default {
     verifyCharge: function(event){
       event.preventDefault()
       if(/^0?.[0-9]{2}$/.test(this.charge)){
-        const path = 'http://9f1927bf.ngrok.io/members-only/chargeVerify'
+        const path = 'http://725f87c6.ngrok.io/members-only/chargeVerify'
   		
         this.$http.post(path, this.charge)
         .then(response => {
@@ -175,7 +175,7 @@ export default {
     },
     storeInfo: function(form){
       alert('WOohoo')
-      const path = 'http://9f1927bf.ngrok.io/members-only/storeInfo'
+      const path = 'http://725f87c6.ngrok.io/members-only/storeInfo'
   		
       this.$http.post(path, form)
       .then(response => {
