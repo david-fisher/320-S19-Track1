@@ -33,14 +33,15 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 	//User class
 	private class User {
 		//Instance variables
-		int ID;
+		private String name;
 		private String email;
 		private String password;
 		private String type;
 			
 		//Constructor
-		public User(int ID, String email, String password, String type) {
-			this.ID = ID;
+		public User(String name, String email, String password, String type) {
+			super();
+			this.name = name;
 			this.email = email;
 			this.password = password;
 			this.type = type;
@@ -50,16 +51,16 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 	//Admin class
 	private class Admin extends User{
 
-		public Admin(int ID, String email, String password, String type) {
-			super(ID, email, password, type);
+		public Admin(String name, String email, String password, String type) {
+			super(name, email, password, type);
 			// TODO Auto-generated constructor stub
 		}
 	}
 	
 	private class Owner extends User{
 	
-		public Owner(int ID, String email, String password, String type) {
-			super(ID, email, password, type);
+		public Owner(String name, String email, String password, String type) {
+			super(name, email, password, type);
 			// TODO Auto-generated constructor stub
 		}
 	}
