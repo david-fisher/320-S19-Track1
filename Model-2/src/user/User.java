@@ -14,6 +14,7 @@ public class User {
 	protected int points;
 	protected User invitedBy;
 	protected boolean loggedIn; // seems unecessary to me, included in meantime
+	protected boolean isValidated; // if user is currently verified by credit card
 	
 	public User(String email,
 				String firstName,
@@ -28,6 +29,12 @@ public class User {
 		this.stripeCreditCardID = creditCard.getId();
 		this.invitedBy = invitedBy;
 		this.loggedIn = false; // seems unecessary to me, included in meantime
+		this.isValidated = false; // placeholder, must charge credit card + make sure it's valid
+	}
+	
+	public boolean checkIfUserValid(double charge) {
+		if(charge == DBAdapter.getCharge(User) this.isValidated = true;
+		return isValidated;
 	}
 	
 	// Feel this is unecessary
@@ -53,8 +60,9 @@ public class User {
 	 *  @return boolean indicating if it is successful
 	 */
 
-	public boolean chargeCreditCard() {
-		return creditCard.charge();
+	public String chargeCreditCard() {
+		creditCard.charge();
+		return "No Problems Here";
 	}
 
 	/**
@@ -68,8 +76,8 @@ public class User {
 	 *  @return boolean indicating if it is successful
 	 */
 
-	public boolean updateAccountInfo(String fieldName, Object data) { // TODO this does not do what it's supposed to
-		return true;
+	public String updateAccountInfo(String fieldName, Object data) { // TODO this does not do what it's supposed to
+		return "No Error Occurred";
 	}
 
 	/**
