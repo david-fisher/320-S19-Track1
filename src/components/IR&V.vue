@@ -59,81 +59,17 @@
             <input class="ui black button" style="color:#D6A200" type="submit" value="Submit">
           </div>
           <div class="submission check">
-            <p style="color:#FF0000">{{ form.submitText }}</p>
+            <p style="color:#FF0000">{{ submitText }}</p>
           </div>
-          <!-- Leaving this in for reference:
-          <div class="field">
-            <label class="label">Message</label>
-            <div class="control">
-              <textarea class="textarea" placeholder="Textarea" v-model="form.message"></textarea>
-            </div>
+        </form> <!--Ends the input form-->
+        <br>
+        <form class="form" v-on:submit="verifyCharge()">
+          <div class="ui input">
+            <input name="email" v-model="form.email" class="input" type="text" placeholder="Email" required>
           </div>
-
-          <div class="field">
-            <label class="label">Inquiry Type</label>
-            <div class="control">
-              <div class="select">
-                <select v-model="form.inquiry_type">
-                  <option disabled value="">Nothing selected</option>
-                  <option v-for="option in options.inquiry" v-bind:value="option.value" :key="option.id">
-                    {{ option.text }}
-                  </option>
-                </select>
-              </div>
-            </div>
+          <div class="submit button">
+            <input class="ui black button" style="color:#D6A200" type="submit" value="Verify Charge and Continue">
           </div>
-
-          <div class="field">
-            <label class="label">LogRocket Usecases</label>
-            <div class="control">
-              <div class="select is-multiple">
-                <select multiple v-model="form.logrocket_usecases">
-                  <option>Debugging</option>
-                  <option>Fixing Errors</option>
-                  <option>User support</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="control">
-              <label class="checkbox">
-                <input type="checkbox" v-model="form.terms">
-                I agree to the <a href="#">terms and conditions</a>
-              </label>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>
-              <strong>What dev concepts are you interested in?</strong>
-            </label>
-            <div class="control">
-              <label class="checkbox">
-                <input type="checkbox" v-model="form.concepts" value="promises">
-                Promises
-              </label>
-              <label class="checkbox">
-                <input type="checkbox" v-model="form.concepts" value="testing">
-                Testing
-              </label>
-            </div>
-          </div>
-
-          <div class="field">
-            <label><strong>Is JavaScript awesome?</strong></label>
-            <div class="control">
-              <label class="radio">
-                <input v-model="form.js_awesome" type="radio" value="Yes">
-                Yes
-              </label>
-              <label class="radio">
-                <input v-model="form.js_awesome" type="radio" value="Yeap!">
-                Yeap!
-              </label>
-            </div>
-          </div>-->
         </form>
       </section>
     </div>
@@ -159,8 +95,8 @@ export default {
   name: 'InformationRequisitionAndVerification',
   data () {
     return {
+      serverAddress: '',
       form: {
-        serverAddress: '',
         firstName: '',
         lastName: '',
         addressLineOne: '',
@@ -172,14 +108,9 @@ export default {
         email: '',
         creditCardNumber: '',
         expiration: '',
-        CVV: '',
-        submitText: ''/*,
-        inquiry_type: '',
-        logrocket_usecases: [],
-        terms: false,
-        concepts: [],
-        js_awesome: '' */
+        CVV: ''
       },
+      submitText: '',
       // needed for the unused options
       options: {
         inquiry: [
@@ -200,31 +131,16 @@ export default {
     validEmail: function(email){
       return /\S+@\S+\.\S+/.test(email)
     },
-    submit: function(number, email, form) {
+    submit: function() {
       // `this` inside methods points to the Vue instance
       // Verify account data and submit
-      if (!this.validPhone(number)) {
-        form.submitText = 'You must fill in a valid phone number!'
-      } else if (!this.validEmail(email)) {
-        form.submitText = 'You must fill in a valid email!'
+      if (!this.validPhone(this.form.number)) {
+        this.submitText = 'You must fill in a valid phone number!'
+      } else if (!this.validEmail(this.form.email)) {
+        this.submitText = 'You must fill in a valid email!'
         console.log('wee')
       }
       else{
-        // Send data to the server and display the resultant message
-        // 
-        var sendData = ''
-        sendData += form.firstName + ' '
-        sendData += form.lastName + ' '
-        sendData += form.addressLineOne + ' '
-        sendData += form.addressLineTwo + ' '
-        sendData += form.city + ' '
-        sendData += form.state + ' '
-        sendData += form.zipCode + ' '
-        sendData += form.phoneNumber + ' '
-        sendData += form.email + ' '
-        sendData += form.creditCardNumber + ' '
-        sendData += form.expiration + ' '
-        sendData += form.CVV
         this.storeInfo(form)
       }
     },
@@ -236,9 +152,9 @@ export default {
       .then(response => {
         var retVal = JSON.parse('{' + response.bodyText).loginResult
         if(retVal.result.length == 0){
-          this.form.submitText = "Your card has been charged. Please check the amount and enter it into the box below."
+          this.submitText = "Your card has been charged. Please check the amount and enter it into the box below."
         } else {
-          this.form.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
+          this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
         }
       })
       .catch(error => {
