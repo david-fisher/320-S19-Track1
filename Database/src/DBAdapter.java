@@ -37,50 +37,55 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		private String email;
 		private String password;
 		private String type;
-			
+		private boolean loggedIn;
+		
 		//Constructor
-		public User(String name, String email, String password, String type) {
+		public User(String name, String email, String password, String type, boolean loggedIn) {
 			super();
 			this.name = name;
 			this.email = email;
 			this.password = password;
 			this.type = type;
+			this.loggedIn = loggedIn;
 		}
 	}
 	
 	//Admin class
 	private class Admin extends User{
-
-		public Admin(String name, String email, String password, String type) {
-			super(name, email, password, type);
+		//Constructor
+		public Admin(String name, String email, String password, String type, boolean loggedIn) {
+			super(name, email, password, type, loggedIn);
 			// TODO Auto-generated constructor stub
 		}
 	}
 	
 	private class Owner extends User{
-	
-		public Owner(String name, String email, String password, String type) {
-			super(name, email, password, type);
+		//Constructor
+		public Owner(String name, String email, String password, String type, boolean loggedIn) {
+			super(name, email, password, type, loggedIn);
 			// TODO Auto-generated constructor stub
 		}
+	
+		
 	}
 	
 	//Content parent class
 	private class Content{
 		//Variables
 		private int id;
+		private int flag;
 		private String text;
 		private int author;
-		private String timeStamp;	
+		private String timeStamp;
 		
 		//Constructor
-		public Content(int id, String text, int author, String timeStamp) {
-			super();
+		public Content(int id, int flag, String text, int author, String timeStamp) {
 			this.id = id;
+			this.flag = flag;
 			this.text = text;
 			this.author = author;
 			this.timeStamp = timeStamp;
-		}
+		}	
 	}
 	
 	//Comment class
@@ -89,10 +94,10 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		private int parent;
 
 		//Constructor
-		public Comment(int id, String text, int author, String timeStamp, Comment[] comments, int parent) {
-			super(id, text, author, timeStamp, comments);
+		public Comment(int id, int flag, String text, int author, String timeStamp, Comment[] comments, int parent) {
+			super(id, flag, text, author, timeStamp, comments);
 			this.parent = parent;
-		}	
+		}
 		
 	}
 	
@@ -100,10 +105,10 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 	private class Post extends Content{
 		//Variables
 		private Comment[] comments;
-		
+
 		//Constructor
-		public Post(int id, String text, int author, String timeStamp, Comment[] comments) {
-			super(id, text, author, timeStamp);
+		public Post(int id, int flag, String text, int author, String timeStamp, Comment[] comments) {
+			super(id, flag, text, author, timeStamp);
 			this.comments = comments;
 		}
 	}
@@ -146,9 +151,9 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		private Filter[] filters;
 		
 		//Constructor
-		public ImagePost(int id, String text, int author, String timeStamp, Comment[] comments, Photo photo,
+		public ImagePost(int id, int flag, String text, int author, String timeStamp, Comment[] comments, Photo photo,
 				Filter[] filters) {
-			super(id, text, author, timeStamp, comments);
+			super(id, flag, text, author, timeStamp, comments);
 			this.photo = photo;
 			this.filters = filters;
 		}
@@ -167,14 +172,15 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 			this.longUrl = longUrl;
 		}
 	}
-		//Mod class
-		private class Mod extends User{
 	
-			public Mod(int ID, String email, String password, String type) {
-				super(ID, email, password, type);
-				// TODO Auto-generated constructor stub
-			}
+	//Mod class
+	private class Mod extends User{
+		//Constructor
+		public Mod(String name, String email, String password, String type, boolean loggedIn) {
+			super(name, email, password, type, loggedIn);
+			// TODO Auto-generated constructor stub
 		}
+	}
 		
 		//Member class
 		private class Member extends User{
