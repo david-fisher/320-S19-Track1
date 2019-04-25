@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.stripe.Stripe;
+import com.stripe.exception.CardException;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.model.Customer;
@@ -63,6 +64,16 @@ public class StripeCreditCard implements CreditCard {
 	private Customer member;
 	
 	/**
+	 * A String to store any potential Stripe error messages needed for output
+	 */
+	private String error;
+	
+	/**
+	 * Boolean indicating whether we have linked a credit card to this member
+	 */
+	private boolean isLinked;
+	
+	/**
 	 * Creates a credit card object given the appropriate information
 	 * @param email
 	 * @param cardNumber
@@ -85,6 +96,7 @@ public class StripeCreditCard implements CreditCard {
 		this.exp_month = exp_month;
 		this.exp_year = exp_year;
 		this.isBanned = false; // default
+		this.isLinked = false; // default
 		
 		// Store the member in Stripe
     	Map<String, Object> customerParameters = new HashMap<String, Object>();
@@ -103,8 +115,11 @@ public class StripeCreditCard implements CreditCard {
 	 * @return the randomized amount we charge to the member
 	 */
 	@Override
-	public int getAmount() {
-		return amount;
+	public double getAmount() {
+		// Convert to dec
+		String D = "0." + Integer.toString(amount);
+		Double d = Double.valueOf(D);
+		return d;
 	}
 	
 	/**
@@ -112,8 +127,8 @@ public class StripeCreditCard implements CreditCard {
 	 * @return a new Stripe Charge object storing the details of the charge (amount, customer, currency type)
 	 */
 	private Charge generateCharge() {
-		// Generate random amount between 20-45 cents
-		int amount = (int) (Math.random() * 20 + 50);
+		// Generate random amount between 50-75 cents
+		int amount = (int) (Math.random() * 25 + 50);
 		this.amount = amount;
 		
 		Map<String, Object> chargeParameters = new HashMap<String, Object>();
@@ -124,7 +139,6 @@ public class StripeCreditCard implements CreditCard {
 			return Charge.create(chargeParameters);
 		} catch (StripeException e) {
 			// Generic error message
-			System.out.println(e.getMessage());
 			return null;
 		}
 	}
@@ -147,6 +161,9 @@ public class StripeCreditCard implements CreditCard {
     	
 		try {
 			return Token.create(tokenParameters);
+		} catch (CardException e) {
+			error = e.getCode();
+			return null;
 		} catch (StripeException e) {
 			// Generic error message
 			return null;
@@ -158,27 +175,39 @@ public class StripeCreditCard implements CreditCard {
 	 * @return a boolean value indicating whether or not a transaction has been successfully processed 
 	 */
 	@Override
-	public boolean charge() {
+	public String charge() {
+		error = "";
 		Token chargeTok = createCard();
 		
 		// Check if null
-		if (chargeTok == null)
-			return false;
-		
-		// Link the credit card (Token) object to the customer
-        Map<String, Object> source = new HashMap<String, Object>();
-    	source.put("source", chargeTok.getId());
-    	
-    	try {
-			member.getSources().create(source);
-		} catch (StripeException e) {
-			// Generic error message
+		if (chargeTok == null) {
+			return error;
 		}
-		return generateCharge() != null;
+		
+		if (!isLinked) {
+			// Link the credit card (Token) object to the customer do this ONCE per card
+			// This ensures that we have ONE VALID linked credit card per member
+	        Map<String, Object> source = new HashMap<String, Object>();
+	    	source.put("source", chargeTok.getId());
+	    	
+	    	try {
+				member.getSources().create(source);
+			} catch (StripeException e) {
+				// Generic error message
+			}
+	    	isLinked = true;
+		}
+		
+		if (generateCharge() != null)
+			return "";
+		else {
+			return "Something wrong with Stripe";
+		}
 	}
 
 	/**
 	 * Checks whether the credit card associated with the member is banned
+	 * @return isBanned
 	 */
 	@Override
 	public boolean isBanned() {
@@ -216,6 +245,16 @@ public class StripeCreditCard implements CreditCard {
 		}
 	}
 
+	/**
+	 * Cross verifies member "guess" charge to the actual Stripe charge amt
+	 * @param guess the amount which the member guesses has been charged to his card
+	 * @return a boolean indicating whether the member charge verification is successful or not
+	 */
+	@Override
+	public boolean verifyCharge(double guess) {
+		return guess == getAmount();
+	}
+	
 	/**
 	 * Verifies the validity of a credit card, and returns a Stripe ID if successfull, null if not
 	 */
