@@ -41,9 +41,9 @@ public class Registration {
 		this.choosePassword = choosePassword;
 		this.verifyPassword = verifyPassword;
 
-		verify_result = this.verify()
+		boolean verifyResult = this.verify();
 
-		if (verify_result){
+		if (verifyResult){
 			//continue
 		}else{
 			return;
@@ -51,7 +51,7 @@ public class Registration {
 		}
 
 		CreditCard card = new StripeCreditCard(email, creditCardNumber, zipCode, creditCardNumber, cvv, expirationMonth, expirationYear);
-		cc_verification_result = card.verify();
+		boolean cc_verification_result = card.verify();
 
 		if (cc_verification_result != null){
 			this.stripeID = cc_verification_result;
@@ -83,7 +83,7 @@ public class Registration {
 	 *  @return boolean indicating if all the checks pass
 	 */
 	
-	private boolean verify() {
+	private static boolean verify() {
 		boolean result = false;
 		if (emailCheck()) result = true; 
 		if (passwordCheck()) result = true;
@@ -132,6 +132,20 @@ public class Registration {
 	}
 
 	/* Registration - Testing */
+	Null values           [eg. Value not provided]
+	String provided       [eg. Field requires integer]
+	String not supplied   [eg. Field requires a String]
+	String password1, 2 not matching [eg. User misspelled password 2nd time]
+	String email not unique in DB [eg. User tries to use another person’s email]
+	Data not in DB [eg. DBAdapter returns false on storeData()]
+	Values not realistically valid [eg. zip code is int, but too long]
+
+	@Test
+	public void
+	
+	@Test
+	public void 
+	
 	
 	@Test
 	public void identityTester() {
