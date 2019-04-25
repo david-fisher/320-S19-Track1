@@ -4,7 +4,6 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.imageio.ImageIO;
 
-import java.awt.Image;
 import java.sql.*;
 
 
