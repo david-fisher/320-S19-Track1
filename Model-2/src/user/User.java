@@ -12,18 +12,26 @@ public class User {
 	protected CreditCard creditCard;
 	protected String stripeCreditCardID;
 	protected int points;
+	protected User invitedBy;
+	protected boolean loggedIn; // seems unecessary to me, included in meantime
 	
 	public User(String email,
 				String firstName,
 				String lastName,
-				int points) {
+				int points,
+				User invitedBy) {
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.points = points;
 		this.creditCard = new StripeCreditCard(email);
 		this.stripeCreditCardID = creditCard.getId();
+		this.invitedBy = invitedBy;
+		this.loggedIn = false; // seems unecessary to me, included in meantime
 	}
+	
+	// Feel this is unecessary
+	public void changeLoggedInStatus() { this.loggedIn = !this.loggedIn; }
 	
 	/**
 	 *  Increments User point total in the DB by either a positive
