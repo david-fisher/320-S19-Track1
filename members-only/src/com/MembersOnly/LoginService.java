@@ -7,7 +7,7 @@ import org.json.*;
 @Path("/")
 public class LoginService {
 
-	@GET
+	@POST
 	@Path("/login")
 	@Produces("application/json")
 	public Response loginResult(/*@FormParam("username") String username, @FormParam("password") String password*/) {
