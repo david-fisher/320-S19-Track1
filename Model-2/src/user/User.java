@@ -41,8 +41,8 @@ public class User {
 	 *  @return void
 	 */
 
-	public void addPoints(int points) {
-		
+	public void addPoints(int points) { // TODO this does not do what it's supposed to
+		DBAdapter.setPoints();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class User {
 	 *  @return boolean indicating if it is successful
 	 */
 
-	public boolean updateAccountInfo(String fieldName, Object data) {
+	public boolean updateAccountInfo(String fieldName, Object data) { // TODO this does not do what it's supposed to
 		return true;
 	}
 
@@ -82,7 +82,7 @@ public class User {
 	 *  @return boolean indicating if it is successful
 	 */
 
-	public Object getRegistrationInfo(String fieldName) {
+	public Object getRegistrationInfo(String fieldName) { // TODO this does not do what it's supposed to
 		return null;
 	}
 
@@ -90,20 +90,31 @@ public class User {
 	
 	@Test
 	public void testCCCharging() {
-	   // Calls CC adapter to charge User’s card 
-	   // verifies if the card is charged
+		//Calls CC adapter to charge User’s card 
+		// verifies if the card is charged
+		//Create new user
+		User testerCC = new User("test@nucleardogs.com", "testy", "testable", 1000, null);
+		//Call CC adapter to charge user card
+		Assert.assertTrue(CreditCard.charge(testerCC));
 	}
 
 	@Test
 	public void testAddPoints() {
-	   // Calls DB API to determine if User point 
-	   // total reflects a specific number of points added
+		// Calls DB API to determine if User point 
+		// total reflects a specific number of points added
+		User testerCC2 = new User("test@fluffernutter.com", "testytest", "testables", 1000, null);
+		testerCC2.addPoints(10);
+		Assert.assertEquals(1010, DBAdapter.getPoints(testerCC2));
+
 	}
 
 	@Test
 	public void testInfoUpdated() {
-	   // Calls DB API to determine if User credentials 
-	   // reflect a specific change as made by updateAccountInfo()
+		// Calls DB API to determine if User credentials
+		// reflect a specific change as made by updateAccountInfo()
+		User testerCC3 = new User("test@deadbodyinthewoods.com", "testytestacles", "testablester", 1000, null);
+		DBAdapter.setEmail(testerCC3,"a@bc.dom")
+		Assert.assertEquals("a@bc.dom",DBAdapter.getEmail(testerCC3));
 	}
 
 }
