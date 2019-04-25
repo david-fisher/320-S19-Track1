@@ -63,10 +63,13 @@
           </div>
         </form> <!--Ends the input form-->
         <br>
-        <form class="form" v-on:submit="verifyCharge()">
-          <div class="ui input">
-            <input name="email" v-model="form.email" class="input" type="text" placeholder="Email" required>
+        <form class="form" v-on:submit="verifyCharge($event)">
+          <div class="field">
+            <div class="ui input">
+              <input name="charge" v-model="charge" class="input" type="text" placeholder="Charge Amount" required>
+            </div>
           </div>
+          <br>
           <div class="submit button">
             <input class="ui black button" style="color:#D6A200" type="submit" value="Verify Charge and Continue">
           </div>
@@ -111,6 +114,7 @@ export default {
         CVV: ''
       },
       submitText: '',
+      charge: '',
       // needed for the unused options
       options: {
         inquiry: [
@@ -125,18 +129,43 @@ export default {
     //Method to run on page load goes here.
   },
   methods: {
-    validPhone: function(number){
-      return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number))
+    verifyCharge: function(event){
+      event.preventDefault()
+      if(/^0?.[0-9]{2}$/.test(this.charge)){
+        const path = 'http://9f1927bf.ngrok.io/members-only/storeInfo'
+  		
+        this.$http.post(path, this.charge)
+        .then(response => {
+          var retVal = JSON.parse('{' + response.bodyText)
+          if(retVal.result.length == 0){
+            this.submitText = "You should be redirected shortly..."
+            router.go('/login')
+          } else {
+            this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
+          }
+        })
+        .catch(error => {
+          console.log("Yeah nope")
+          this.submitText = "Error processing request. Please try again."
+          console.log(error)
+        })
+      } else{
+        console.log("hi")
+        this.submitText = "Format should be '0.XX' where XX represents the number of cents you were charged"
+      }
     },
-    validEmail: function(email){
-      return /\S+@\S+\.\S+/.test(email)
+    validPhone: function(){
+      return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(this.form.number))
+    },
+    validEmail: function(){
+      return /\S+@\S+\.\S+/.test(this.form.email)
     },
     submit: function() {
       // `this` inside methods points to the Vue instance
       // Verify account data and submit
-      if (!this.validPhone(this.form.number)) {
+      if (!this.validPhone()) {
         this.submitText = 'You must fill in a valid phone number!'
-      } else if (!this.validEmail(this.form.email)) {
+      } else if (!this.validEmail()) {
         this.submitText = 'You must fill in a valid email!'
         console.log('wee')
       }
@@ -161,9 +190,6 @@ export default {
         console.log("Yeah nope")
         console.log(error)
       })
-    },
-    storeInfos: function(){
-      
     },
     verifyForm: function(event){
       event.preventDefault()
