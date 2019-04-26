@@ -23,11 +23,11 @@ class ImagePost_Test
   {
     try
     {
-      File file = new File(folder+ "/test/Gunners.png");
+      File file = new File(folder + "test/Gunners.png");
       int originalSize = folderSize(folder+"src");
       photo = new ImagePost(marc, "1", file);
       assertEquals(originalSize + 1,  folderSize(folder + "src"));
-      File toDelete = new File(folder+ "/src/Gunners.png");
+      File toDelete = new File(folder+ "src/Gunners.png");
       toDelete.delete();
       assertEquals(originalSize ,  folderSize(folder + "src"));
     }
@@ -36,6 +36,34 @@ class ImagePost_Test
       fail("Error finding test image");
     }
   }
+
+  @Test
+  void testGetImage()
+  {
+    try
+    {
+      File file = new File(folder+ "/test/Gunners.png");
+      photo = new ImagePost(marc, "1", file);
+      assertEquals(photo.getImage(), file);
+      File toDelete = new File(folder+ "src/Gunners.png");
+      toDelete.delete();
+
+    }
+    catch(Exception e)
+    {
+      fail("Error finding test image");
+    }
+  }
+
+//  @Test
+//  void testPathInDB()
+//  {
+//    File file = new File(folder+ "/test/Gunners.png");
+//    photo = new ImagePost(marc, "1", file);
+//    assertEquals(DB.get(photo.postID), folder+ "/src/Gunners.png" );
+//    File toDelete = new File(folder+ "/src/Gunners.png");
+//    toDelete.delete();
+//  }
 
   int folderSize(String path) throws IOException
   {

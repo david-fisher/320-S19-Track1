@@ -3,7 +3,7 @@ package post;
 public class Comment extends Post
 {
 	Post associatedPostID;
-	int pointsForComment;
+	int pointsForComment = 5;
 
 	/* The constructor for comment will extend from Post
 	 *
@@ -14,6 +14,8 @@ public class Comment extends Post
 		super(poster, ID, text);
 		this.associatedPostID = associatedPostID;
 		super.pointsForPost = pointsForComment;
+		//this.linkPostToComment();
+    addPoints();
 	}
 
 	/* This function will get the associated posts unique id
@@ -25,13 +27,23 @@ public class Comment extends Post
 		return associatedPostID;
 	}
 
+	/* This function will add this comment to the list of comments
+	 * associated with the original post
+	 * @param none
+	 * @return none
+	 */
+//	public void linkPostToComment()
+//  {
+//    getPost(associatedPostID).addComment(this);
+//  }
+
    /* Adds Points to the users point stack
 	* @params none
 	* @return a boolean indicating success or failure
     */
 	void addPoints()
 	{
-
+    //this.poster.addpoints();
 		return;
 	}
 

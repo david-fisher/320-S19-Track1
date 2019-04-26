@@ -3,13 +3,15 @@ package post;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 
 import javax.imageio.ImageIO;
 
 public class ImagePost extends Post
 {
-	int pointsForPhoto;
+	int pointsForPhoto = 10;
 	File file;
+	BufferedImage image;
 
 	public ImagePost(user poster, String postID, File file)
 	{
@@ -31,6 +33,7 @@ public class ImagePost extends Post
          String newPhotoPath ="Model-2/images/src/" + file.getName();
          ImageIO.write(image, "png",new File(newPhotoPath));
          sendAddressToBD(newPhotoPath);
+         addPoints();
 			}
 			catch (IOException ex)
 			{
@@ -44,6 +47,7 @@ public class ImagePost extends Post
     }
 
 	}
+
   /*Helper funciton to check file extention
    *@param String the extention
    *@return boolean true if png false if other;
@@ -56,14 +60,19 @@ public class ImagePost extends Post
 		}
 		return false;
 	}
+
 	/* Sends path of newly saved image to the DB
 	 * @ Params String the path of the new file
 	 * @ return void
 	 */
-
 	public void sendAddressToBD(String path)
   {
 	  //send path to bd
+  }
+
+  public File getImage()
+  {
+    return this.file;
   }
 
   /* Adds Points to the users point stack
@@ -72,7 +81,7 @@ public class ImagePost extends Post
 	*/
 	void addPoints()
 	{
-		//user.addpoints(this.pointsForPhoto)
+		//poster.addpoints(this.pointsForPhoto)
 		return;
 	}
 }
