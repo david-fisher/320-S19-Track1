@@ -1,4 +1,3 @@
-import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.imageio.ImageIO;
 
@@ -6,8 +5,10 @@ import java.sql.*;
 
 
 public class DBAdapter {
+	
 
-private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address for database. figure out l8tr
+	private String DBAddress = "jdbc:mysql://localhost:3306/TrackOneDB"; //access address for database. figure out l8tr
+	
 	
 	private Connection getConnection() throws SQLException{
 		//function used to get connection to database
@@ -506,31 +507,40 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		}
 	}
 
-/* OLD CODE
 
-	public boolean createUser(User usr) throws SQLException{
+
+	public boolean createUser(User usr){
 		//stub
-		Connection conn = getConnection();
-		ResultSet rs = conn.createStatement().executeQuery("INSERT INTO User (email, name,type) VALUES ("+usr.email + "," +usr.password+"," + usr.type);
-		ResultSetMetaData rsmd = rs.getMetaData();
-		
+		Connection conn;
+		try {
+			conn = getConnection();
+			int log = 0;
+			if(usr.loggedIn)
+				log = 1;
+			int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email, name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.name+"','" +usr.password+"','"+ usr.type+"',"+log+")");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 		System.out.println("Query Results: \n\n");
 		
-		while(rs.next()) {
-			for (int i=1; i<=rsmd.getColumnCount(); i++) {
-				System.out.print(rs.getString(i)+"\t\t");
-			}
-			System.out.println();
-		}
 		return true;
 	}
 
-	public JSONObject getUser(int id) { 
+	public User getUser(String email) { 
 		//general function- returns entire user.
-		//stub
+		Connection conn;
+		try {
+			conn=getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
-	
+	/*
 	public boolean setUser(int id, JSONObject user) { 
 		//general function - sets all fields of user based on input object.
 		//stub
@@ -689,7 +699,7 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 	}
 	
 
-	
+	/*
 	public JSONObject createPost(JSONObject post) {
 		//stub
 		return new JSONObject();
@@ -876,8 +886,8 @@ private String DBAddress = "jdbc:mysql://localhost:3306/sys"; //access address f
 		// TODO Auto-generated method stub
 		DBAdapter adapter = new DBAdapter();
 		adapter.getConnection();
-		User user1 = new User(11,"carolinekim@gmail.com","caroline kim","Member");
-		adapter.createUser(user1);
+		User user1 = adapter.new User("Caroline Kim","ckim9@umass.edu","rbals1997!","Member",true);
+		System.out.println(adapter.createUser(user1));
 	}
 
 }
