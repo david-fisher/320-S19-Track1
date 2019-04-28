@@ -133,13 +133,13 @@ export default {
     verifyCharge: function(event){
       event.preventDefault()
       if(/^0?.[0-9]{2}$/.test(this.charge)){
-        const path = this.ip + 'chargeVerify'
+        const path = this.ip + '/chargeVerify'
         this.$http.post(path, this.charge)
         .then(response => {
           var retVal = JSON.parse('{' + response.bodyText)
           if(retVal.result.length == 0){
             this.submitText = "You should be redirected shortly..."
-            router.go('/accountcreation')
+            this.$router.push('/accountcreation')
           } else {
             this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
           }
@@ -155,7 +155,7 @@ export default {
       }
     },
     validPhone: function(){
-      return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(this.form.number))
+      return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(this.form.phoneNumber))
     },
     validEmail: function(){
       return /\S+@\S+\.\S+/.test(this.form.email)
@@ -170,16 +170,16 @@ export default {
         console.log('wee')
       }
       else{
-        this.storeInfo(form)
+        this.storeInfo()
       }
     },
-    storeInfo: function(form){
-      alert('WOohoo')
+    storeInfo: function(){
       const path = this.ip + '/storeInfo'
   		
-      this.$http.post(path, form)
+      this.$http.post(path, this.form)
       .then(response => {
-        var retVal = JSON.parse('{' + response.bodyText).loginResult
+        console.log(response)
+        var retVal = JSON.parse('{' + response.bodyText)
         if(retVal.result.length == 0){
           this.submitText = "Your card has been charged. Please check the amount and enter it into the box below."
           this.disabled = false
@@ -194,7 +194,7 @@ export default {
     },
     verifyForm: function(event){
       event.preventDefault()
-      this.submit(this.form.phoneNumber, this.form.email, this.form)
+      this.submit()
     }
   }
 }
