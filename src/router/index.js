@@ -5,6 +5,7 @@ import LoginPage from '@/components/LoginPage'
 import Irv from '@/components/IR&V'
 import PasswordReset from '@/components/PasswordReset'
 import Settings from '@/components/Settings'
+import Feed from '@/components/Feed'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/user/settings',
       name: 'Settings',
       component: Settings
+    },
+    {
+      path: '/feed',
+      name: 'Feed',
+      component: Feed
     }
   ]
 })
