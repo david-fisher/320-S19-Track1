@@ -37,14 +37,16 @@ export default {
   methods: {
     verifyForm: function(event){
       event.preventDefault()
+      
       const path = this.ip + '/login'
+
       this.$http.post(path, this.form)
       .then(response => {
         var retVal = JSON.parse('{' + response.bodyText)
         console.log(retVal)
         if(retVal.loginResult.length == 0){
-          this.submitText = "You should be redirected shortly..."
-          router.go('/login')
+          this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
+          this.$router.push('/')
         } else {
           this.submitText = "Email or Password is invalid."
         }
