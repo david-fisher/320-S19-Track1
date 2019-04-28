@@ -1,5 +1,7 @@
 package post;
 
+import user.*;
+
 public class Comment extends Post
 {
 	Post associatedPostID;
@@ -9,7 +11,7 @@ public class Comment extends Post
 	 *
 	 * @param Post is the Post that this comment is associated with
 	 */
-	public Comment(user poster, String ID, String text, Post associatedPost)
+	public Comment(User poster, String ID, String text, Post associatedPost)
 	{
 		super(poster, ID, text);
 		this.associatedPostID = associatedPostID;

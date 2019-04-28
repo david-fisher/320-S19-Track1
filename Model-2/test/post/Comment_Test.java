@@ -1,12 +1,12 @@
-package post;
-
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import post.*;
+import user.*;
+import static org.junit.Assert.*;
 
 class Comment_Test
 {
 	int ids;
-	user marc = new user();
+	User marc = new User("", "", "", 0, null);
 	Post post1;
 	Comment comment1;
 

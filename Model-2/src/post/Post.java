@@ -1,9 +1,6 @@
 package post;
 
-/*
- * Created by marcrossi@umass.edu
- */
-
+import user.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -11,13 +8,13 @@ public class Post
 {
 	User poster;
 	String postID;
-	String text;
-	int flag = 0;
+	public String text;
+	public int flag = 0;
 	int pointsForPost = 5;
-	Timestamp timestamp;
-	ArrayList<Comment> comments;
-	ArrayList<String> hashtags;
-	ArrayList<String> adminHashtags;
+	public Timestamp timestamp;
+	public ArrayList<Comment> comments;
+	public ArrayList<String> hashtags;
+	public ArrayList<String> adminHashtags;
 
 	/* The constructor for test.post will take in a User class variable, a String that
 	 * is the unique test.post id of that test.post and the string of text associated with
@@ -65,7 +62,7 @@ public class Post
 	* @param toBeRemoved the string to be removed from arraylist
 	* @return returns true if it worked and false if not found or fail
 	*/
-	boolean removeHashtag(String tag)
+   public boolean removeHashtag(String tag)
 	{
 		if(adminHashtags.contains(tag))
 		{
@@ -79,7 +76,7 @@ public class Post
     * @param toBeAdded the string to be added to the arraylist
 	* @return returns a boolean to indicate the success or failure of the action
 	*/
-	boolean addHashtag(String tag)
+   public boolean addHashtag(String tag)
 	{
 		if(adminHashtags.contains(tag))
 		{
@@ -93,7 +90,7 @@ public class Post
 	* @param none
 	* @return a boolean to confirm the success or fail of this action
 	*/
-	boolean removeComment(Comment comment)
+   public boolean removeComment(Comment comment)
 	{
 		if(comments.contains(comment))
 		{
@@ -108,7 +105,7 @@ public class Post
 	* @param comment the comment to be added
 	* @return a boolean communicating the success of the addition
 	*/
-	boolean addComment(Comment comment)
+   public boolean addComment(Comment comment)
 	{
 		if(comments.contains(comment))
 		{
@@ -122,7 +119,7 @@ public class Post
 	* @param none
 	* @return an object of type user that is the user who created the test.post
 	*/
-	User getUser()
+   public User getUser()
 	{
 		return poster;
 	}
@@ -132,7 +129,7 @@ public class Post
 	 * @param int 0 = no flag, 1 = sent to mod, 2 = sent to owner
 	 * @return none
 	 */
-	void setFlag(int flag)
+	public void setFlag(int flag)
 	{
 		this.flag = flag;
 	}
@@ -141,7 +138,7 @@ public class Post
 	* @params none
 	* @return a string containing the text of the test.post
 	*/
-	String getText()
+   public String getText()
 	{
 		return text;
 	}
@@ -150,7 +147,7 @@ public class Post
     * @param newText will be new value of the test.post’s text
 	* @return a boolean indicating success
 	*/
-	void setText(String newText)
+   public void setText(String newText)
 	{
 		text = newText;
 		this.parseForHashtags();
@@ -160,7 +157,7 @@ public class Post
 	* @param none
 	* @return a string containing the unique postID
 	*/
-	String getPostID()
+   public String getPostID()
 	{
 		return postID;
 	}
@@ -181,7 +178,7 @@ public class Post
 	* @param test.post a test.post to compare the timestamp of to this object’s timestamp
 	* @return boolean if this timestamp is newer than the object passed in
 	*/
-	boolean compareTimes(Post otherPost)
+   public boolean compareTimes(Post otherPost)
 	{
 		if(this.timestamp.compareTo(otherPost.timestamp) < 0)
 		{

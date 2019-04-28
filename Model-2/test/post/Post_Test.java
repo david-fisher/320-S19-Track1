@@ -1,13 +1,16 @@
-package post;
+import org.junit.Test;
+import post.Comment;
+import post.Post;
+import user.User;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Timestamp;
+
+import static org.junit.Assert.*;
 
 class Post_Test
 {
 	int ids = 0;
-	user marc = new user();
+	User marc = new User("l","marc","rossi",100, null);
 	Post post1;
 	Post post2;
 	Post post3;
@@ -16,6 +19,7 @@ class Post_Test
 	/*
 	 * Checks that a test.post is being successfully created
 	 */
+
 	@Test
 	void testPostCreation()
 	{

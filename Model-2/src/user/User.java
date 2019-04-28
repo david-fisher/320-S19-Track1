@@ -1,8 +1,7 @@
 package user;
 
-import org.junit.Test;
-
 import stripe.*;
+import db.*;
 
 public class User {
 	
@@ -25,7 +24,7 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.points = points;
-		this.creditCard = new StripeCreditCard(email);
+		// this.creditCard = new StripeCreditCard(email);
 		this.stripeCreditCardID = creditCard.getId();
 		this.invitedBy = invitedBy;
 		this.loggedIn = false; // seems unecessary to me, included in meantime
@@ -33,8 +32,8 @@ public class User {
 	}
 	
 	public boolean checkIfUserValid(double charge) {
-		if(charge == DBAdapter.getCharge(User) this.isValidated = true;
-		return isValidated;
+		//if(charge == DBAdapter.getCharge(User)) this.isValidated = true;
+		return true;
 	}
 	
 	// Feel this is unecessary
@@ -44,19 +43,19 @@ public class User {
 	 *  Increments User point total in the DB by either a positive
 	 *  or negative amount (if points are removed).
 	 *
-	 *  @param  none 
+	 *  @param
 	 *  @return void
 	 */
 
 	public void addPoints(int points) { // TODO this does not do what it's supposed to
-		DBAdapter.setPoints();
+		/* DBAdapter.setPoints(); */
 	}
 
 	/**
 	 *  Charges the User’s stored credit card by calling the 
 	 *  adapter.
 	 *
-	 *  @param  none 
+	 *  @param
 	 *  @return boolean indicating if it is successful
 	 */
 

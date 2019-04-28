@@ -11,7 +11,7 @@ public class Registration_Test {
 	String not supplied   [eg. Field requires a String]
 	String password1, 2 not matching [eg. User misspelled password 2nd time]
 	String email not unique in DB [eg. User tries to use another person’s email]
-	Data not in DB [eg. DBAdapter returns false on storeData()]
+	Data not in DB [eg. db.DBAdapter returns false on storeData()]
 	Values not realistically valid [eg. zip code is int, but too long]
     */
 

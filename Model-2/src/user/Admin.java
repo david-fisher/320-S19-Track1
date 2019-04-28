@@ -1,7 +1,5 @@
 package user;
 
-import org.junit.Test;
-
 import post.*;
 
 public class Admin extends User {
@@ -9,8 +7,9 @@ public class Admin extends User {
 	public Admin(String email, 
 				 String firstName, 
 				 String lastName,  
-				 int points) {
-		super(email, firstName, lastName, points);
+				 int points,
+				 User invitedBy) {
+		super(email, firstName, lastName, points, null);
 	}
 
 	/**

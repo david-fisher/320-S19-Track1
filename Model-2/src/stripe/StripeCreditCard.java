@@ -201,7 +201,7 @@ public class StripeCreditCard implements CreditCard {
 		if (generateCharge() != null)
 			return "";
 		else {
-			return "Something wrong with Stripe";
+			return "GENERIC STRIPE ERROR";
 		}
 	}
 

@@ -1,5 +1,3 @@
-package login;
-
 import org.junit.Test;
 
 public class LogicProcessor_Test {

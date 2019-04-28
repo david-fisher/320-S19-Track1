@@ -1,8 +1,7 @@
 package login;
 
-import org.junit.Test;
-
-import user.User;
+import user.*;
+import db.*;
 
 public class LoginProcessor {
 	
@@ -19,16 +18,17 @@ public class LoginProcessor {
 	 *  accepts the createSessionCookie() method and the 
 	 *  User login credentials are verified against the DB.
 	 *
-	 *  @param  none 
+	 *  @param
 	 *  @return boolean indicating if the User has been logged in
 	 */
 
 	public boolean login() {
-		User currentUser = DBAdapter.getUser(email); // TODO placeholder for DBAdapter for now
+		/*User currentUser = DBAdapter.getUser(email); // TODO placeholder for db.DBAdapter for now
 		if(currentUser.email == email && currentUser.password == password) {
 			if(createSessionCookie()) return true;
 			else return false;
-		} else return false;
+		} else return false;*/
+		return false;
 	}
 
 	/**
@@ -36,14 +36,15 @@ public class LoginProcessor {
 	 *  that is logging in. Returns a boolean indicating if
 	 *  it ended up being created.
 	 *
-	 *  @param  none 
+	 *  @param
 	 *  @return boolean indicating if the session is created
 	 */
 
 	public boolean createSessionCookie() {
-		User currentUser = DBAdapter.getUser(email); // TODO placeholder for DBAdapter for now
+		/* User currentUser = DBAdapter.getUser(email); // TODO placeholder for db.DBAdapter for now
 		if(server.newSession(currentUser)) return true; // TODO figure out how to call newSesssion
-		else return false;
+		else return false; */
+		return false;
 	}
 
 	/**
@@ -59,14 +60,15 @@ public class LoginProcessor {
 	 */
 
 	public boolean resetPassword(String password, String newPassword) {
-		User currentUser = DBAdapter.getUser(email); // TODO placeholder for DBAdapter for now
-		String currentPassword = DBAdapter.getPassword(currentUser); // TODO placeholder for DBAdapter for now
+		/* User currentUser = DBAdapter.getUser(email); // TODO placeholder for db.DBAdapter for now
+		String currentPassword = DBAdapter.getPassword(currentUser); // TODO placeholder for db.DBAdapter for now
 		if(password == currentPassword) {
-			DBAdapter.setPassword(currentUser, newPassword); // TODO placeholder for DBAdapter for now
+			DBAdapter.setPassword(currentUser, newPassword); // TODO placeholder for db.DBAdapter for now
 			return true;
 		} else {
 			return false;
-		}
+		}*/
+		return false;
 	}
 
 }

@@ -1,19 +1,18 @@
-package post;
+import post.*;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import user.*;
 import java.io.File;
 import java.io.IOException;
+import static org.junit.Assert.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import static org.testng.AssertJUnit.assertEquals;
 
 class ImagePost_Test
 {
   int ids = 0;
-  user marc = new user();
+  User marc = new User("l", "l", "l", 0, null);
   Post post1;
   ImagePost photo;
   String folder = "Model-2/images/";
