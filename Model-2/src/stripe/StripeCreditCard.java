@@ -246,9 +246,6 @@ public class StripeCreditCard implements CreditCard {
 	}
 
 	/**
-	 * Verifies the validity of a credit card, and returns a Stripe ID if successfull, null if not
-	 */
-	@Override
 	 * Cross verifies member "guess" charge to the actual Stripe charge amt
 	 * @param guess the amount which the member guesses has been charged to his card
 	 * @return a boolean indicating whether the member charge verification is successful or not
