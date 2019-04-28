@@ -1,6 +1,8 @@
 package registration;
 
-import org.junit.Test;
+//import org.junit.Test;
+import stripe.CreditCard;
+import stripe.StripeCreditCard;
 
 public class Registration {
 	private String firstName;
@@ -16,7 +18,7 @@ public class Registration {
 	private int cvv;
 	private int expirationMonth;
 	private int expirationYear;
-	
+
 	public Registration(String firstName,
 						String lastName,
 						String address1,
@@ -30,7 +32,7 @@ public class Registration {
 						int cvv,
 						int expirationMonth,
 						int expirationYear) {
-		
+
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address1 = address1;
@@ -43,9 +45,9 @@ public class Registration {
 
 		boolean verifyResult = this.verify();
 
-		if (verifyResult){
+		if (verifyResult) {
 			//continue
-		}else{
+		} else {
 			return;
 			//Do not run any of the below code. 
 		}
@@ -53,85 +55,88 @@ public class Registration {
 		CreditCard card = new StripeCreditCard(email, creditCardNumber, zipCode, creditCardNumber, cvv, expirationMonth, expirationYear);
 		boolean cc_verification_result = card.verify();
 
-		if (cc_verification_result != null){
+		if (cc_verification_result != null) {
 			this.stripeID = cc_verification_result;
 			storeData();
-		}else{
+		} else {
 			return;
 			//If the credit card is invalid, handle this somehow...
 			//DO NOT call storeData();
 		}
 
-		
-		
+
 	}
-	
-	/** 
-	 *  Returns a boolean value indicating whether the credentials
-	 *  presented to the Registration class constructor from the 
-	 *  login screen are confirmed. Specifically, confirmed means
-	 *  that there is no duplicate emails, and evokes the credit 
-	 *  card processing class to ensure the proper credit card is
-	 *  used.
-	 *  
-	 *  Calls three methods [emailCheck(), passwordCheck(), 
-	 *  creditCardCheck()] to verify the 3 things we need to check:
-	 *  is the email address unique, is the password the same as the
-	 *  verifyPassword field, and is the credit card chargeable.
+
+	/**
+	 * Returns a boolean value indicating whether the credentials
+	 * presented to the Registration class constructor from the
+	 * login screen are confirmed. Specifically, confirmed means
+	 * that there is no duplicate emails, and evokes the credit
+	 * card processing class to ensure the proper credit card is
+	 * used.
+	 * <p>
+	 * Calls three methods [emailCheck(), passwordCheck(),
+	 * creditCardCheck()] to verify the 3 things we need to check:
+	 * is the email address unique, is the password the same as the
+	 * verifyPassword field, and is the credit card chargeable.
 	 *
-	 *  @param  none 
-	 *  @return boolean indicating if all the checks pass
+	 * @param none
+	 * @return boolean indicating if all the checks pass
 	 */
-	
+
 	private static boolean verify() {
 		boolean result = false;
-		if (emailCheck()) result = true; 
+		if (emailCheck()) result = true;
 		if (passwordCheck()) result = true;
 		//if (creditCardCheck()) result = true;
 		return result;
 	}
-	
+
 	/**
-	 *  Returns a boolean value indicating whether the email is
-	 *  unique (as in there is no database record using this specific
-	 *  email.
+	 * Returns a boolean value indicating whether the email is
+	 * unique (as in there is no database record using this specific
+	 * email.
 	 *
-	 *  @param  none 
-	 *  @return boolean indicating if the checks pass
+	 * @param none
+	 * @return boolean indicating if the checks pass
 	 */
-	
+
 	private boolean emailCheck() {
 		// verify that email is unique and correct
 		return true;
-	} 
-	
+	}
+
 	/**
-	 *  Returns a boolean value indicating whether the password fields
-	 *  for password and verifyPassword are identical.
+	 * Returns a boolean value indicating whether the password fields
+	 * for password and verifyPassword are identical.
 	 *
-	 *  @param  none 
-	 *  @return boolean indicating if the checks pass
+	 * @param none
+	 * @return boolean indicating if the checks pass
 	 */
-	
+
 	private boolean passwordCheck() {
 		// verify that password is correct
 		return true;
 	}
-	
+
 	/**
-	 *  Sends the credentials to the database for new User 
-	 *  creation and storage. Returns boolean indicating
-	 *  whether it is successful, as determined by the DB.
+	 * Sends the credentials to the database for new User
+	 * creation and storage. Returns boolean indicating
+	 * whether it is successful, as determined by the DB.
 	 *
-	 *  @param  none 
-	 *  @return boolean indicating if the DB has stored the data
+	 * @param none
+	 * @return boolean indicating if the DB has stored the data
 	 */
 
 	private boolean storeData() {
+
 		return true;
 	}
 
-	/* Registration - Testing */
+}
+
+
+	/* Registration - Testing
 	Null values           [eg. Value not provided]
 	String provided       [eg. Field requires integer]
 	String not supplied   [eg. Field requires a String]
@@ -160,3 +165,4 @@ public class Registration {
 	}
 
 }
+	*/
