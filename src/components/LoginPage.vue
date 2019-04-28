@@ -1,15 +1,19 @@
 <template>
   <div align="center" style="border:1px solid black">
     <h1>Login Page</h1>
-    <form class="form" action="/WebServ/dist/#/storeInfo" method="post" v-on:submit="verifyForm($event)">
+    <form class="form" v-on:submit="verifyForm($event)">
       <div class="ui fluid input">
-        <label class="label" for="username"><b>Username: </b></label>
-        <input type="text" v-model="form.name" placeholder="Username" id="username" required>
+        <label class="label" for="email"><b>Email: </b></label>
+        <input type="text" v-model="form.email" placeholder="Email" id="email" required>
       </div>
       <br>
       <div class="ui fluid input">
         <label class="label" for="password"><b>Password: </b></label>
-        <input type="password" v-model="form.pass" placeholder="Password" id="password" required>
+        <input type="password" v-model="form.password" placeholder="Password" id="password" required>
+      </div>
+      <br>
+      <div class="submission check">
+        <p style="color:#FF0000">{{ submitText }}</p>
       </div>
       <br>
       <div>
@@ -21,20 +25,37 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
   data () {
     return {
       form: {
-        name: '',
-        pass: ''
-      }
+        email: '',
+        password: ''
+      },
+      submitText: ''
     }
   },
   methods: {
     verifyForm: function(event){
-      if(!submit(this.form)){
-        event.preventDefault()
-      }
+      event.preventDefault()
+      
+      const path = this.ip + '/login'
+
+      this.$http.post(path, this.form)
+      .then(response => {
+        var retVal = JSON.parse('{' + response.bodyText)
+        console.log(retVal)
+        if(retVal.loginResult.length == 0){
+          this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
+          this.$router.push('/')
+        } else {
+          this.submitText = "Email or Password is invalid."
+        }
+      })
+      .catch(error => {
+        console.log("Yeah nope")
+        this.submitText = "Error processing request. Please try again."
+        console.log(error)
+      })
     }
   }
 }
