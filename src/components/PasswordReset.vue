@@ -21,9 +21,9 @@
         <label  class="label" align="left" style="margin-inline-start: 20%;"><b>Info: </b></label>
       </div>
       <div class="ui fluid input">
-        <input v-model="form.code" placeholder="Verification Code" id="vcode" required>
-        <input type="password" v-model="form.pass" placeholder="New password" id="pass" required>
-        <input type="password" v-model="form.confPass" placeholder="Confirm password" id="cpass" required>
+        <input v-model="form2.code" placeholder="Verification Code" id="vcode" required>
+        <input type="password" v-model="form2.pass" placeholder="New password" id="pass" required>
+        <input type="password" v-model="form2.confPass" placeholder="Confirm password" id="cpass" required>
       </div>
       <br>
       <div>
@@ -45,6 +45,7 @@ export default {
         email: ''
       },
       form2: {
+        code: '',
         pass: '',
         confPass: ''
       },
@@ -67,7 +68,7 @@ export default {
         console.log(retVal)
 
         //All is well
-        if(retVal.sendResetCodeResult.length == 0){
+        if(retVal.result.length == 0){
           this.submitText = "Code Sent!"
           this.disabled = false
         } else {
@@ -84,7 +85,7 @@ export default {
 
 
     submit: function(){
-      if(!checkEmail()){
+      if(!this.checkEmail()){
         this.form.submitText = 'Invalid email'
       } else {
         this.sendResetCode()
@@ -99,13 +100,14 @@ export default {
 
 
     sendPass: function(event){
-     const path = this.ip +'/updatePassword'
-     
-     this.$http.post(path, this.form)
+      event.preventDefault()
+      const path = this.ip +'/updatePassword'
+
+      this.$http.post(path, this.form)
       .then(response => {
         var retVal = JSON.parse('{' + response.bodyText)
         console.log(retVal)
-        if(retVal.updatePasswordResult.length == 0){
+        if(retVal.result.length == 0){
           this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
           this.$router.push('/')
         } else {
@@ -119,13 +121,6 @@ export default {
       })
     }
   }
-}
-
-function updatePassword(form){
-  if(form.pass == form.confPass){
-    return true;
-  }
-  return false;
 }
 </script>
 

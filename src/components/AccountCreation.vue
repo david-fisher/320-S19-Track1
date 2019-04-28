@@ -33,9 +33,13 @@ export default {
     }
   },
   methods: {
+    passwordsEqual: function(){
+      return this.form.pass == this.form.confirmPass
+    },
     verifyPassword: function(event){
-      if(PasswordsEqual(this.form)){ //TODO : Make this actually do something
-        event.preventDefault()
+      event.preventDefault()
+      if(!this.passwordsEqual()){
+        
       }
     }
   }
