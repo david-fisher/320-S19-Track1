@@ -2,6 +2,7 @@
 import javax.imageio.ImageIO;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class DBAdapter {
@@ -48,54 +49,7 @@ public class DBAdapter {
 			this.loggedIn = loggedIn;
 		}
 
-		//Setters and Getters
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getEmail() {
-			return email;
-		}
-
-		public void setEmail(String email) {
-			this.email = email;
-		}
-
-		public String getPassword() {
-			return password;
-		}
-
-		public void setPassword(String password) {
-			this.password = password;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-
-		public boolean isLoggedIn() {
-			return loggedIn;
-		}
-
-		public void setLoggedIn(boolean loggedIn) {
-			this.loggedIn = loggedIn;
-		}
-
-		public int getID() {
-			return ID;
-		}
-
-		public void setID(int iD) {
-			ID = iD;
-		}
+		
 	}
 	
 	//Admin class
@@ -524,7 +478,6 @@ public class DBAdapter {
 			e.printStackTrace();
 			return false;
 		}
-		System.out.println("Query Results: \n\n");
 		
 		return true;
 	}
@@ -534,114 +487,278 @@ public class DBAdapter {
 		Connection conn;
 		try {
 			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				String name = rs.getString("name");
+				String password = rs.getString("password");
+				String type = rs.getString("type");
+				int loggedIn = rs.getInt("loggedIn");
+				boolean log = false;
+				if(loggedIn == 1) {
+					log = true;
+				}
+				User usr = new User(name,email,password,type,log);
+				return usr;
+				
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
+	public String getUserType(String email) {
+		//stub
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				String type = rs.getString("type");
+				return type;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 		return null;
 	}
 	/*
-	public boolean setUser(int id, JSONObject user) { 
-		//general function - sets all fields of user based on input object.
-		//stub
-		return true;
-	}
-	
-	public String getUserType(int id) {
-		//stub
-		return null;
-	}
-	
 	public boolean setUserType(int id, String type) {
 		//stub
 		return true;
-	}
+	}*/
 
-	public String getUserName(int id) {
-		//stub
+	public String getUserName(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				String name = rs.getString("name");
+				return name;
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		return null;
 	}
-	
+	/*
 	public boolean setUserName(int id, String name) {
 		//stub
 		return true;
 	}
+	*/
 	
-	public JSONObject getUserAddress(int id) {
-		//stub
+	public String getUserAddress(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				String address = rs.getString("address");
+				return address;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		return null;
 	}
-	
+	/*
 	public boolean setUserAddress(int id, JSONObject address) {
 		//stub
 		return true;
-	}
+	}*/
 	
-	public int getUserPhone(int id) {
-		//stub
-		return 0;
+	public String getUserPhone(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				String phone = rs.getString("phone");
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
-	
+	/*
 	public boolean setUserPhone(int id, int number) {
 		//stub
 		return true;
 	}
-	
-	public String getUserBirthday(int id) {
-		//stub
+	*/
+	public String getUserBirthday(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				String birthday = rs.getString("birthday");
+				return birthday;
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		return null;
 	}
-	
+	/*
 	public boolean setUserBirthday(int id, String bday) {
 		//stub
 		return true;
 	}
-	
-	public int getUserPoints(int id) {
-		//stub
+	*/
+	public int getUserPoints(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				int points = rs.getInt("points");
+				return points;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
 		return 0;
 	}
-	
+	/*
 	public boolean setUserPoints(int id, int amt) {
 		//stub
 		return true;
 	}
-	
-	public int[] getUserFollowing(int id) {
-		//stub
-		return null;
+	*/
+	public String[] getUserFollowing(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			int userID=0;
+			while(rs.next()) {
+				userID = rs.getInt("userID");	
+			}
+			rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Follow WHERE userID =" + userID);
+			ArrayList<Integer> followerID = new ArrayList<Integer>();
+			while(rs.next()) {
+				followerID.add(rs.getInt("follow"));
+			}
+			String[] followers = new String[followerID.size()];
+			for(int i=0;i<followerID.size();i++) {
+				rs=conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + followerID.get(i).toString());
+				while(rs.next()) {
+					String fEmail = rs.getString("email");
+					followers[i] = fEmail;
+				}
+			}
+			return followers;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
+	/*
 	public boolean setUserFollowing(int id, int[] users) {
 		//stub
 		return true;
 	}
-	
-	public int getUserInviter(int id) {
-		//stub
-		return 0;
+	*/
+	public String getUserInviter(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				String inviterEmail = rs.getString("inviter");
+				return inviterEmail;
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
-	
+	/*
 	public boolean setUserInviter(int id, int inviter) {
 		//stub
 		return true;
 	}
-	
-	public int[] getUsersInvited(int id) {
-		//stub
-		return null;
+	*/
+	public String[] getUsersInvited(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			int userID=0;
+			while(rs.next()) {
+				userID = rs.getInt("userID");	
+			}
+			rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Invite WHERE inviter =" + userID);
+			ArrayList<Integer> inviteeID = new ArrayList<Integer>();
+			while(rs.next()) {
+				inviteeID.add(rs.getInt("invitee"));
+			}
+			String[] invitees = new String[inviteeID.size()];
+			for(int i=0;i<inviteeID.size();i++) {
+				rs=conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + inviteeID.get(i).toString());
+				while(rs.next()) {
+					String inEmail = rs.getString("email");
+					invitees[i] = inEmail;
+				}
+			}
+			return invitees;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
+	/*
 	public boolean setUsersInvited(int id) {
 		//stub
 		return true;
 	}
-	
-	public boolean getUserHasInvited(int id) {
-		//stub
-		return true;
+	*/
+	public boolean getUserHasInvited(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				int hasInvited = rs.getInt("hasInvited");
+				boolean boolInvited = false;
+				if(hasInvited == 1)
+					boolInvited = true;
+				return boolInvited;
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return false;
 	}
-	
+	/*
 	public boolean setUserHasInvited(int id, boolean status) {
 		//stub
 		return true;
@@ -656,43 +773,104 @@ public class DBAdapter {
 		//stub
 		return true;
 	}
-	
-	public boolean getUserCanLogin(int id) {
-		//stub
-		return true;
+	*/
+	public boolean getUserCanLogin(String email) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				int valid = rs.getInt("validAccount");
+				boolean canLogin = false;
+				if(valid==1)
+					canLogin = true;
+				return canLogin;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return false;
 	}
-	
+	/*
 	public boolean setUserCanLogin(int id, boolean state) {
 		//stub
 		return true;
 	}
-	
-	public boolean getUserPrivate(int id){
-		//stub
-		return true;
+	*/
+	public boolean getUserPrivate(String email){
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				int privacy = rs.getInt("private");
+				boolean priv = false;
+				if(privacy==1)
+					priv = true;
+				return priv;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return false;
 	}
-
+	/*
 	public boolean setUserPrivate(int id, boolean state) {
 		//stub
 		return true;
 	}
-	
-	public int[] getUserPosts(int id) {
+	*/
+	public int[] getUserPosts(String email) {
 		//returns post IDs, not post
-		//stub
-		return null;
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			int userID=0;
+			while(rs.next()) {
+				userID = rs.getInt("userID");	
+			}
+			rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE userID =" + userID);
+			ArrayList<Integer> postID = new ArrayList<Integer>();
+			while(rs.next()) {
+				postID.add(rs.getInt("postID"));
+			}
+			int[] arr = new int[postID.size()];
+			for(int i =0; i<postID.size(); i++) {
+				arr[i] = postID.get(i);
+			}
+			return arr;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
+	/*
 	public boolean setUserPosts(int id, int[] posts) {
 		//stub
 		return true;
 	}
-	
-	public boolean deleteUser(int id) {
-		//stub
+	*/
+	public boolean deleteUser(String email) {
+		Connection conn;
+		try {
+			conn = getConnection();
+			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.User WHERE email = '" + email + "'");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
 		return true;
 	}
-	
+	/*
 	public boolean snap() {
 		//deletes half of all users
 		return true;
@@ -887,7 +1065,8 @@ public class DBAdapter {
 		DBAdapter adapter = new DBAdapter();
 		adapter.getConnection();
 		User user1 = adapter.new User("Caroline Kim","ckim9@umass.edu","rbals1997!","Member",true);
-		System.out.println(adapter.createUser(user1));
+		User user2 = adapter.getUser("ckim98@umass.edu");
+		
 	}
 
 }
