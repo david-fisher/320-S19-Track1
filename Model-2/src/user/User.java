@@ -12,8 +12,7 @@ public class User {
 	protected String stripeCreditCardID;
 	protected int points;
 	protected User invitedBy;
-	protected boolean loggedIn; // seems unecessary to me, included in meantime
-	protected boolean isValidated; // if user is currently verified by credit card
+	protected boolean isValidated; // Is User currently verified by CC?
 	protected String type;
 	
 	public User(String email,
@@ -26,17 +25,15 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.points = points;
-		// this.creditCard = new StripeCreditCard(email);
 		this.stripeCreditCardID = creditCard.getId();
 		this.invitedBy = invitedBy;
-		this.loggedIn = false; // seems unecessary to me, included in meantime
-		this.isValidated = false; // placeholder, must charge credit card + make sure it's valid
+		this.isValidated = false;
 		this.type = type;
 	}
 	
 	public boolean checkIfUserValid(double charge) {
-		//if(charge == DBAdapter.getCharge(User)) this.isValidated = true;
-		return true;
+		if(creditCard.verifyCharge(charge)) this.isValidated = true;
+		return isValidated;
 	}
 	
 	// Feel this is unecessary
@@ -51,7 +48,7 @@ public class User {
 	 */
 
 	public void addPoints(int points) { // TODO this does not do what it's supposed to
-		/* DBAdapter.setPoints(); */
+		//DBAdapter.setUserPoints(this.email, points);
 	}
 
 	/**
@@ -63,8 +60,7 @@ public class User {
 	 */
 
 	public String chargeCreditCard() {
-		creditCard.charge();
-		return "No Problems Here";
+		return creditCard.charge();
 	}
 
 	/**
@@ -95,6 +91,4 @@ public class User {
 	public Object getRegistrationInfo(String fieldName) { // TODO this does not do what it's supposed to
 		return null;
 	}
-
-	/* User - Testing */
 }

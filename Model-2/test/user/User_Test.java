@@ -6,32 +6,55 @@ import org.junit.Test;
 
 public class User_Test
 {
+    /**
+     * Calls CC adapter to charge User’s card,
+     * verifies if the card is charged
+     */
     @Test
     public void testCCCharging() {
-        //Calls CC adapter to charge User’s card
-        // verifies if the card is charged
-        //Create new user
-        User testerCC = new User("test@nucleardogs.com", "testy", "testable", 1000, null);
+        //Create new user to test on
+        User testerCC = new User("testEmail", "firstName", "lastName", 1000, null, "member");
+
         //Call CC adapter to charge user card
-        // Assert.assertTrue(CreditCard.charge());
+        boolean result = false;
+        //if(testerCC.charge().notEquals("GENERIC STRIPE ERROR")) result = true;
+        //assertTrue(result);
     }
 
+    /**
+     * Calls DB API to determine if User point
+     * total reflects a specific number of points added
+     */
     @Test
     public void testAddPoints() {
-        // Calls DB API to determine if User point
-        // total reflects a specific number of points added
-        User testerCC2 = new User("test@fluffernutter.com", "testytest", "testables", 1000, null);
-        testerCC2.addPoints(10);
-        // Assert.assertEquals(1010, DBAdapter.getPoints(testerCC2));
+        //Create new user to test on
+        User testerPoints = new User("testEmail2", "firstName2", "lastName2", 1000, null, "member");
+
+        // Call the User addPoints() method
+        //testerCC2.addPoints(10);
+
+        // Check that the points added to the User is correct
+        //assertEquals(1010, DBAdapter.getPoints(testerCC2.email));
 
     }
 
-    @Test
+    /**
+     * Calls DB API to determine if User credentials
+     * reflect a specific change as made by updateAccountInfo()
+     * As of right now settings only contains: - creditCard info
+     * 										   - postVisibility
+     * 										   - profileDescription
+     */
+    /*@Test
     public void testInfoUpdated() {
-        // Calls DB API to determine if User credentials
-        // reflect a specific change as made by updateAccountInfo()
-        User testerCC3 = new User("test@deadbodyinthewoods.com", "testytestacles", "testablester", 1000, null);
-        // DBAdapter.setEmail(testerCC3,"a@bc.dom");
-        // Assert.assertEquals("a@bc.dom", DBAdapter.getEmail(testerCC3));
-    }
+    	//Create new user to test on
+    	User testerInfo = new User("testEmail3", "firstName3", "lastName3", 1000, null, "member");
+
+    	//Have the DB set new credit card
+    	JSONObject card = new JSONObject(); // stub
+        DBAdapter.setUserCard(testerInfo,card); //unfortunately does not exist/work yet
+
+        //Check all credentials are correct
+        assertEquals(card, DBAdapter.getUserCard(testerInfo));
+    }*/
 }
