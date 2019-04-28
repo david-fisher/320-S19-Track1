@@ -59,81 +59,20 @@
             <input class="ui black button" style="color:#D6A200" type="submit" value="Submit">
           </div>
           <div class="submission check">
-            <p style="color:#FF0000">{{ form.submitText }}</p>
+            <p style="color:#FF0000">{{ submitText }}</p>
           </div>
-          <!-- Leaving this in for reference:
+        </form> <!--Ends the input form-->
+        <br>
+        <form class="form" v-on:submit="verifyCharge($event)">
           <div class="field">
-            <label class="label">Message</label>
-            <div class="control">
-              <textarea class="textarea" placeholder="Textarea" v-model="form.message"></textarea>
+            <div class="ui input">
+              <input name="charge" v-model="charge" class="input" type="text" placeholder="Charge Amount" required>
             </div>
           </div>
-
-          <div class="field">
-            <label class="label">Inquiry Type</label>
-            <div class="control">
-              <div class="select">
-                <select v-model="form.inquiry_type">
-                  <option disabled value="">Nothing selected</option>
-                  <option v-for="option in options.inquiry" v-bind:value="option.value" :key="option.id">
-                    {{ option.text }}
-                  </option>
-                </select>
-              </div>
-            </div>
+          <br>
+          <div class="submit button">
+            <input class="ui black button" style="color:#D6A200" :disabled="disabled == true" type="submit" value="Verify Charge and Continue">
           </div>
-
-          <div class="field">
-            <label class="label">LogRocket Usecases</label>
-            <div class="control">
-              <div class="select is-multiple">
-                <select multiple v-model="form.logrocket_usecases">
-                  <option>Debugging</option>
-                  <option>Fixing Errors</option>
-                  <option>User support</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="control">
-              <label class="checkbox">
-                <input type="checkbox" v-model="form.terms">
-                I agree to the <a href="#">terms and conditions</a>
-              </label>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>
-              <strong>What dev concepts are you interested in?</strong>
-            </label>
-            <div class="control">
-              <label class="checkbox">
-                <input type="checkbox" v-model="form.concepts" value="promises">
-                Promises
-              </label>
-              <label class="checkbox">
-                <input type="checkbox" v-model="form.concepts" value="testing">
-                Testing
-              </label>
-            </div>
-          </div>
-
-          <div class="field">
-            <label><strong>Is JavaScript awesome?</strong></label>
-            <div class="control">
-              <label class="radio">
-                <input v-model="form.js_awesome" type="radio" value="Yes">
-                Yes
-              </label>
-              <label class="radio">
-                <input v-model="form.js_awesome" type="radio" value="Yeap!">
-                Yeap!
-              </label>
-            </div>
-          </div>-->
         </form>
       </section>
     </div>
@@ -154,12 +93,12 @@
 </template>s
 
 <script>
-import axios from "axios";
 
 export default {
   name: 'InformationRequisitionAndVerification',
   data () {
     return {
+      serverAddress: '',
       form: {
         firstName: '',
         lastName: '',
@@ -172,14 +111,11 @@ export default {
         email: '',
         creditCardNumber: '',
         expiration: '',
-        CVV: '',
-        submitText: ''/*,
-        inquiry_type: '',
-        logrocket_usecases: [],
-        terms: false,
-        concepts: [],
-        js_awesome: '' */
+        CVV: ''
       },
+      disabled: true,
+      submitText: '',
+      charge: '',
       // needed for the unused options
       options: {
         inquiry: [
@@ -194,82 +130,73 @@ export default {
     //Method to run on page load goes here.
   },
   methods: {
+    verifyCharge: function(event){
+      event.preventDefault()
+      if(/^0?.[0-9]{2}$/.test(this.charge)){
+        const path = this.ip + '/chargeVerify'
+        this.$http.post(path, this.charge)
+        .then(response => {
+          var retVal = JSON.parse('{' + response.bodyText)
+          if(retVal.result.length == 0){
+            this.submitText = "You should be redirected shortly..."
+            this.$router.push('/accountcreation')
+          } else {
+            this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
+          }
+        })
+        .catch(error => {
+          console.log("Yeah nope")
+          this.submitText = "Error processing request. Please try again."
+          console.log(error)
+        })
+      } else{
+        console.log("hi")
+        this.submitText = "Format should be '0.XX' where XX represents the number of cents you were charged"
+      }
+    },
+    validPhone: function(){
+      return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(this.form.phoneNumber))
+    },
+    validEmail: function(){
+      return /\S+@\S+\.\S+/.test(this.form.email)
+    },
+    submit: function() {
+      // `this` inside methods points to the Vue instance
+      // Verify account data and submit
+      if (!this.validPhone()) {
+        this.submitText = 'You must fill in a valid phone number!'
+      } else if (!this.validEmail()) {
+        this.submitText = 'You must fill in a valid email!'
+        console.log('wee')
+      }
+      else{
+        this.storeInfo()
+      }
+    },
+    storeInfo: function(){
+      const path = this.ip + '/storeInfo'
+  		
+      this.$http.post(path, this.form)
+      .then(response => {
+        console.log(response)
+        var retVal = JSON.parse('{' + response.bodyText)
+        if(retVal.result.length == 0){
+          this.submitText = "Your card has been charged. Please check the amount and enter it into the box below."
+          this.disabled = false
+        } else {
+          this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
+        }
+      })
+      .catch(error => {
+        console.log("Yeah nope")
+        console.log(error)
+      })
+    },
     verifyForm: function(event){
       event.preventDefault()
-      if(submit(this.form.phoneNumber, this.form.email, this.form)){
-        storeInfos()
-      }
+      this.submit()
     }
   }
-}
-
-function validPhone(number){
-  return (/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(number))
-}
-
-function validEmail(email){
-  return /\S+@\S+\.\S+/.test(email)
-}
-
-function submit(number, email, form) {
-  // `this` inside methods points to the Vue instance
-  // Verify account data and submit
-  if (!validPhone(number)) {
-    form.submitText = 'You must fill in a valid phone number!'
-    return false
-  } else if (!validEmail(email)) {
-    form.submitText = 'You must fill in a valid email!'
-    console.log('wee')
-    return false
-  }
-  else{
-    // Send data to the server and display the resultant message
-    // 
-    var sendData = ''
-    sendData += form.firstName + ' '
-    sendData += form.lastName + ' '
-    sendData += form.addressLineOne + ' '
-    sendData += form.addressLineTwo + ' '
-    sendData += form.city + ' '
-    sendData += form.state + ' '
-    sendData += form.zipCode + ' '
-    sendData += form.phoneNumber + ' '
-    sendData += form.email + ' '
-    sendData += form.creditCardNumber + ' '
-    sendData += form.expiration + ' '
-    sendData += form.CVV
-    if(storeInfo(form).length == 0){
-      return true
-    }
-    return false
-  }
-  alert('You should not have made it here')
-  return false
-}
-
-function storeInfo(form){
-  alert('WOohoo')
-  console.log("WOOHOO")
-  axios.get('/storeInfo', {
-      params: {
-        form
-      }
-    })
-    .then(function(response) {
-      //On Success
-      console.log(response.data)
-      return response.data
-    })
-    .catch(function(error) {
-      //handle error
-      console.error(error);
-      return "error"
-    })
-}
-
-function storeInfos(){
-  alert('hi')
-  console.log('hi')
 }
 </script>
 

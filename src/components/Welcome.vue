@@ -48,6 +48,22 @@
           Settings
         </a>
       </li>
+      <li>
+        <a
+          href="#/accountcreation"
+          target="_blank"
+        >
+          Account Creation
+        </a>
+      </li>
+      <li>
+        <a
+          href="#/moderatorAndAdminCreation"
+          target="_blank"
+        >
+          Moderator and Admin Creation
+        </a>
+      </li>
       <!-- leaving this for reference -->
       <!--<li>
         <a

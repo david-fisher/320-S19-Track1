@@ -5,7 +5,12 @@ import LoginPage from '@/components/LoginPage'
 import Irv from '@/components/IR&V'
 import PasswordReset from '@/components/PasswordReset'
 import Settings from '@/components/Settings'
+<<<<<<< HEAD
 import Feed from '@/components/Feed'
+=======
+import AccountCreation from '@/components/AccountCreation'
+import ModeratorAndAdminCreation from '@/components/ModeratorAndAdminCreation'
+>>>>>>> 554ec38f7bbada9eeb5388777b16f4c8d5be69ea
 
 Vue.use(Router)
 
@@ -37,9 +42,20 @@ export default new Router({
       component: Settings
     },
     {
+<<<<<<< HEAD
       path: '/feed',
       name: 'Feed',
       component: Feed
+=======
+      path: '/accountcreation',
+      name: 'AccountCreation',
+      component: AccountCreation
+    },
+    {
+      path: '/moderatorAndAdminCreation',
+      name: 'ModeratorAndAdminCreation',
+      component: ModeratorAndAdminCreation
+>>>>>>> 554ec38f7bbada9eeb5388777b16f4c8d5be69ea
     }
   ]
 })
