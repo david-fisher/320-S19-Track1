@@ -36,9 +36,6 @@ public class User {
 		return isValidated;
 	}
 	
-	// Feel this is unecessary
-	public void changeLoggedInStatus() { this.loggedIn = !this.loggedIn; }
-	
 	/**
 	 *  Increments User point total in the DB by either a positive
 	 *  or negative amount (if points are removed).
