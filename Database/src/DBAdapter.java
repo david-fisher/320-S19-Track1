@@ -9,26 +9,56 @@ public class DBAdapter {
 	
 
 	private String DBAddress = "jdbc:mysql://localhost:3306/TrackOneDB"; //access address for database. figure out l8tr
-	
+	private Connection conn;
 	
 	private Connection getConnection() throws SQLException{
 		//function used to get connection to database
+		if(conn != null) return conn;
 		Connection conn = DriverManager.getConnection(DBAddress,"root","root");
 		System.out.println("Log: Connection Established!");
 		return conn;
-		/*ResultSet rs = conn.createStatement().executeQuery("select * from user");
-		ResultSetMetaData rsmd = rs.getMetaData();
-		
-		System.out.println("Query Results: \n\n");
-		
-		while(rs.next()) {
-			for (int i=1; i<=rsmd.getColumnCount(); i++) {
-				System.out.print(rs.getString(i)+"\t\t");
-			}
-			System.out.println();
-		}*/
 	}
 	
+	public boolean createUser(User usr) {
+		try {
+			getConnection();
+			int log = (usr.loggedIn) ? 1 : 0;
+			int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email, name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.name+"','" +usr.password+"','"+ usr.type+"',"+log+")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public User getUser(String email) { //FIX LATER
+		try {
+			getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			while(rs.next()) {
+				String name = rs.getString("name");
+				String password = rs.getString("password");
+				String type = rs.getString("type");
+				int loggedIn = rs.getInt("loggedIn");
+				boolean log = (loggedIn == 1) ? true : false;
+				//User usr = new User(name,email,password,type,log);
+				return usr;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
+	public boolean User updateUser(User usr) {
+		User oldUser = this.getUser(usr.email);
+		if (oldUser == null) return false;
+		
+		
+	}
+}
+/*	
 	//User class
 	private class User {
 		//Instance variables
@@ -845,7 +875,6 @@ Connection conn;
 		//stub
 		return true;
 	}//isn't this basically the same thing as setUserInviter..?
-	*/
 	public boolean getUserHasInvited(String email) {
 		Connection conn;
 		try {
@@ -896,7 +925,6 @@ Connection conn;
 		//stub
 		return true;
 	}
-	*/
 	public boolean getUserCanLogin(String email) {
 		//responses to validAccount attribute in DB
 		Connection conn;
@@ -1010,7 +1038,7 @@ Connection conn;
 		//stub
 		return true;
 	}
-	*///i dont think we need this method anymore. this can be handled in post table and create post methods
+	
 	
 	
 	public boolean deleteUser(String email) {
@@ -1215,7 +1243,6 @@ Connection conn;
 		//stub
 		return true;
 	}
-	*/
 	
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
@@ -1227,4 +1254,4 @@ Connection conn;
 		
 	}
 
-}
+} */

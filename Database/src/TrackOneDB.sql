@@ -4,7 +4,8 @@ CREATE DATABASE IF NOT EXISTS `TrackOneDB`;
 CREATE TABLE IF NOT EXISTS `TrackOneDB`.`User` (
   `userID` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
+  `first name` VARCHAR(45) NOT NULL,
+  `last name` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `type` VARCHAR(45) NOT NULL,
   `loggedIn` TINYINT(1) NOT NULL,
