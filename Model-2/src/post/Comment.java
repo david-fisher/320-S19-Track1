@@ -9,13 +9,13 @@ public class Comment extends Post
 	 *
 	 * @param Post is the Post that this comment is associated with
 	 */
-	public Comment(user poster, String ID, String text, Post associatedPostID)
+	public Comment(user poster, String ID, String text, Post associatedPost)
 	{
 		super(poster, ID, text);
 		this.associatedPostID = associatedPostID;
 		super.pointsForPost = pointsForComment;
-		//this.linkPostToComment();
-    addPoints();
+		this.linkPostToComment();
+		this.addPoints();
 	}
 
 	/* This function will get the associated posts unique id
@@ -32,10 +32,10 @@ public class Comment extends Post
 	 * @param none
 	 * @return none
 	 */
-//	public void linkPostToComment()
-//  {
-//    getPost(associatedPostID).addComment(this);
-//  }
+	public void linkPostToComment()
+    {
+      associatedPostID.addComment(this);
+    }
 
    /* Adds Points to the users point stack
 	* @params none

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Post
 {
-	user poster;
+	User poster;
 	String postID;
 	String text;
 	int flag = 0;
@@ -26,7 +26,7 @@ public class Post
 	 * @param postID the unique test.post ID associated with this test.post
 	 * @param text the text to be populated in the UI
 	 */
-	public Post(user poster, String postID, String text)
+	public Post(User poster, String postID, String text)
 	{
 		this.poster = poster;
 		this.postID = postID;
@@ -122,7 +122,7 @@ public class Post
 	* @param none
 	* @return an object of type user that is the user who created the test.post
 	*/
-	user getUser()
+	User getUser()
 	{
 		return poster;
 	}

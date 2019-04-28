@@ -3,8 +3,6 @@ package post;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
-
 import javax.imageio.ImageIO;
 
 public class ImagePost extends Post
@@ -12,8 +10,9 @@ public class ImagePost extends Post
 	int pointsForPhoto = 10;
 	File file;
 	BufferedImage image;
+	String path;
 
-	public ImagePost(user poster, String postID, File file)
+	public ImagePost(User poster, String postID, File file)
 	{
 		super(poster, postID, "");
 		this.file = file;
@@ -30,10 +29,11 @@ public class ImagePost extends Post
 			try
 			{
 				 BufferedImage image = ImageIO.read(file);
-         String newPhotoPath ="Model-2/images/src/" + file.getName();
-         ImageIO.write(image, "png",new File(newPhotoPath));
-         sendAddressToBD(newPhotoPath);
-         addPoints();
+                 String newPhotoPath ="Model-2/images/src/" + file.getName();
+				 ImageIO.write(image, "png",new File(newPhotoPath));
+                 sendAddressToBD(newPhotoPath);
+                 path = newPhotoPath;
+                 this.addPoints();
 			}
 			catch (IOException ex)
 			{
