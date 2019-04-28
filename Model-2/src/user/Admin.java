@@ -28,10 +28,6 @@ public class Admin extends User {
 
 	/* Admin - Testing */
 	
-	@Test
-	public void testPostEditor() {
-	   // Calls DB API to determine whether post 
-	   // content is updated to the new editPost() text
-	}
+
 
 }
