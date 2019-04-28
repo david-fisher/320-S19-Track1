@@ -1,6 +1,8 @@
 package post;
 
 import user.*;
+
+import java.awt.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -196,4 +198,19 @@ public class Post
 		this.poster.addPoints(this.pointsForPost);
 		return;
 	}
+
+	/*
+	 * Anti CP Stub
+	 * Please don't expect this to be anything but a stub
+	 * Because that will send me to prison
+	 */
+
+	public void antiCPKiller(Image possibleCP) {
+		/*if(possibleCP.equals(shrekImg_stub)) {
+			send to moderator
+		} else {
+			allow post
+		}*/
+	}
+
 }
