@@ -1,3 +1,4 @@
+
 <template>
 
   <div align="center" style="border:1px solid black">
@@ -8,6 +9,16 @@
           <option v-bind:value="{ role: moderator }">Moderator</option>
           <option v-bind:value="{ role: admin }">Admin</option>
         </select>
+      </div>
+      <br>
+      <div class="ui fluid input">
+        <label class="label" for="username"><b>Username: </b></label>
+        <input type="text" v-model="form.name" placeholder="Username" id="username" required>
+      </div>
+      <br>
+      <div class="ui fluid input">
+        <label class="label" for="password"><b>Password: </b></label>
+        <input type="password" v-model="form.pass" placeholder="Password" id="password" required>
       </div>
       <br>
       <div>
