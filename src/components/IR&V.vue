@@ -71,7 +71,7 @@
           </div>
           <br>
           <div class="submit button">
-            <input class="ui black button" style="color:#D6A200" type="submit" value="Verify Charge and Continue">
+            <input class="ui black button" style="color:#D6A200" :disabled="disabled == true" type="submit" value="Verify Charge and Continue">
           </div>
         </form>
       </section>
@@ -113,6 +113,7 @@ export default {
         expiration: '',
         CVV: ''
       },
+      disabled: true,
       submitText: '',
       charge: '',
       // needed for the unused options
@@ -132,14 +133,13 @@ export default {
     verifyCharge: function(event){
       event.preventDefault()
       if(/^0?.[0-9]{2}$/.test(this.charge)){
-        const path = 'http://725f87c6.ngrok.io/members-only/chargeVerify'
-  		
+        const path = this.ip + 'chargeVerify'
         this.$http.post(path, this.charge)
         .then(response => {
           var retVal = JSON.parse('{' + response.bodyText)
           if(retVal.result.length == 0){
             this.submitText = "You should be redirected shortly..."
-            router.go('/login')
+            router.go('/accountcreation')
           } else {
             this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
           }
@@ -175,13 +175,14 @@ export default {
     },
     storeInfo: function(form){
       alert('WOohoo')
-      const path = 'http://725f87c6.ngrok.io/members-only/storeInfo'
+      const path = this.ip + '/storeInfo'
   		
       this.$http.post(path, form)
       .then(response => {
         var retVal = JSON.parse('{' + response.bodyText).loginResult
         if(retVal.result.length == 0){
           this.submitText = "Your card has been charged. Please check the amount and enter it into the box below."
+          this.disabled = false
         } else {
           this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
         }
