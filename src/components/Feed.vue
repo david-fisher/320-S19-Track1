@@ -1,103 +1,102 @@
 <template>
-    <div id="bigDad">
-        <div class="ui inverted segment">
-            <div class="ui inverted secondary menu">
-                <div class="ui icon input">
-                    <input type="text" placeholder="Search members...">
-                    <i class="search icon"></i>
-                </div>
-                <img class="item right" src="../assets/dark_logo.png" alt="Smiley face" height="60" width="60">
-                <a class="item right">
-                    <i class="user circle outline icon"></i>
-                </a>
-                <a class="active item">
-                    <i class="align justify icon"></i>
-                </a>
-            </div>
+  <div id="bigDad">
+    <div class="ui inverted segment">
+      <div class="ui inverted secondary menu">
+        <div class="ui icon input">
+          <input type="text" placeholder="Search members...">
+          <i class="search icon"></i>
         </div>
-        <div class="makePost">
-            <form class="ui form"><textarea cols="7" rows="5" charswidth="23" name="text_body" placeholder="Post"></textarea></form>
-        </div>
-        <div id="feedHolder">
-            <div id="feed" style="float:left"  >
-                <!--<% (1..10).each do %> -->
-                <div class="item">
-                    <div class="header-container">
-                    <div class="header">
-                        <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
-                        <div class="username"> Dhruv </div>
-                    </div>
-                    </div>
-                    <!--<div class="photo"> -->
-                        <img src="../assets/picture.jpg" alt="Smiley face" width="600">
-                    <!-- </div> -->
-                    
-                    <div class="content">
-                    <ul class="comments" style="padding-left: 20px;">
-                    <!-- <% (1..3).each do %> -->
-                        <li>
-                            <div class="name"></div>
-                            <div class="comment"></div>
-                        </li>
-                        <!-- <% end %> -->
-                    </ul>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="header-container">
-                    <div class="header">
-                        <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
-                        <div class="username"> Dhruv </div>
-                    </div>
-                    </div>
-                    <!--<div class="photo"> -->
-                        <img src="../assets/picture.jpg" alt="Smiley face" width="600">
-                    <!-- </div> -->
-                    
-                    <div class="content">
-                    <ul class="comments" style="padding-left: 20px;">
-                    <!-- <% (1..3).each do %> -->
-                        <li>
-                            <div class="name"></div>
-                            <div class="comment"></div>
-                        </li>
-                        <!-- <% end %> -->
-                    </ul>
-                    </div>
-                </div>
-            </div>
-                <!-- <% end %> -->
-            <div id="feed" style="float:right">
-            <!--<% (1..10).each do %> -->
-                <div class="item">
-                    <div class="header-container">
-                        <div class="header">
-                            <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
-                            <div class="username"> Dhruv </div>
-                        </div>
-                    </div>
-                    
-                    <img src="../assets/logo.png" alt="Smiley face" width="600">
-                   
-                    <div class="content">
-                        <ul class="comments" style="padding-left:10px;">
-                        <!-- <% (1..3).each do %> -->
-                            <li style="padding-left:0px">
-                                <div class="name" > dkhurana1999 </div>
-                                <div class="comment">adasdadsada</div>
-                            </li>
-                            <!-- <% end %> -->
-                        </ul>
-                    </div>
-                    <div class="ui fluid input">
-                        <input type="text" style="width: 300px;" placeholder="Comment">
-                        <div class="ui button">Post</div>
-                    </div>
-                </div>
-            <!-- <% end %> -->
-            </div>
-        </div>
+        <img class="item right" src="../assets/dark_logo.png" alt="Smiley face" height="60" width="60">
+        <a class="item right">
+          <i class="user circle outline icon"></i>
+        </a>
+        <a class="active item">
+          <i class="align justify icon"></i>
+        </a>
+      </div>
     </div>
+    <div class="makePost">
+      <form class="ui form"><textarea cols="7" rows="5" charswidth="23" name="text_body" placeholder="Post"></textarea></form>
+    </div>
+    <div id="feedHolder">
+      <div id="feed" style="float:left"  >
+        <!--<% (1..10).each do %> -->
+        <div class="item">
+          <div class="header-container">
+            <div class="header">
+              <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
+              <div class="username"> Dhruv </div>
+            </div>
+          </div>
+          <!--<div class="photo"> -->
+          <img src="../assets/picture.jpg" alt="Smiley face" width="600">
+          <!-- </div> -->
+          <div class="content">
+            <ul class="comments" style="padding-left: 20px;">
+            <!-- <% (1..3).each do %> -->
+              <li>
+                <div class="name"></div>
+                <div class="comment"></div>
+              </li>
+            <!-- <% end %> -->
+            </ul>
+          </div>
+        </div>
+        <div class="item">
+          <div class="header-container">
+            <div class="header">
+              <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
+              <div class="username"> Dhruv </div>
+            </div>
+          </div>
+          <!--<div class="photo"> -->
+          <img src="../assets/picture.jpg" alt="Smiley face" width="600">
+          <!-- </div> -->
+          
+          <div class="content">
+            <ul class="comments" style="padding-left: 20px;">
+            <!-- <% (1..3).each do %> -->
+              <li>
+                <div class="name"></div>
+                <div class="comment"></div>
+              </li>
+            <!-- <% end %> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- <% end %> -->
+      <div id="feed" style="float:right">
+        <!--<% (1..10).each do %> -->
+        <div class="item">
+          <div class="header-container">
+            <div class="header">
+              <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
+              <div class="username"> Dhruv </div>
+            </div>
+          </div>
+            
+          <img src="../assets/logo.png" alt="Smiley face" width="600">
+            
+          <div class="content">
+            <ul class="comments" style="padding-left:10px;">
+              <!-- <% (1..3).each do %> -->
+              <li style="padding-left:0px">
+                <div class="name" > dkhurana1999 </div>
+                <div class="comment">adasdadsada</div>
+              </li>
+              <!-- <% end %> -->
+            </ul>
+          </div>
+          <div class="ui fluid input">
+            <input type="text" style="width: 300px;" placeholder="Comment">
+            <div class="ui button">Post</div>
+          </div>
+        </div>
+        <!-- <% end %> -->
+      </div>
+    </div>
+  </div>
 </template>
 
 
