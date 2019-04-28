@@ -14,12 +14,14 @@ public class User {
 	protected User invitedBy;
 	protected boolean loggedIn; // seems unecessary to me, included in meantime
 	protected boolean isValidated; // if user is currently verified by credit card
+	protected String type;
 	
 	public User(String email,
 				String firstName,
 				String lastName,
 				int points,
-				User invitedBy) {
+				User invitedBy,
+				String type) {
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -29,6 +31,7 @@ public class User {
 		this.invitedBy = invitedBy;
 		this.loggedIn = false; // seems unecessary to me, included in meantime
 		this.isValidated = false; // placeholder, must charge credit card + make sure it's valid
+		this.type = type;
 	}
 	
 	public boolean checkIfUserValid(double charge) {
