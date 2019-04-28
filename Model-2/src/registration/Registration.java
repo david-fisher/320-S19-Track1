@@ -4,6 +4,8 @@ package registration;
 import stripe.CreditCard;
 import stripe.StripeCreditCard;
 
+import java.awt.*;
+
 public class Registration {
 	private String firstName;
 	private String lastName;
@@ -11,13 +13,13 @@ public class Registration {
 	private String address2;
 	private int phoneNumber;
 	private String email;
-	private int zipCode;
+	private String zipCode;
 	private String choosePassword;
 	private String verifyPassword;
-	private int creditCardNumber;
-	private int cvv;
-	private int expirationMonth;
-	private int expirationYear;
+	private String creditCardNumber;
+	private String cvv;
+	private String expirationMonth;
+	private String expirationYear;
 
 	public Registration(String firstName,
 						String lastName,
@@ -25,13 +27,13 @@ public class Registration {
 						String address2,
 						int phoneNumber,
 						String email,
-						int zipCode,
+						String zipCode,
 						String choosePassword,
 						String verifyPassword,
-						int creditCardNumber,
-						int cvv,
-						int expirationMonth,
-						int expirationYear) {
+						String creditCardNumber,
+						String cvv,
+						String expirationMonth,
+						String expirationYear) {
 
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -42,29 +44,6 @@ public class Registration {
 		this.zipCode = zipCode;
 		this.choosePassword = choosePassword;
 		this.verifyPassword = verifyPassword;
-
-		boolean verifyResult = this.verify();
-
-		if (verifyResult) {
-			//continue
-		} else {
-			return;
-			//Do not run any of the below code. 
-		}
-
-		CreditCard card = new StripeCreditCard(email, creditCardNumber, zipCode, creditCardNumber, cvv, expirationMonth, expirationYear);
-		boolean cc_verification_result = card.verify();
-
-		if (cc_verification_result != null) {
-			this.stripeID = cc_verification_result;
-			storeData();
-		} else {
-			return;
-			//If the credit card is invalid, handle this somehow...
-			//DO NOT call storeData();
-		}
-
-
 	}
 
 	/**
@@ -83,13 +62,33 @@ public class Registration {
 	 * @param none
 	 * @return boolean indicating if all the checks pass
 	 */
+	public String verify() {
 
-	private static boolean verify() {
-		boolean result = false;
-		if (emailCheck()) result = true;
-		if (passwordCheck()) result = true;
-		//if (creditCardCheck()) result = true;
-		return result;
+		if (emailCheck()){
+
+		}else{
+			return "Invalid email";
+		}
+
+		if (passwordCheck())
+		{
+
+		}else{
+			return "Passwords don't match";
+		}
+
+		CreditCard card = new StripeCreditCard(this.email, this.creditCardNumber, this.zipCode , this.cvv, this.expirationMonth , this.expirationYear);
+		String resultCardValidation = card.verify();
+
+		if(resultCardValidation == null){
+			return "Invalid credit card";
+		}
+
+		//Create a User object in the database.
+		//NOTE: This user will still be invalid until they verify their charge.
+		storeData();
+
+		return "";
 	}
 
 	/**
@@ -129,7 +128,6 @@ public class Registration {
 	 */
 
 	private boolean storeData() {
-
 		return true;
 	}
 
