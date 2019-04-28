@@ -44,6 +44,10 @@ public class Registration {
 		this.zipCode = zipCode;
 		this.choosePassword = choosePassword;
 		this.verifyPassword = verifyPassword;
+		this.creditCardNumber = creditCardNumber;
+		this.cvv = cvv;
+		this.expirationMonth = expirationMonth;
+		this.expirationYear = expirationYear;
 	}
 
 	/**
