@@ -1,7 +1,7 @@
 <template>
   <div align="center" style="border:1px solid black">
     <h1>Reset Password</h1>
-    <form class="form" action="/sendResetCode" method="post" v-on:submit="sendCode($event)">
+    <form class="form" v-on:submit="sendCode($event)">
       <div>
         <div style="text-align: left">
           <label  class="label" align="left" style="margin-inline-start: 20%;" for="email"><b>Email: </b></label>
@@ -16,7 +16,7 @@
       </div>
     </form>
     <br>
-    <form class="form" action="/updatePassword" method="post" v-on:submit="sendPass($event)">
+    <form class="form" v-on:submit="sendPass($event)">
       <div style="text-align: left">
         <label  class="label" align="left" style="margin-inline-start: 20%;"><b>Info: </b></label>
       </div>
@@ -50,7 +50,31 @@ export default {
     }
   },
   methods: {
+    sendResetCode: function(){
+      return /\S+@\S+\.\S+/.test(this.form.email)
+    },
     sendCode: function(event){
+      event.preventDefault()
+
+      const path = this.ip + '/sendResetCode'
+
+      this.$http.post(path, this.form)
+      .then(response => {
+        var retVal = JSON.parse('{'+response.bodyText)
+        console.log(retVal)
+        if(retVal.sendResetCodeResult.length == 0){
+          this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
+          this.$router.push('/')
+        } else {
+          this.submitText = "Email is invalid"
+        }
+      })
+      .catch(error => {
+        console.log("Yeah nope")
+        this.submitText = "Error processing request. Please try again."
+        console.log(error)
+      })
+
       if(!sendResetCode(this.form.email)){
         this.form.submitText = ''
         event.preventDefault()
@@ -58,17 +82,26 @@ export default {
       this.form.submitText = 'Invalid email'
     },
     sendPass: function(event){
-      if(!updatePassword(this.form)){
-        this.form.submitText = ''
-        event.preventDefault()
-      }
-      this.form.submitText = 'Passwords do not match'
+     const path = this.ip +'/updatePassword'
+     
+     this.$http.post(path, this.form)
+      .then(response => {
+        var retVal = JSON.parse('{' + response.bodyText)
+        console.log(retVal)
+        if(retVal.updatePasswordResult.length == 0){
+          this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
+          this.$router.push('/')
+        } else {
+          this.submitText = "Password was unable to be updated"
+        }
+      })
+      .catch(error => {
+        console.log("Yeah nope")
+        this.submitText = "Error processing request. Please try again."
+        console.log(error)
+      })
     }
   }
-}
-
-function sendResetCode(email){
-  return /\S+@\S+\.\S+/.test(email)
 }
 
 function updatePassword(form){
