@@ -194,7 +194,7 @@ export default {
     },
     verifyForm: function(event){
       event.preventDefault()
-      this.submit(this.form.phoneNumber, this.form.email, this.form)
+      this.submit()
     }
   }
 }
