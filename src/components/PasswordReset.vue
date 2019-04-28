@@ -27,10 +27,10 @@
       </div>
       <br>
       <div>
-        <button type="submit" style="width:200px; margin-bottom:5px; color:#D6A200" class="ui black button">Reset Password</button>
+        <button type="submit" :disabled="disabled" style="width:200px; margin-bottom:5px; color:#D6A200" class="ui black button">Reset Password</button>
       </div>
       <div class="submission check">
-        <p style="color:#FF0000">{{ form.submitText }}</p>
+        <p style="color:#FF0000">{{ submitText }}</p>
       </div>
     </form>
   </div>
@@ -42,31 +42,36 @@ export default {
   data () {
     return {
       form: {
-        email: '',
+        email: ''
+      },
+      form2: {
         pass: '',
-        confPass: '',
-        submitText: ''
-      }
+        confPass: ''
+      },
+      disabled: true,
+      submitText: ''
     }
   },
   methods: {
-    sendResetCode: function(){
+    checkEmail: function(){
       return /\S+@\S+\.\S+/.test(this.form.email)
     },
-    sendCode: function(event){
-      event.preventDefault()
 
+
+    sendResetCode: function(){
       const path = this.ip + '/sendResetCode'
 
       this.$http.post(path, this.form)
       .then(response => {
         var retVal = JSON.parse('{'+response.bodyText)
         console.log(retVal)
+
+        //All is well
         if(retVal.sendResetCodeResult.length == 0){
-          this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
-          this.$router.push('/')
+          this.submitText = "Code Sent!"
+          this.disabled = false
         } else {
-          this.submitText = "Email is invalid"
+          this.submitText = "somethin"
         }
       })
       .catch(error => {
@@ -75,12 +80,24 @@ export default {
         console.log(error)
       })
 
-      if(!sendResetCode(this.form.email)){
-        this.form.submitText = ''
-        event.preventDefault()
-      }
-      this.form.submitText = 'Invalid email'
     },
+
+
+    submit: function(){
+      if(!checkEmail()){
+        this.form.submitText = 'Invalid email'
+      } else {
+        this.sendResetCode()
+      }
+    },
+
+
+    sendCode: function(event){
+      event.preventDefault()
+      this.submit()
+    },
+
+
     sendPass: function(event){
      const path = this.ip +'/updatePassword'
      
