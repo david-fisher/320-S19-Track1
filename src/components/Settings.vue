@@ -107,6 +107,8 @@ export default {
         this.form1SubmitText = "CVV cannot be blank!"
       } else{
         //Some fancy networking shit
+        const path = this.ip + '/updateCCAddress'
+
         this.$http.post(path, this.form1)
         .then(response => {
           console.log(response)
@@ -125,6 +127,8 @@ export default {
     },
     verifyFormDesc: function(event){
       event.preventDefault()
+
+      const path = this.ip + '/updateProfileDescription'
       this.$http.post(path, this.form2)
       .then(response => {
         console.log(response)
@@ -142,6 +146,9 @@ export default {
     },
     verifyFormVis: function(event){
       event.preventDefault()
+
+      const path = this.ip + '/updateVisibility'
+
       this.$http.post(path, this.form3)
       .then(response => {
         console.log(response)
@@ -158,6 +165,7 @@ export default {
       })
     },
     generateInvite: function(){
+      const path = this.ip + '/generateInvite'
       this.$http.post(path)
       .then(response => {
         console.log(response)
