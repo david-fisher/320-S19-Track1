@@ -7,9 +7,9 @@
         <label class="label">Update Credit Card</label>
       </div>
       <div class="ui fluid input">
-        <input type="text" v-model="form.creditCardNumber" placeholder="Credit Card Number" id="creditcardnumber" required>
-        <input type="text" v-model="form.expiration" placeholder="Expiration (MM/YY)" id="expiration" required>
-        <input type="text" v-model="form.CVV" placeholder="CVV" id="CVV" required>
+        <input type="text" v-model="form1.creditCardNumber" placeholder="Credit Card Number" id="creditcardnumber" required>
+        <input type="text" v-model="form1.expiration" placeholder="Expiration (MM/YY)" id="expiration" required>
+        <input type="text" v-model="form1.CVV" placeholder="CVV" id="CVV" required>
       </div>
       <br>
       <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Submit</button>
@@ -38,12 +38,12 @@
       </div>
       <div class="control">
         <div class="select">
-          <select v-model="form.whoCanSeeMe">
+          <select v-model="form3.whoCanSeeMe">
             <option disabled value="">Who can see my posts.</option>
             <option value="everyone">Everyone</option>
             <option value="followingMe">Only people who follow me (and invitees)</option>
           </select>
-          <select v-model="form.whoDoISee">
+          <select v-model="form3.whoDoISee">
             <option disabled value="">Whose posts do I see.</option>
             <option value="everyone">Everyone</option>
             <option value="thoseIFollow">Only those I follow</option>
