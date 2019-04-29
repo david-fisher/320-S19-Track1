@@ -19,11 +19,32 @@ public class DBAdapter {
 		return conn;
 	}
 	
-	public boolean createUser(User usr) {
+	public boolean createUser(User usr) { //FIX THIS
 		try {
 			getConnection();
 			int log = (usr.loggedIn) ? 1 : 0;
-			int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email, name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.name+"','" +usr.password+"','"+ usr.type+"',"+log+")");
+			if (usr.type == "member") { 
+				int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email,firstName,lastName,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.firstName+"','" +usr.lastName+"','" +usr.password+"','"+ usr.type+"',"+log+")");
+				this.updateUser(usr.email, "address", usr.address);
+				this.updateUser(usr.email, "city", usr.city);
+				this.updateUser(usr.email, "state", usr.state);
+				this.updateUser(usr.email, "zip", usr.zip);
+				this.updateUser(usr.email, "ccNum", usr.ccNum);
+				this.updateUser(usr.email, "ccv", usr.ccv);
+				this.updateUser(usr.email, "ccExpMon", usr.expM);
+				this.updateUser(usr.email, "ccExpYr", usr.expY);
+				this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
+				this.updateUser(usr.email, "phone", usr.phone);
+				this.updateUser(usr.email, "birthday", usr.birthday);
+				this.updateUser(usr.email, "points", usr.points);
+				this.updateUser(usr.email, "inviter", usr.invitedBy);
+				this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0);
+				this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0);
+				this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0);
+			}
+			else { //in case of mod or owner
+				int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email,name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.firstName+"','" +usr.password+"','"+ usr.type+"',"+log+")");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -31,17 +52,38 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public User getUser(String email) { //FIX LATER
+	public User getUser(String email) {
 		try {
 			getConnection();
+			User usr;
 			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
 			while(rs.next()) {
-				String name = rs.getString("name");
-				String password = rs.getString("password");
 				String type = rs.getString("type");
-				int loggedIn = rs.getInt("loggedIn");
-				boolean log = (loggedIn == 1) ? true : false;
-				//User usr = new User(name,email,password,type,log);
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String inviter = rs.getString("inviter");
+				usr = new User (email, firstName, lastName, 0, inviter);
+				if (type == "member") { //set member fields
+					usr.type = type;
+					usr.address = rs.getString("address");
+					usr.city = rs.getString("city");
+					usr.state = rs.getString("state");
+					usr.zip = rs.getString("zip");
+					usr.ccNum = rs.getString("ccNum");
+					usr.ccv = rs.getString("ccv");
+					usr.expM = rs.getString("ccExpMon");
+					usr.expY = rs.getString("ccExpYr");
+					usr.creditCard = new StripeCreditCard(email, usr.ccNum, 
+										usr.zip, usr.ccv, usr.expM, usr.expY);
+					usr.stripeCreditCardID = rs.getString("stripeID");
+					usr.points += rs.getInt("points");
+					usr.phone = rs.getString("phone");
+					usr.password = rs.getString("password");
+					usr.loggedIn = true;
+					usr.hasInvited = (rs.getInt("hasInvited") == 1);
+					usr.isValidated = (rs.getInt("validAccount") == 1);
+					usr.privacy = rs.getBoolean("private");
+				}
 				return usr;
 			}
 		} catch (SQLException e) {
@@ -51,11 +93,80 @@ public class DBAdapter {
 		return null;
 	}
 	
-	public boolean User updateUser(User usr) {
-		User oldUser = this.getUser(usr.email);
+	private <T> String formatUpdateString(String email, String varname, T var) {
+		return String.format("UPDATE TrackOneDB.USER SET %s = '"+var+"' WHERE email = '"+email+"'", varname);
+	}
+	
+	public <T> boolean updateUser(String email, String field, T newValue) {
+		User oldUser = this.getUser(email);
 		if (oldUser == null) return false;
-		
-		
+		String query = formatUpdateString(email, field, newValue);
+		try {
+			getConnection();
+			int rs = conn.createStatement().executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean deleteUser(String email) {
+		try {
+			getConnection();
+			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.User WHERE email = '" +email+ "'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean createPost(Post pst) { //FIX LATER
+		try {
+			getConnection();
+			if (pst instanceof Comment) { //in case of a comment
+				Comment com = (Comment)pst;
+				//int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email, name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.firstName+"','" +usr.password+"','"+ usr.type+"',"+log+")");
+			}
+			else if (pst instanceof ImagePost) { //in case of an image post
+				ImagePost img = (ImagePost)pst;
+				//put new prompt in here
+			}
+			else { //in case of a normal post
+				//new prompt
+			}
+			//int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email, name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.name+"','" +usr.password+"','"+ usr.type+"',"+log+")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	public Post getPost(String id) { //FIX LATER
+		try {
+			getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE photoID = '"+id+"'");
+			while(rs.next()) {
+				String type = rs.getString("type");
+				if (type == "post") {
+					//stuff
+					return null;
+				}
+				else if (type == "imagepost") {
+					//stuff
+					return null;
+				}
+				else if (type == "comment") {
+					//stuff
+					return null;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
 }
 /*	
