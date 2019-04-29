@@ -13,6 +13,10 @@
         <input type="password" v-model="form.confirmPass" placeholder="Confirmed Password" id="confirmPassword" required>
       </div>
       <br>
+      <div class="submission check">
+        <p style="color:#FF0000">{{ submitText }}</p>
+      </div>
+      <br>
       <div>
         <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Login</button>
       </div>
@@ -29,7 +33,8 @@ export default {
       form: {
         pass: '',
         confirmPass: ''
-      }
+      },
+      submitText: ''
     }
   },
   methods: {
@@ -39,7 +44,28 @@ export default {
     verifyPassword: function(event){
       event.preventDefault()
       if(!this.passwordsEqual()){
-        
+        this.submitText = "Yeah, those passwords don't match. Try again." 
+      } else if(this.pass.length < 8){
+        this.submitText = "Nuh uh. Your password must be at least eight characters"
+      } else {
+
+        const path = this.ip + '/storePassword'
+  		
+        this.$http.post(path, this.form)
+        .then(response => {
+          console.log(response)
+          var retVal = JSON.parse('{' + response.bodyText)
+          if(retVal.result.length == 0){
+            this.submitText = "One moment..."
+            this.$router.push('/feed')
+          } else {
+            this.submitText = retVal.result
+          }
+        })
+        .catch(error => {
+          console.log("Yeah nope")
+          console.log(error)
+        })
       }
     }
   }
