@@ -19,12 +19,12 @@ public class DBAdapter {
 		return conn;
 	}
 	
-	public boolean createUser(User usr) { //FIX THIS
+	public boolean createUser(User usr) {
 		try {
 			getConnection();
 			int log = (usr.loggedIn) ? 1 : 0;
+			int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email,firstName,lastName,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.firstName+"','" +usr.lastName+"','" +usr.password+"','"+ usr.type+"',"+log+")");
 			if (usr.type == "member") { 
-				int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email,firstName,lastName,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.firstName+"','" +usr.lastName+"','" +usr.password+"','"+ usr.type+"',"+log+")");
 				this.updateUser(usr.email, "address", usr.address);
 				this.updateUser(usr.email, "city", usr.city);
 				this.updateUser(usr.email, "state", usr.state);
@@ -41,9 +41,6 @@ public class DBAdapter {
 				this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0);
 				this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0);
 				this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0);
-			}
-			else { //in case of mod or owner
-				int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email,name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.firstName+"','" +usr.password+"','"+ usr.type+"',"+log+")");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -122,52 +119,21 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public boolean createPost(Post pst) { //FIX LATER
+	public boolean createPost(Post pst) {
 		try {
 			getConnection();
-			if (pst instanceof Comment) { //in case of a comment
+			if (pst instanceof Comment) {
 				Comment com = (Comment)pst;
-				//int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email, name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.firstName+"','" +usr.password+"','"+ usr.type+"',"+log+")");
+				//add to post table, then add to comment table
+				//int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Comment (commentID, text, parentID) VALUES ('"+com.postID+"','" +com.text+"','" +com.associatedPostID+"')");
 			}
-			else if (pst instanceof ImagePost) { //in case of an image post
-				ImagePost img = (ImagePost)pst;
-				//put new prompt in here
-			}
-			else { //in case of a normal post
-				//new prompt
-			}
-			//int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email, name,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.name+"','" +usr.password+"','"+ usr.type+"',"+log+")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
-	public Post getPost(String id) { //FIX LATER
-		try {
-			getConnection();
-			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE photoID = '"+id+"'");
-			while(rs.next()) {
-				String type = rs.getString("type");
-				if (type == "post") {
-					//stuff
-					return null;
-				}
-				else if (type == "imagepost") {
-					//stuff
-					return null;
-				}
-				else if (type == "comment") {
-					//stuff
-					return null;
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return null;
-	}
+	
 }
 /*	
 	//User class

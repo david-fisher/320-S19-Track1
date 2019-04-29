@@ -8,7 +8,6 @@ public interface CreditCard {
 	public void setSubscription(boolean on);	// Enable subscription payments (3 month verifications)
 	public boolean verifyCharge(double guess);			// Function to enable member credit card charge verification
 }
-package stripe;
 
 import java.util.HashMap;
 import java.util.Map;
