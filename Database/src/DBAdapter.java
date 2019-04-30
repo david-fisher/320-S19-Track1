@@ -48,6 +48,7 @@ public class DBAdapter {
 		}
 		return true;
 	}
+
 	
 	public User getUser(String email) {
 		try {
@@ -119,6 +120,62 @@ public class DBAdapter {
 		return true;
 	}
 	
+	
+	public boolean followUser(String follower,String followee) {
+		try {
+			Connection conn = getConnection();
+		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Follow (follow,userID) VALUES ('"+followee+"','"+follower+")");
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	// follower follows followee lol
+	
+	public boolean createURL(String original, String shortened) {
+		try {
+			Connection conn = getConnection();
+		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.URL (original,shortened) VALUES ('"+original+"','"+shortened+")");
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	//long and shortened URL are stored in the table
+	
+	public String getOriginalURL(String shortened){
+		try {
+			Connection conn = getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("Select * From TrackOneDB.URL WHERE shortened = '"+shortened+"'");
+		    while (rs.next()) {
+		    	String original = rs.getString("original");
+			    return original;
+		    }
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
+	public boolean setOriginalURL(String shortened,String longURL) {
+		Connection conn;
+		try {
+			conn = getConnection();
+			int rs = conn.createStatement().executeUpdate("UPDATE TrackOneDB.URL SET original = '"+longURL+"'WHERE shortened = '"+shortened+"'");		
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return false;	  	
+		}
+		return true;
+
+	}
+	
+	
 	public boolean createPost(Post pst) {
 		try {
 			getConnection();
@@ -135,6 +192,8 @@ public class DBAdapter {
 	}
 	
 }
+
+
 /*	
 	//User class
 	private class User {
