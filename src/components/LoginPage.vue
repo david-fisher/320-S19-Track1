@@ -80,7 +80,7 @@ export default {
       .then(response => {
         var retVal = JSON.parse('{' + response.bodyText)
         console.log(retVal)
-        if(retVal.loginResult.length == 0){
+        if(retVal.result.length == 0){
           this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
           this.$router.push('/')
         } else {

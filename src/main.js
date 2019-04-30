@@ -11,7 +11,10 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 Vue.use(sui)
 Vue.use(VueResource)
-Vue.prototype.ip = 'http://a9b62795.ngrok.io/members-only'
+Vue.prototype.ip = 'http://cff1c08e.ngrok.io/members-only'
+
+Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
+
 new Vue({
   el: '#app',
   router,
