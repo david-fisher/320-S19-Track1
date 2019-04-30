@@ -40,15 +40,16 @@ public class LoginProcessor {
 	 *  @return boolean indicating if the password is reset
 	 */
 
-	public boolean resetPassword(String password, String newPassword) {
-		/* User currentUser = DBAdapter.getUser(email); // TODO placeholder for db.DBAdapter for now
-		String currentPassword = DBAdapter.getPassword(currentUser); // TODO placeholder for db.DBAdapter for now
-		if(password == currentPassword) {
-			DBAdapter.setPassword(currentUser, newPassword); // TODO placeholder for db.DBAdapter for now
-			return true;
-		} else {
-			return false;
-		}*/
+	public boolean resetPassword(String newPassword, String verifyNewPassword, int verificationCode) {
+		// Check verification code against server
+//		if(verificationCode == Server.resetVerificationCode) { // TODO figure out how to ask the server for this
+//			User currentUser = DBAdapter.getUser(email);
+//			String currentPassword = DBAdapter.getPassword(currentUser);
+//			if(newPassword == verifyNewPassword) {
+//				DBAdapter.setPassword(currentUser, newPassword);
+//				return true;
+//			} else return false;
+//		}
 		return false;
 	}
 
