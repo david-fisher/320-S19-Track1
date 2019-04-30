@@ -161,20 +161,6 @@ public class DBAdapter {
 		return null;
 	}
 	
-	public boolean setOriginalURL(String shortened,String longURL) {
-		Connection conn;
-		try {
-			conn = getConnection();
-			int rs = conn.createStatement().executeUpdate("UPDATE TrackOneDB.URL SET original = '"+longURL+"'WHERE shortened = '"+shortened+"'");		
-		}
-		catch (SQLException e){
-			e.printStackTrace();
-			return false;	  	
-		}
-		return true;
-
-	}
-	
 	
 	public boolean createPost(Post pst) {
 		try {
