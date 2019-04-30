@@ -61,6 +61,12 @@ CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Follow` (
   `userID` INT NOT NULL,
   `follow` INT NOT NULL,
   PRIMARY KEY (`followID`));
+  
+  CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Blocked` (
+  `blockID` INT NOT NULL AUTO_INCREMENT,
+  `userID` INT NOT NULL,
+  `blocked` INT NOT NULL,
+  PRIMARY KEY (`blockID`));
 
 CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Comment` (
   `commentID` INT NOT NULL AUTO_INCREMENT,

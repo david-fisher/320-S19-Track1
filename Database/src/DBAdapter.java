@@ -60,7 +60,7 @@ public class DBAdapter {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String inviter = rs.getString("inviter");
-				usr = new User (email, firstName, lastName, 0, inviter);
+				usr = new User (email, firstName, lastName, 0, inviter, null);
 				if (type == "member") { //set member fields
 					usr.type = type;
 					usr.address = rs.getString("address");
@@ -168,7 +168,7 @@ public class DBAdapter {
 			getConnection();
 			if (pst instanceof Comment) { //add to post table then add to comment table
 				Comment com = (Comment)pst;
-				//add to post table, then add to comment table
+				int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Post (type, text, parentID) VALUES ('"+com.postID+"','" +com.text+"','" +com.associatedPostID+"')");
 				//int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Comment (commentID, text, parentID) VALUES ('"+com.postID+"','" +com.text+"','" +com.associatedPostID+"')");
 			}
 			else if (pst instanceof ImagePost) { //add to post table then add to image table & any other relevant tables

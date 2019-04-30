@@ -30,7 +30,8 @@ public class User {
 				String firstName,
 				String lastName,
 				int points,
-				String invitedBy) {
+				String invitedBy,
+				CreditCard cc) {
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
