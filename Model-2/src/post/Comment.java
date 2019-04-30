@@ -14,7 +14,7 @@ public class Comment extends Post
 	public Comment(User poster, String ID, String text, Post associatedPost)
 	{
 		super(poster, ID, text);
-		this.associatedPostID = associatedPostID;
+		this.associatedPostID = associatedPost;
 		super.pointsForPost = pointsForComment;
 		this.linkPostToComment();
 		this.addPoints();

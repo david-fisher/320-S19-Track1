@@ -20,7 +20,9 @@ public class User {
 				String lastName,
 				int points,
 				User invitedBy,
-				String type) {
+				String type,
+				CreditCard creditCard) {
+		this.creditCard = creditCard;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;

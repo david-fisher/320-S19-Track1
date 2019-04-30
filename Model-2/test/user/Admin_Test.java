@@ -1,4 +1,6 @@
-import org.junit.Test;
+package user;
+
+import org.junit.jupiter.api.Test;
 
 public class Admin_Test
 {

@@ -1,16 +1,31 @@
-import org.junit.Test;
+package post;
+
+import org.junit.jupiter.api.Test;
+
 import post.Comment;
 import post.Post;
+import stripe.StripeCreditCard;
 import user.User;
-
 import java.sql.Timestamp;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class Post_Test
 {
 	int ids = 0;
-	User marc = new User("l","marc","rossi",100, null);
+	// Necessary fields
+	String email = "test@gmail.com";
+	String cardNum = "4000056655665556";
+	String zipCode = "00000";
+	String cvv = "123";
+	String exp_month = "10";
+	String exp_year = "2020";
+
+	// Create the test card with the information above
+	StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode,
+			cvv, exp_month, exp_year);
+	User marc = new User("l","marc","rossi",100, null,"member",testCard);
 	Post post1;
 	Post post2;
 	Post post3;
@@ -66,7 +81,7 @@ class Post_Test
 	{
 		post1 = new Post(marc, createId(), "comment test");
 		comment1 = new Comment(marc,createId(), "comment test", post1);
-		assertEquals(0, post1.comments.size());
+		assertEquals(1, post1.comments.size());
 		post1.addComment(comment1);
 		assertEquals(1, post1.comments.size());
 		post1.removeComment(comment1);

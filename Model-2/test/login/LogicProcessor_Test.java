@@ -1,4 +1,5 @@
-import org.junit.Test;
+package login;
+import org.junit.jupiter.api.Test;
 
 public class LogicProcessor_Test {
 

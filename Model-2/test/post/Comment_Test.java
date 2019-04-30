@@ -1,12 +1,27 @@
-import org.junit.Test;
+package post;
+
+
 import post.*;
+import stripe.StripeCreditCard;
 import user.*;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Comment_Test
 {
 	int ids;
-	User marc = new User("", "", "", 0, null);
+	// Necessary fields
+	String email = "test@gmail.com";
+	String cardNum = "4000056655665556";
+	String zipCode = "00000";
+	String cvv = "123";
+	String exp_month = "10";
+	String exp_year = "2020";
+
+	// Create the test card with the information above
+	StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode,
+			cvv, exp_month, exp_year);
+	User marc = new User("", "", "", 0, null, "member",testCard);
 	Post post1;
 	Comment comment1;
 

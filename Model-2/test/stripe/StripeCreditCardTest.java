@@ -1,5 +1,6 @@
+package stripe;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;

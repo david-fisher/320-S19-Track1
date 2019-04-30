@@ -1,15 +1,17 @@
 package user;
 
 import post.*;
+import stripe.CreditCard;
 
 public class Admin extends User {
 
-	public Admin(String email, 
-				 String firstName, 
-				 String lastName,  
+	public Admin(String email,
+				 String firstName,
+				 String lastName,
 				 int points,
-				 User invitedBy) {
-		super(email, firstName, lastName, points, null);
+				 User invitedBy,
+				 CreditCard card) {
+		super(email, firstName, lastName, points, null, "member", card);
 	}
 
 	/**

@@ -30,7 +30,7 @@ public class ImagePost extends Post
 			try
 			{
 				 BufferedImage image = ImageIO.read(file);
-                 String newPhotoPath ="Model-2/images/src/" + file.getName();
+                 String newPhotoPath ="images/src/" + file.getName();
 				 ImageIO.write(image, "png",new File(newPhotoPath));
                  sendAddressToBD(newPhotoPath);
                  path = newPhotoPath;
