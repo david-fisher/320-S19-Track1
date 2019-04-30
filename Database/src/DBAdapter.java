@@ -149,7 +149,7 @@ public class DBAdapter {
 	public String getOriginalURL(String shortened){
 		try {
 			Connection conn = getConnection();
-			ResultSet rs = conn.createStatement().executeQuery("Select * From TrackOneDB.URL WHERE shortened = '"+shortened+"'");
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.URL WHERE shortened = '"+shortened+"'");
 		    while (rs.next()) {
 		    	String original = rs.getString("original");
 			    return original;
