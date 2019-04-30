@@ -46,7 +46,6 @@ public class IRVService {
 		catch(Exception e) {
 			return Response.status(200).entity("invalid").build();
 		}
-
 		
 		//INSERT Model2 Code to run verification and check the value.
         JSONObject json = new JSONObject();

@@ -10,35 +10,45 @@ public class LoginService {
 	@POST
 	@Path("/login")
 	@Produces("application/json")
+	/***
+	 * 
+	 * @param payload: email, password
+	 * @return
+	 */
 	public Response login(String payload) {
         
         JSONObject json_payload = new JSONObject(payload);
         
-        String email_addr = json_payload.getString("email");
+        String email = json_payload.getString("email");
         String password = json_payload.getString("password");
-
+        
         String response = "";
-		if(email_addr.equals("Cole")) {
+		if(email.equals("a@a.a")) {
 			response = "";
 		}
 		else {
-			response = "WHO THE FUCK ARE You";
+			response = "Error on login: email != a@a.a";
 		}
         
         System.out.println(response);
-        JSONObject login_result = new JSONObject();
-        login_result.put("loginResult", response);
-        login_result.put("sessionID", "2");
-        String login_string = login_result.toString();
-		return Response.status(200).entity(login_string.substring(1)).build();
+        JSONObject result = new JSONObject();
+        result.put("result", response);
+		return Response.status(200).entity(result.toString().substring(1)).build();
 	}
 	
 	@POST
 	@Path("/sendResetCode")
 	@Produces("application/json")
+	/***
+	 * 
+	 * @param payload: email
+	 * @return
+	 */
 	public Response sendResetCode(String payload) {
 		System.out.println(payload);
 		JSONObject store_result = new JSONObject();
+		
+		
 	    store_result.put("result", "");
 		return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
@@ -46,9 +56,16 @@ public class LoginService {
 	@POST
 	@Path("/updatePassword")
 	@Produces("application/json")
-	public Response updatePassword(String payload) {
-		System.out.println(payload);
+	/***
+	 * 
+	 * @param payload: code, pass, confPass
+	 * @return Response Object holding empty string if email was valid and anything else otherwise.
+	 */
+	public Response updatePassword(String payload) {		
+		
 		JSONObject store_result = new JSONObject();
+		
+		
 	    store_result.put("result", "");
 		return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
