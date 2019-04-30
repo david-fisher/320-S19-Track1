@@ -132,6 +132,7 @@ public class DBAdapter {
 		return true;
 	}
 	// follower follows followee lol
+	// #english
 	
 	public boolean createURL(String original, String shortened) {
 		try {
@@ -165,10 +166,14 @@ public class DBAdapter {
 	public boolean createPost(Post pst) {
 		try {
 			getConnection();
-			if (pst instanceof Comment) {
+			if (pst instanceof Comment) { //add to post table then add to comment table
 				Comment com = (Comment)pst;
 				//add to post table, then add to comment table
 				//int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Comment (commentID, text, parentID) VALUES ('"+com.postID+"','" +com.text+"','" +com.associatedPostID+"')");
+			}
+			else if (pst instanceof ImagePost) { //add to post table then add to image table & any other relevant tables
+				//add to post table
+				//then add image to image table
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
