@@ -355,32 +355,6 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public int[] getUserPosts(String email) {
-		//returns post IDs, not post
-		Connection conn;
-		try {
-			conn=getConnection();
-			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
-			int userID=0;
-			while(rs.next()) {
-				userID = rs.getInt("userID");	
-			}
-			rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE userID =" + userID);
-			ArrayList<Integer> postID = new ArrayList<Integer>();
-			while(rs.next()) {
-				postID.add(rs.getInt("postID"));
-			}
-			int[] arr = new int[postID.size()];
-			for(int i =0; i<postID.size(); i++) {
-				arr[i] = postID.get(i);
-			}
-			return arr;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 /*
 
@@ -898,7 +872,32 @@ Connection conn;
 		return true;
 	}
 	
-	
+	public int[] getUserPosts(String email) {
+		//returns post IDs, not post
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+			int userID=0;
+			while(rs.next()) {
+				userID = rs.getInt("userID");	
+			}
+			rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE userID =" + userID);
+			ArrayList<Integer> postID = new ArrayList<Integer>();
+			while(rs.next()) {
+				postID.add(rs.getInt("postID"));
+			}
+			int[] arr = new int[postID.size()];
+			for(int i =0; i<postID.size(); i++) {
+				arr[i] = postID.get(i);
+			}
+			return arr;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/*
 	public boolean setUserPosts(int id, int[] posts) {
 		//stub
