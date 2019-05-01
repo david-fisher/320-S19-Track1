@@ -381,7 +381,18 @@ public class DBAdapter {
 			return null;
 		}
 	}
-
+	public boolean unfollowUser(String follower,String followee) {
+		try {
+			Connection conn = getConnection();
+		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Follow (follow,userID) VALUES ('"+followee+"','"+follower+")");
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	// follower follows followee lol
+	// #english
 /*
 
 	public boolean createUser(User usr){
