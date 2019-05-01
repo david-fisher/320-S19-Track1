@@ -948,7 +948,7 @@ Connection conn;
 				int userID = rs.getInt("userID");
 				String text = rs.getString("text");
 				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
-				String email;
+				String email="";
 				while(rs2.next()) {
 					email = rs2.getString("email");
 				}
