@@ -82,6 +82,9 @@ export default {
         console.log(retVal)
         if(retVal.result.length == 0){
           this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
+          this.$session.start()
+          this.$session.set('email', this.form.email)
+          this.$session.set('password', this.form.password)
           this.$router.push('/')
         } else {
           this.submitText = "Email or Password is invalid."
