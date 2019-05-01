@@ -4,13 +4,16 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import org.json.*;
 
+import com.Model2.*;
+
 @Path("/")
 public class PostService {
 	@POST
 	@Path("/loadProfile")
 	@Produces("application/json")
 	public Response loadProfile(String payload) {
-		
+		//SendEmail.sendMail("cikoro@umass.edu", "Hi. This is a test of members only!");
+		//System.out.println("Done");
 		return null;
 	}
 	

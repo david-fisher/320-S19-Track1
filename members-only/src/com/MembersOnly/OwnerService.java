@@ -10,7 +10,6 @@ public class OwnerService {
 	@Path("/deletePost")
 	@Produces("application/json")
 	public Response deletePost(String payload) {
-		
 		return null;
 	}
 	
@@ -47,12 +46,5 @@ public class OwnerService {
 	@Produces("application/json")
 	public Response createMod(String payload) {
 		return null;
-	}
-	
-	
-	
-	
-	
-
-	
+	}	
 }

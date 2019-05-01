@@ -6,6 +6,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class MembersOnlyApplication extends ResourceConfig { 
 	public MembersOnlyApplication() {
 		packages("com.MembersOnly");
+		packages("com.Model2");
 	}
 
 }

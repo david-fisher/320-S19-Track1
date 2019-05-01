@@ -26,7 +26,7 @@ public class IRVService {
         String CVV = json_payload.getString("CVV"); 
         System.out.println(firstName);
         
-        //INSERT REGISTRATION METHOD
+        //TODO: CALL REGISTRATION METHOD AND RETURN PROPER RESULT
         
         JSONObject store_result = new JSONObject();
         store_result.put("result", "");
@@ -44,22 +44,32 @@ public class IRVService {
 		    charge = Double.parseDouble(payload);
 		}
 		catch(Exception e) {
-			return Response.status(200).entity("invalid").build();
+			return Response.status(200).entity("error").build();
 		}
 		
-		//INSERT Model2 Code to run verification and check the value.
-        JSONObject json = new JSONObject();
-        json.put("result", "");
-        String new_json = json.toString();
-        System.out.println(new_json);
-        return Response.status(200).entity(new_json.substring(1)).build();
+		//TODO: INSERT MODEL2 CODE TO VERIFY THE CHARGE
+		
+        JSONObject store_result = new JSONObject();
+        store_result.put("result", "");
+        return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
 	
 	@POST
 	@Path("/storePassword")
 	@Produces("application/json")
+	/***
+	 * 
+	 * @param payload: pass, confirmPass
+	 * @return
+	 */
 	public Response storePassword(String payload) {
+		JSONObject json_payload = new JSONObject(payload);
+		String pass = json_payload.getString("pass");
+		String confirmPass = json_payload.getString("confirmPass");
+		
+		//CALL THE CODE IN MODEL2 to store the password.
 		return null;
+		//return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
 	
 	
