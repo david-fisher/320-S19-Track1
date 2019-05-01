@@ -257,6 +257,17 @@ public class DBAdapter {
 		return null;
 	}
 	
+	public boolean deleteURL(String shortURL) {
+		try {
+			Connection conn = getConnection();
+		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.URL WHERE shortened = '" +shortURL+"'");
+		 }catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
 	
 	public boolean createPost(Post pst) {
 		try {
