@@ -76,18 +76,4 @@ public class User {
 	public String updateAccountInfo(String fieldName, Object data) { // TODO this does not do what it's supposed to
 		return "No Error Occurred";
 	}
-
-	/**
-	 *  Returns an Object containing the data in the specified
-	 *  field within the DB where the desired credential from the 
-	 *  specific User is requested.
-	 *
-	 *  @param  fieldName	String indicating which field in the DB
-	 * 				the data should pulled from
-	 *  @return boolean indicating if it is successful
-	 */
-
-	public Object getRegistrationInfo(String fieldName) {
-		return null;
-	}
 }
