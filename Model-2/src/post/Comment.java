@@ -5,7 +5,7 @@ import user.*;
 
 public class Comment extends Post
 {
-	Post associatedPostID;
+	public Post associatedPostID;
 	int pointsForComment = 5;
 
 	/* The constructor for comment will extend from Post

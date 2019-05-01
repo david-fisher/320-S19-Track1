@@ -12,7 +12,13 @@ public class ImagePost extends Post
 	int pointsForPhoto = 10;
 	File file;
 	BufferedImage image;
-	String path;
+	public String path;
+
+
+	public ImagePost(User poster, String postID, String path) { //used to return objects from DB
+		super(poster, postID, "");
+		this.path = path;
+	}
 
 	public ImagePost(User poster, String postID, File file)
 	{

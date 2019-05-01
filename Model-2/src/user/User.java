@@ -4,17 +4,33 @@ import stripe.*;
 import db.*;
 
 public class User {
-	
-	protected String email;
-	protected String firstName;
-	protected String lastName;
-	protected CreditCard creditCard;
-	protected String stripeCreditCardID;
-	protected int points;
-	protected User invitedBy;
-	protected boolean isValidated; // Is User currently verified by CC?
-	protected String type;
-	
+
+	public String email;
+	public String firstName;
+	public String lastName;
+	public CreditCard creditCard;
+	public String stripeCreditCardID;
+	public int points;
+	public User invitedBy;
+	public boolean isValidated; // Is User currently verified by CC?
+	public String type;
+
+	//Additional fields made by DB team
+	public String address;
+	public String city;
+	public String state;
+	public String zip;
+	public String ccNum;
+	public String ccv;
+	public String expM;
+	public String expY;
+	public String birthday;
+	public String phone;
+	public boolean hasInvited;
+	public boolean privacy;
+	public boolean loggedIn;
+	public String password;
+
 	public User(String email,
 				String firstName,
 				String lastName,

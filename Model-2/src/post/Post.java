@@ -9,13 +9,12 @@ import java.util.ArrayList;
 
 public class Post
 {
-	User poster;
-	String postID;
+	public User poster;
+	public String postID;
 	public String text;
 	DBAdapter DB;
 	public int flag = 0;
 	int pointsForPost = 5;
-	DBAdapter DB;
 	public Timestamp timestamp;
 	public ArrayList<Comment> comments;
 	public ArrayList<String> hashtags;
@@ -42,7 +41,6 @@ public class Post
 		this.createTimeStamp();
 		this.addPoints();
 		this.parseForHashtags();
-		this.addToDB();
 	}
 
    /* This function will parse the text for hashtags
@@ -207,9 +205,6 @@ public class Post
 
 	public void sendToDB()
 	{
-		if(DB.getPost(poster))
-		{
 
-		}
 	}
 }
