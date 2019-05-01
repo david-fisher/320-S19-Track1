@@ -31,6 +31,11 @@ public class User {
 		this.invitedBy = invitedBy;
 		this.isValidated = false;
 		this.type = type;
+		this.addUserToDB();
+	}
+
+	public void addUserToDB() {
+		//if(!DBAdapter.getUser(this.email)) DBAdapter.post(this);
 	}
 	
 	public boolean checkIfUserValid(double charge) {
