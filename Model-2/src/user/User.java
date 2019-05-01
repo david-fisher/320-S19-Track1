@@ -46,7 +46,7 @@ public class User {
 	 *  @return void
 	 */
 
-	public void addPoints(int points) { // TODO this does not do what it's supposed to
+	public void addPoints(int points) {
 		//DBAdapter.setUserPoints(this.email, points);
 	}
 
