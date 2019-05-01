@@ -81,8 +81,9 @@ public class DBAdapter {
 					usr.hasInvited = (rs.getInt("hasInvited") == 1);
 					usr.isValidated = (rs.getInt("validAccount") == 1);
 					usr.privacy = rs.getBoolean("private");
+					return usr;
 				}
-				return usr;
+				return (Admin)usr;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -185,12 +186,46 @@ public class DBAdapter {
 		return true;
 	}
 	
+	public Post getPost(String postID) {
+		try {
+			getConnection();
+			int id = Integer.parseInt(postID);
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE postID = '"+id+"'");
+			while(rs.next()) {
+				String type = rs.getString("type");
+				Timestamp time = rs.getTimestamp("time");
+				String author = rs.getString("userID");
+				String text = rs.getString("text");
+				int flag = rs.getInt("explicit");
+				if (type == "comment") { //set  fields
+					Post parent = this.getPost(Integer.toString(rs.getInt("parentID")));
+					Comment com = new Comment(this.getUser(author),Integer.toString(id),text, parent);
+					com.timestamp = time;
+					com.flag = rs.getInt("explicit");
+					return com;
+				}
+				ResultSet comments = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Comments WHERE parentID = '"+postID+"'");
+				ArrayList<Comment> coms;
+				while(rs.next()) { //populate comments
+					coms.add((Comment)getPost(Integer.toString(comments.getInt("parentID"))));
+				}
+				if (type == "imagePost") { //do later
+				}
+				//return (admin)usr;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
 	
 	private <T> String formatPostUpdateString(int id, String varname, T var) {
 		return String.format("UPDATE TrackOneDB.Post SET %s = '"+var+"' WHERE postID = '"+id+"'", varname);
 	}
 	
-	public <T> boolean updatePost(int id, String field, T newValue) {
+	public <T> boolean updatePost(int id, String field, T newValue) { //do not use when updating comments
 		String query = formatPostUpdateString(id, field, newValue);
 		try {
 			getConnection();

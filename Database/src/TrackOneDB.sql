@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Post` (
   `postID` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(45) NOT NULL,
   `time` DATETIME NOT NULL,
-  `userID` INT NOT NULL,
+  `userID` VARCHAR(45) NOT NULL,
   `text` VARCHAR(512) NOT NULL,
   `explicit` TINYINT(1) NULL,
   `visible` TINYINT(1) NULL,
