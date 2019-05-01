@@ -163,7 +163,7 @@ public class DBAdapter {
 			while(rs0.next()) {
 				filterID = rs0.getInt("photoID");	
 			}
-		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.FilteredPhoto (xPos,yPos,visibleToUser,photoID,filterID) VALUES ('"+filter.xPos+"','"+filter.yPos+"','"+filter.visibleToUser+"','"+filter.photoID+"','"+filterID+"')");
+		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.FilteredPhoto (xPos,yPos,visibleToUser,photoID,filterID) VALUES ('"+filter.xPos+"','"+filter.yPos+"','"+filter.visibleToUser+"','"+filter.photoId+"','"+filterID+"')");
 			
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -181,7 +181,7 @@ public class DBAdapter {
 			while(rs0.next()) {
 				filterID = rs0.getInt("photoID");	
 			}
-		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.FilteredPhoto WHERE photoID = AND filterID ='" +filter.photoID+ "AND"+filterID+"'");
+		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.FilteredPhoto WHERE photoID = AND filterID ='" +filter.photoId+ "AND"+filterID+"'");
 		 }catch(SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -195,7 +195,7 @@ public class DBAdapter {
 		Connection conn;
 		try {
 			conn=getConnection();
-			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.FilterPhoto WHERE photoID = '"+photo.photoID+"'");
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.FilterPhoto WHERE photoID = '"+photo.photoId+"'");
 			ArrayList<Integer> filterID = new ArrayList<Integer>();
 			while(rs.next()) {
 				filterID.add(rs.getInt("filterID"));
@@ -289,7 +289,7 @@ public class DBAdapter {
 					return com;
 				}
 				ResultSet comments = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Comments WHERE parentID = '"+postID+"'");
-				ArrayList<Comment> coms;
+				ArrayList<Comment> coms = new ArrayList<Comment>();
 				while(rs.next()) { //populate comments
 					coms.add((Comment)getPost(Integer.toString(comments.getInt("parentID"))));
 				}

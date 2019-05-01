@@ -1,13 +1,13 @@
 
 public class Filter extends Photo{
-	int xPos;
-	int ypos;
-	boolean visibleToUser;
+	public int xPos;
+	public int yPos;
+	public boolean visibleToUser;
 	
 	public Filter(int photoId, String photoPath, int xPos, int ypos, boolean visibleToUser) {
 		super(photoId, photoPath);
 		this.xPos = xPos;
-		this.ypos = ypos;
+		this.yPos = ypos;
 		this.visibleToUser = visibleToUser;
 	}
 
