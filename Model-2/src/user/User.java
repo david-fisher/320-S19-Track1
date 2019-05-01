@@ -87,7 +87,7 @@ public class User {
 	 *  @return boolean indicating if it is successful
 	 */
 
-	public Object getRegistrationInfo(String fieldName) { // TODO this does not do what it's supposed to
+	public Object getRegistrationInfo(String fieldName) {
 		return null;
 	}
 }
