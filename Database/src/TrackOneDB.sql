@@ -35,9 +35,10 @@ CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Post` (
   `type` VARCHAR(45) NOT NULL,
   `time` DATETIME NOT NULL,
   `userID` INT NOT NULL,
-  `explicit` TINYINT(1) NOT NULL,
-  `visible` TINYINT(1) NOT NULL,
-  `photoID` INT NOT NULL,
+  `text` VARCHAR(512) NOT NULL,
+  `explicit` TINYINT(1) NULL,
+  `visible` TINYINT(1) NULL,
+  `photoID` INT NULL,
   `parentID` INT NULL,
   PRIMARY KEY (`postID`),
   UNIQUE INDEX `postID_UNIQUE` (`postID` ASC) VISIBLE);
@@ -61,12 +62,6 @@ CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Follow` (
   `userID` INT NOT NULL,
   `follow` INT NOT NULL,
   PRIMARY KEY (`followID`));
-  
-  CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Blocked` (
-  `blockID` INT NOT NULL AUTO_INCREMENT,
-  `userID` INT NOT NULL,
-  `blocked` INT NOT NULL,
-  PRIMARY KEY (`blockID`));
 
 CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Comment` (
   `commentID` INT NOT NULL AUTO_INCREMENT,
