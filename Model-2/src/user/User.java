@@ -30,7 +30,9 @@ public class User {
 	public boolean privacy;
 	public boolean loggedIn;
 	public String password;
-	DBAdapter DB;
+
+	public DBAdapter DB;
+
 	public User(String email,
 				String firstName,
 				String lastName,
@@ -64,19 +66,19 @@ public class User {
 	 *  Increments User point total in the DB by either a positive
 	 *  or negative amount (if points are removed).
 	 *
-	 *  @param
-	 *  @return void
+	 *  @param	points Integer representing the number of points to be
+	 *                 incremented or decremented (using a negative number)
+	 *  @return	void
 	 */
 
 	public void addPoints(int points) {
-		//DBAdapter.setUserPoints(this.email, points);
+		//DB.setUserPoints(this.email, points); // commented out in DBA
 	}
 
 	/**
 	 *  Charges the User’s stored credit card by calling the 
-	 *  adapter.
+	 *  CC adapter
 	 *
-	 *  @param
 	 *  @return boolean indicating if it is successful
 	 */
 
@@ -89,13 +91,21 @@ public class User {
 	 *  for the User’s specific credential to be updated in the DB.
 	 *
 	 *  @param  fieldName	String indicating which field in the DB
-	 * 				the data should be stored in
+	 * 						the data should be stored in
 	 *  @param	data		A generic Object that is the data to be
-	 * 				stored in the DB field.
+	 * 						stored in the DB field.
 	 *  @return boolean indicating if it is successful
 	 */
 
-	public String updateAccountInfo(String fieldName, Object data) { // TODO this does not do what it's supposed to
-		return "No Error Occurred";
+	public String updateAccountInfo(String fieldName, Object data) {
+		if(fieldName.equals("birthday")) {
+			//DB.setUserBirthday(this.email,data); // commented out in DBA
+		} else if(fieldName.equals("card")) {
+			//DB.setUserCard(this.email,data); // commented out in DBA
+		} else if(fieldName.equals("privacy")) {
+			//DB.setUserPrivacy(this.email,data); // commented out in DBA
+		} else return (fieldName + "Account Information Unsuccessfully Updated To: " + data);
+
+		return (fieldName + "Account Information Successfully Updated To: " + data);
 	}
 }
