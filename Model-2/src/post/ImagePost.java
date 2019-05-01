@@ -1,5 +1,6 @@
 package post;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,19 +28,19 @@ public class ImagePost extends Post
 
 		if(this.checkFile(extension))
 		{
-			try
+			if(!CP(file.getName()))
 			{
-				 BufferedImage image = ImageIO.read(file);
-                 String newPhotoPath ="images/src/" + file.getName();
-				 ImageIO.write(image, "png",new File(newPhotoPath));
-                 sendAddressToBD(newPhotoPath);
-                 path = newPhotoPath;
-                 this.addPoints();
-			}
-			catch (IOException ex)
-			{
-			    System.out.println("failed to upload image");
-			    ex.printStackTrace();
+				try {
+					BufferedImage image = ImageIO.read(file);
+					String newPhotoPath = "images/src/" + file.getName();
+					ImageIO.write(image, "png", new File(newPhotoPath));
+					sendAddressToBD(newPhotoPath);
+					path = newPhotoPath;
+					this.addPoints();
+				} catch (IOException ex) {
+					System.out.println("failed to upload image");
+					ex.printStackTrace();
+				}
 			}
 		}
 		else
@@ -84,5 +85,19 @@ public class ImagePost extends Post
 	{
 		//poster.addpoints(this.pointsForPhoto)
 		return;
+	}
+
+	/*
+	 * Anti CP Stub
+	 * Please don't expect this to be anything but a stub
+	 * Because that will send me to prison
+	 */
+	public boolean CP(String filename)
+	{
+		if(filename.equals("shrekImg_stub"))
+		{
+			return true;
+		}
+		return false;
 	}
 }

@@ -1,5 +1,6 @@
 package post;
 
+import db.DBAdapter;
 import user.*;
 
 public class Comment extends Post
@@ -18,13 +19,14 @@ public class Comment extends Post
 		super.pointsForPost = pointsForComment;
 		this.linkPostToComment();
 		this.addPoints();
+		this.sendToDB();
 	}
 
 	/* This function will get the associated posts unique id
 	 * @param none
 	 * @return int that represents the associated test.post id
 	 */
-  public Post getAssociatedPostID()
+    public Post getAssociatedPostID()
 	{
 		return associatedPostID;
 	}
@@ -38,6 +40,8 @@ public class Comment extends Post
     {
       associatedPostID.addComment(this);
     }
+
+
 
    /* Adds Points to the users point stack
 	* @params none

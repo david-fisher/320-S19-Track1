@@ -1,5 +1,6 @@
 package post;
 
+import db.DBAdapter;
 import user.*;
 
 import java.awt.*;
@@ -11,8 +12,10 @@ public class Post
 	User poster;
 	String postID;
 	public String text;
+	DBAdapter DB;
 	public int flag = 0;
 	int pointsForPost = 5;
+	DBAdapter DB;
 	public Timestamp timestamp;
 	public ArrayList<Comment> comments;
 	public ArrayList<String> hashtags;
@@ -31,6 +34,7 @@ public class Post
 		this.postID = postID;
 		this.text = text;
 
+		DB = new DBAdapter();
 		comments = new ArrayList<Comment>();
 		hashtags = new ArrayList<String>();
 		adminHashtags = new ArrayList<String>();
@@ -38,6 +42,7 @@ public class Post
 		this.createTimeStamp();
 		this.addPoints();
 		this.parseForHashtags();
+		this.addToDB();
 	}
 
    /* This function will parse the text for hashtags
@@ -199,18 +204,12 @@ public class Post
 		return;
 	}
 
-	/*
-	 * Anti CP Stub
-	 * Please don't expect this to be anything but a stub
-	 * Because that will send me to prison
-	 */
 
-	public void antiCPKiller(Image possibleCP) {
-		/*if(possibleCP.equals(shrekImg_stub)) {
-			send to moderator
-		} else {
-			allow post
-		}*/
+	public void sendToDB()
+	{
+		if(DB.getPost(poster))
+		{
+
+		}
 	}
-
 }
