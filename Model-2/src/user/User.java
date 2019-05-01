@@ -1,5 +1,6 @@
 package user;
 
+import post.*;
 import stripe.*;
 import db.*;
 
@@ -107,5 +108,16 @@ public class User {
 		} else return (fieldName + "Account Information Unsuccessfully Updated To: " + data);
 
 		return (fieldName + "Account Information Successfully Updated To: " + data);
+	}
+
+	/*
+	 * Admin Functionality
+	 */
+
+	public String editPost(Post post, String text) {
+		if(this.type.equals("admin")) {
+			//DB.setPost(post.postID, text); // commented out in DBA
+			return "Post successfully updated";
+		} else return "Post unsuccessfully updated";
 	}
 }
