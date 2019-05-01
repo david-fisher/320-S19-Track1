@@ -30,7 +30,7 @@ public class User {
 	public boolean privacy;
 	public boolean loggedIn;
 	public String password;
-
+	DBAdapter DB;
 	public User(String email,
 				String firstName,
 				String lastName,
@@ -47,11 +47,12 @@ public class User {
 		this.invitedBy = invitedBy;
 		this.isValidated = false;
 		this.type = type;
+		DB = new DBAdapter();
 		this.addUserToDB();
 	}
 
 	public void addUserToDB() {
-		//if(!DBAdapter.getUser(this.email)) DBAdapter.post(this);
+		if(DB.getUser(this.email) == null ) DB.createUser(this);
 	}
 	
 	public boolean checkIfUserValid(double charge) {
