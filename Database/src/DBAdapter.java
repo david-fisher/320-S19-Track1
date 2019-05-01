@@ -134,10 +134,94 @@ public class DBAdapter {
 	// follower follows followee lol
 	// #english
 	
+	public boolean createPhoto(Photo photo) {
+		try {
+			Connection conn = getConnection();
+		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Photo (original) VALUES ('"+photo.photoPath+"')");
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean deletePhoto(Photo photo) {
+		try {
+			Connection conn = getConnection();
+		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Photo WHERE original = '" +photo.photoPath+ "'");
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean insertFilter(Filter filter) {
+		try {
+			Connection conn = getConnection();
+			ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.photoPath+"'");
+		    int filterID=0;
+			while(rs0.next()) {
+				filterID = rs0.getInt("photoID");	
+			}
+		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.FilteredPhoto (xPos,yPos,visibleToUser,photoID,filterID) VALUES ('"+filter.xPos+"','"+filter.yPos+"','"+filter.visibleToUser+"','"+filter.photoID+"','"+filterID+"')");
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	//assuming the photoID is the original photo, and the path is the filter.
+	
+	public boolean deleteFilter(Filter filter) {
+		try {
+			Connection conn = getConnection();
+			ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.photoPath+"'");
+		    int filterID=0;
+			while(rs0.next()) {
+				filterID = rs0.getInt("photoID");	
+			}
+		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.FilteredPhoto WHERE photoID = AND filterID ='" +filter.photoID+ "AND"+filterID+"'");
+		 }catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	//I am being creative here about the format and I am not sure the format of matching two columns in the table.
+	//I will fix it after asking Caroline.
+	
+	public int[] getFilters(Photo photo) {
+		Connection conn;
+		try {
+			conn=getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.FilterPhoto WHERE photoID = '"+photo.photoID+"'");
+			ArrayList<Integer> filterID = new ArrayList<Integer>();
+			while(rs.next()) {
+				filterID.add(rs.getInt("filterID"));
+			}
+			int[] filters = new int[filterID.size()];
+			for(int i=0;i<filterID.size();i++) {
+				filters[i] = filterID.get(i);
+			 }
+			return filters;
+			}
+		 catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	//return a list of filterID. I have this structure in case they want us to return the path.
+	
+	
+	
 	public boolean createURL(String original, String shortened) {
 		try {
 			Connection conn = getConnection();
-		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.URL (original,shortened) VALUES ('"+original+"','"+shortened+")");
+		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.URL (original,shortened) VALUES ('"+original+"','"+shortened+"')");
 		} catch(SQLException e) {
 			e.printStackTrace();
 			return false;
