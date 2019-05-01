@@ -144,6 +144,18 @@ public class DBAdapter {
 		return true;
 	}
 	
+	public Photo getPhoto(String id) {
+		int ID = Integer.parseInt(id);
+		try {
+			Connection conn = getConnection();
+		    int rs = conn.createStatement().executeUpdate("SELECT * FROM TrackOneDB.Photo WHERE photoID = '" +ID+ "'");
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
 	public boolean deletePhoto(Photo photo) {
 		try {
 			Connection conn = getConnection();
@@ -290,12 +302,20 @@ public class DBAdapter {
 				}
 				ResultSet comments = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Comments WHERE parentID = '"+postID+"'");
 				ArrayList<Comment> coms = new ArrayList<Comment>();
-				while(rs.next()) { //populate comments
+				while(comments.next()) { //populate comments
 					coms.add((Comment)getPost(Integer.toString(comments.getInt("parentID"))));
 				}
 				if (type == "imagePost") { //do later
+					String path = this.getPhoto(rs.getString("photoID")).photoPath;
+					ImagePost imgP = new ImagePost(this.getUser(author), postID, path);
+					imgP.timestamp = time;
+					imgP.flag = rs.getInt("explicit");
+					return imgP;
 				}
-				//return (admin)usr;
+				Post pst = new Post(this.getUser(author), postID, text);
+				pst.flag = rs.getInt("explicit");
+				pst.timestamp = time;
+				return pst;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
