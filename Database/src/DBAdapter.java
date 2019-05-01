@@ -1400,7 +1400,7 @@ Connection conn;
 	
 	public Post[] getPostFollowing(User usr) {
 		String email = usr.email;
-		int userID;
+		int userID=0;
 		try {
 			getConnection();
 			ResultSet rs = conn.createStatement().executeQuery("Select * FROM TrackOneDB.User WHERE email = '"+ email + "'");
@@ -1422,7 +1422,7 @@ Connection conn;
 					Timestamp time = rs.getTimestamp("time");
 					String text = rs.getString("text");
 					ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + arr.get(i));
-					String email2;
+					String email2= "";
 					while(rs2.next()) {
 						email = rs2.getString("email");
 					}
@@ -1454,7 +1454,7 @@ Connection conn;
 				int userID = rs.getInt("userID");
 				String text = rs.getString("text");
 				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
-				String email;
+				String email ="";
 				while(rs2.next()) {
 					email = rs2.getString("email");
 				}
