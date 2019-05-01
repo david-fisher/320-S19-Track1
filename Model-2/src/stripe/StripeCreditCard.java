@@ -176,6 +176,8 @@ public class StripeCreditCard implements CreditCard {
 	 */
 	@Override
 	public String charge() {
+		if (isBanned) { return "Credit card is banned"; }
+
 		error = "";
 		Token chargeTok = createCard();
 		
@@ -229,8 +231,11 @@ public class StripeCreditCard implements CreditCard {
 	 */
 	@Override
 	public void setSubscription(boolean on) {
+		// Avoid enabling subscriptions on a banned card
+		if (isBanned) { return; }
+
 		Map<String, Object> item = new HashMap<String, Object>();
-		
+
 		Map<String, Object> items = new HashMap<String, Object>();
 		items.put("0", item);
 		

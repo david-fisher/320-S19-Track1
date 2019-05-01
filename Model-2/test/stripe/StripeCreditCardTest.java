@@ -1,13 +1,13 @@
 package stripe;
 
-import org.junit.jupiter.api.Test;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
+import org.junit.Test;
 import stripe.*;
 
 public class StripeCreditCardTest {
-	
+
 	@Test
 	public void testCreateCard() {
 		// Define the Stripe key we're using
@@ -35,7 +35,7 @@ public class StripeCreditCardTest {
 	public void testVerifyValid() {
 		// Define the Stripe key we're using
 		Stripe.apiKey = "sk_test_gCabH088eiNoFnUbVBwfKCLV00p4slRZXy";
-				
+
 		// Necessary fields
 		String email = "test@gmail.com";
 		String cardNum = "4000056655665556";
@@ -342,5 +342,27 @@ public class StripeCreditCardTest {
 		assert amount >= 0.50;
 
 		assert testCard.verifyCharge(0.31) == false;
+	}
+
+	@Test
+	public void testChargeBanned() {
+		// Define the Stripe key we're using
+		Stripe.apiKey = "sk_test_gCabH088eiNoFnUbVBwfKCLV00p4slRZXy";
+
+		// Necessary fields
+		String email = "test@gmail.com";
+		String cardNum = "4000056655665556";
+		String zipCode = "00000";
+		String cvv = "123";
+		String exp_month = "10";
+		String exp_year = "2020";
+
+		// Create the test card with the information above
+		StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode,
+				 									     cvv, exp_month, exp_year);
+
+		testCard.setBanned(true);
+		String charge = testCard.charge();
+		assert charge.equals("Credit card is banned");
 	}
 }
