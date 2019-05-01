@@ -91,14 +91,12 @@ public class DBAdapter {
 		return null;
 	}
 	
-	private <T> String formatUpdateString(String email, String varname, T var) {
-		return String.format("UPDATE TrackOneDB.USER SET %s = '"+var+"' WHERE email = '"+email+"'", varname);
+	private <T> String formatUserUpdateString(String email, String varname, T var) {
+		return String.format("UPDATE TrackOneDB.User SET %s = '"+var+"' WHERE email = '"+email+"'", varname);
 	}
 	
 	public <T> boolean updateUser(String email, String field, T newValue) {
-		User oldUser = this.getUser(email);
-		if (oldUser == null) return false;
-		String query = formatUpdateString(email, field, newValue);
+		String query = formatUserUpdateString(email, field, newValue);
 		try {
 			getConnection();
 			int rs = conn.createStatement().executeUpdate(query);
@@ -109,7 +107,7 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public boolean deleteUser(String email) {
+	public boolean deleteUser(String email) { //delete posts all posts users made?
 		try {
 			getConnection();
 			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.User WHERE email = '" +email+ "'");
@@ -166,15 +164,51 @@ public class DBAdapter {
 	public boolean createPost(Post pst) {
 		try {
 			getConnection();
+			int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Post (postID, time, text, userID) VALUES ('" +Integer.parseInt(pst.postID)+"','" +pst.timestamp+"','" +pst.text+"','" +pst.poster.email+"')");
+			this.updatePost(Integer.parseInt(pst.postID), "explicit", 0); //double check what the specific values are
+			this.updatePost(Integer.parseInt(pst.postID), "visible", 0); //double check what the specific values are
 			if (pst instanceof Comment) { //add to post table then add to comment table
 				Comment com = (Comment)pst;
-				int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Post (type, text, parentID) VALUES ('"+com.postID+"','" +com.text+"','" +com.associatedPostID+"')");
-				//int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Comment (commentID, text, parentID) VALUES ('"+com.postID+"','" +com.text+"','" +com.associatedPostID+"')");
+				this.updatePost(Integer.parseInt(com.postID), "type", "comment");
+				this.updatePost(Integer.parseInt(com.postID), "parentID", Integer.parseInt(com.postID));
+				int rs2 = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Comment (text, parentID, childID) VALUES ('"+com.text+"','" +Integer.parseInt(com.associatedPostID.postID)+"','" +Integer.parseInt(com.postID)+"')");
 			}
 			else if (pst instanceof ImagePost) { //add to post table then add to image table & any other relevant tables
-				//add to post table
-				//then add image to image table
+				ImagePost img = (ImagePost)pst;
+				this.updatePost(Integer.parseInt(img.postID), "type", "imagePost");
+				//then add image to image table and add filters to table
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	
+	private <T> String formatPostUpdateString(int id, String varname, T var) {
+		return String.format("UPDATE TrackOneDB.Post SET %s = '"+var+"' WHERE postID = '"+id+"'", varname);
+	}
+	
+	public <T> boolean updatePost(int id, String field, T newValue) {
+		String query = formatPostUpdateString(id, field, newValue);
+		try {
+			getConnection();
+			int rs = conn.createStatement().executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	
+	public boolean deletePost(String id) { //delete posts all posts users made?
+		try {
+			getConnection();
+			int pstID = Integer.parseInt(id);
+			//delete photos and filters before deleting post?
+			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +pstID+ "'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
