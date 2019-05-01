@@ -1347,13 +1347,110 @@ Connection conn;
 		//stub
 		return new JSONObject();
 	}
-
-	public JSONObject getPost(int id) {
+	*/
+	public Post[] getPost(int num) {
 		//general function - returns entire post object.
-		//stub
-		return new JSONObject();
+		Post[] arr = new Post[num];
+		int pos = 0;
+		try {
+			getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post ORDER BY time DESC LIMIT " + num);
+			while(rs.next()) {
+				String postID = Integer.toString(rs.getInt("postID"));
+				//String type = rs.getString("type");
+				int explicit = rs.getInt("explicit");
+				Timestamp time = rs.getTimestamp("time");
+				int userID = rs.getInt("userID");
+				String text = rs.getString("text");
+				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
+				String email;
+				while(rs2.next()) {
+					email = rs2.getString("email");
+				}
+				arr[0] = new Post(getUser(email), postID, text);
+				arr[0].timestamp = time;
+				arr[0].setFlag(explicit);
+				pos ++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return arr;
 	}
-
+	
+	public Post[] getPostFollowing(User usr) {
+		String email = usr.email;
+		int userID;
+		try {
+			getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("Select * FROM TrackOneDB.User WHERE email = '"+ email + "'");
+			while (rs.next()) {
+				userID = rs.getInt("userID");
+			}
+			ArrayList<Integer> arr = new ArrayList<Integer>();
+			rs = conn.createStatement().executeQuery("Select * FROM TrackOneDB.Follow WHERE userID = " + userID);
+			while(rs.next()) {
+				arr.add(rs.getInt("follow"));
+			}
+			ArrayList<Post> postArr = new ArrayList<Post>();
+			for(int i=0; i<arr.size(); i++) {
+				rs=conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE userID =" + arr.get(i));
+				while(rs.next()) {
+					String postID = Integer.toString(rs.getInt("postID"));
+					//String type = rs.getString("type");
+					int explicit = rs.getInt("explicit");
+					Timestamp time = rs.getTimestamp("time");
+					String text = rs.getString("text");
+					ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + arr.get(i));
+					String email2;
+					while(rs2.next()) {
+						email = rs2.getString("email");
+					}
+					Post p = new Post(getUser(email2), postID, text);
+					p.timestamp = time;
+					p.setFlag(explicit);
+					postArr.add(p);
+				}
+			}
+			//sort by datetime****
+			return (Post[]) postArr.toArray();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	
+	}
+	
+	public Post[] getFlaggedPost(int x) {
+		ArrayList<Post> arr = new ArrayList<Post>();
+		try {
+			getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE explicit = "+ x);
+			while(rs.next()) {
+				String postID = Integer.toString(rs.getInt("postID"));
+				//String type = rs.getString("type");
+				int explicit = rs.getInt("explicit");
+				Timestamp time = rs.getTimestamp("time");
+				int userID = rs.getInt("userID");
+				String text = rs.getString("text");
+				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
+				String email;
+				while(rs2.next()) {
+					email = rs2.getString("email");
+				}
+				Post p = new Post(getUser(email), postID, text);
+				p.timestamp = time;
+				p.setFlag(explicit);
+				arr.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return (Post[]) arr.toArray();
+	}
+/*
 	public JSONObject setPost(int id, JSONObject post) {
 		//general function - sets all post fields based on input object
 		//stub
@@ -1533,5 +1630,5 @@ Connection conn;
 		//adapter.setUserType("ckim9@umass.edu", "admin");
 		
 	}
-
-} */
+*/
+} 
