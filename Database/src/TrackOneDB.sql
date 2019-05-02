@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `TrackOneDB`.`URL` (
 CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Invite` (
   `inviteID` INT NOT NULL AUTO_INCREMENT,
   `inviter` VARCHAR(45) NOT NULL,
-  `code` INT NOT NULL,
+  `code` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`inviteID`),
   UNIQUE INDEX `inviteID_UNIQUE` (`inviteID` ASC) VISIBLE);
 
