@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 
+
 import java.sql.*;
 import java.util.ArrayList;
 import login.*;
@@ -106,7 +107,7 @@ public class DBAdapter {
                     usr.privacy = rs.getBoolean("private");
                     return usr;
                 }
-                return (Admin)usr;
+                //return (Admin)usr;
             }
         } catch (SQLException e) {
             e.printStackTrace();
