@@ -20,12 +20,13 @@ class DBTestSuite {
 		Connection conn;
 		
 		try {		
+			System.out.println("Attempting Connection");
 			conn = DriverManager.getConnection(DBAddress,"root","root");
-			System.out.println("Log: Connection Established!");
-			conn.close();
+			//conn.close();
 			return true;
 		}
 		catch(SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 		
@@ -152,7 +153,7 @@ class DBTestSuite {
 		//create a URL entry, then fetch that URL from the DB.
 		DB.createURL("www.umass.edu","u.edu");
 		
-		if(DB.getOriginalURL("u.edu") == "www.umass.edu") {
+		if(DB.getOriginalURL("u.edu").equals("www.umass.edu")) {
 			return true;
 		}
 		
@@ -198,6 +199,8 @@ class DBTestSuite {
 	
 	public static void main(String[] args) {
 		DBTestSuite test = new DBTestSuite();
+		System.out.println(test.testConnection());
+		System.out.println(test.testURLCreation());
 	}
 	
 }

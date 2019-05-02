@@ -13,11 +13,21 @@ public class DBAdapter {
 	
 	// USER FUNCTIONS
 	private Connection getConnection() throws SQLException{
-		//function used to get connection to database
-		if(conn != null) return conn;
-		Connection conn = DriverManager.getConnection(DBAddress,"root","root");
-		System.out.println("Log: Connection Established!");
-		return conn;
+		try {		
+			System.out.println("Attempting Connection");
+			conn = DriverManager.getConnection(DBAddress,"root","root");
+			//conn.close();
+			return conn;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+//		//function used to get connection to database
+//		if(conn != null) return conn;
+//		Connection conn = DriverManager.getConnection(DBAddress,"root","root");
+//		//System.out.println("Log: Connection Established!");
+//		return conn;
 	}
 	
 	public boolean createUser(User usr) {
@@ -243,11 +253,15 @@ public class DBAdapter {
 	public boolean createURL(String original, String shortened) {
 		try {
 			this.getConnection();
-			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.URL SET original = ?, shortened = ?");
-		    statement.setString(1, original);
+			//System.out.println("Connection is null: " + (conn==null));
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.URL(original, shortened) VALUES(?, ?)");// original = ?, shortened = ?");
+			statement.setString(1, original);
 		    statement.setString(2, shortened);
 		    statement.executeUpdate();
 		 } catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}catch(NullPointerException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -258,7 +272,10 @@ public class DBAdapter {
 	public String getOriginalURL(String shortened){
 		try {
 			this.getConnection();
-			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.URL WHERE shortened = '"+shortened+"'");
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM TrackOneDB.URL WHERE shortened = ?");
+			statement.setString(1, shortened);
+			ResultSet rs = statement.executeQuery();
+			//ResultSet rs = conn.createStatement().executeQuery(statement);//"SELECT * FROM TrackOneDB.URL WHERE shortened = '"+shortened+"'");
 		    while (rs.next()) {
 		    	String original = rs.getString("original");
 			    return original;
