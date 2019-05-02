@@ -43,25 +43,25 @@ public class DBAdapter {
 		    statement.setInt(6, log);
 		    System.out.println(statement.toString());
 		    statement.executeUpdate();
-//		    if (this.updateUser(usr.email, "loggedIn", log) != true) return false;
-//		    if (usr.type == "member") { 
-//				if (this.updateUser(usr.email, "address", usr.address) == false) return false;
-//				if (this.updateUser(usr.email, "city", usr.city)== false) return false;
-//				if (this.updateUser(usr.email, "state", usr.state)== false) return false;
-//				if (this.updateUser(usr.email, "zip", usr.zip)== false) return false;
-//				if (this.updateUser(usr.email, "ccNum", usr.ccNum)== false) return false;
-//				if (this.updateUser(usr.email, "ccv", usr.ccv)== false) return false;
-//				if (this.updateUser(usr.email, "ccExpMon", usr.expM)== false) return false;
-//				if (this.updateUser(usr.email, "ccExpYr", usr.expY)== false) return false;
-//				//this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
-//				if (this.updateUser(usr.email, "phone", usr.phone)== false) return false;
-//				if (this.updateUser(usr.email, "birthday", usr.birthday)== false) return false;
-//				if (this.updateUser(usr.email, "points", usr.points)== false) return false;
-//				if (this.updateUser(usr.email, "inviter", usr.invitedBy)== false) return false;
-//				if (this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0)== false) return false;
-//				if (this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0)== false) return false;
-//				if (this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0)== false) return false;
-//			}
+		    if (this.updateUser(usr.email, "loggedIn", log) != true) return false;
+		    if (usr.type == "member") { 
+				if (this.updateUser(usr.email, "address", usr.address) == false) return false;
+				if (this.updateUser(usr.email, "city", usr.city)== false) return false;
+				if (this.updateUser(usr.email, "state", usr.state)== false) return false;
+				if (this.updateUser(usr.email, "zip", usr.zip)== false) return false;
+				if (this.updateUser(usr.email, "ccNum", usr.ccNum)== false) return false;
+				if (this.updateUser(usr.email, "ccv", usr.ccv)== false) return false;
+				if (this.updateUser(usr.email, "ccExpMon", usr.expM)== false) return false;
+				if (this.updateUser(usr.email, "ccExpYr", usr.expY)== false) return false;
+				//this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
+				if (this.updateUser(usr.email, "phone", usr.phone)== false) return false;
+				if (this.updateUser(usr.email, "birthday", usr.birthday)== false) return false;
+				if (this.updateUser(usr.email, "points", usr.points)== false) return false;
+				if (this.updateUser(usr.email, "inviter", usr.invitedBy)== false) return false;
+				if (this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0)== false) return false;
+				if (this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0)== false) return false;
+				if (this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0)== false) return false;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -102,7 +102,7 @@ public class DBAdapter {
 					usr.privacy = rs.getBoolean("private");
 					return usr;
 				}
-				return (Admin)usr;
+				return usr;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -151,6 +151,7 @@ public class DBAdapter {
 		    statement.setObject(1, newValue);
 		    statement.setString(2, email);
 		    statement.executeUpdate();
+		    System.out.println(statement.toString());
 		    return true;
 			//int rs = conn.createStatement().executeUpdate(query);
 		} catch (SQLException e) {

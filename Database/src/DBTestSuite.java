@@ -43,35 +43,36 @@ class DBTestSuite {
 		admin.type = "admin";
 		if(db.createUser(admin)) { System.out.println("Admin Successfully Created"); }
 		else { System.out.println("Admin Unsuccessfully Created."); }
-//		if(db.deleteUser(admin.email)) { System.out.println("Admin Sucessfully Deleted"); };
-//		User member = new User("noobkiller69@fortnite.edu", "Korg", "Rockman", 200, "swamy@umass.edu");
-//		member.address = "100 Street Lane";
-//		member.city = "Townsville";
-//		member.state = "LA";
-//		member.zip = "42069";
-//		member.ccNum = "111111111111";
-//		member.ccv = "123";
-//		member.expM = "Sept";
-//		member.expY = "42069";
-//		member.birthday = "aaaaaa";
-//		member.phone = "2222222";
-//		member.password = "sss";
-//		member.hasInvited = false;
-//		member.loggedIn = true; // seems unecessary to me, included in meantime
-//		member.isValidated = true; // if user is currently verified by credit card
-//		member.privacy = false;
-//		String q = "www";
-//		if(db.createUser(member)) { System.out.println("Korg Successfully Created"); }
-//		if(db.updateUser("noobkiller69@fortnite.edu","firstName","Borg")) {
-//			System.out.println("update borked");
-//		}
-//		User newUser = db.getUser("noobkiller69@fortnite.edu");
-//		if (newUser == null) { System.out.println("wrong"); return; }
-//		if(newUser.firstName == "Borg"){
-//			System.out.println("User Successfully Updated");
-//			db.deleteUser("noobkiller69@fortnite.edu");
-//		}
-//		else { System.out.println("User Unsuccessfully Updated"); }
+		if(db.deleteUser(admin.email)) { System.out.println("Admin Sucessfully Deleted"); };
+		User member = new User("noobkiller69@fortnite.edu", "Korg", "Rockman", "password1", "swamy@umass.edu");
+		member.type = "member";
+		member.address = "100 Street Lane";
+		member.city = "Townsville";
+		member.state = "LA";
+		member.zip = "42069";
+		member.ccNum = "111111111111";
+		member.ccv = "123";
+		member.expM = "09";
+		member.expY = "2019";
+		member.birthday = "aaaaaa";
+		member.phone = "2222222";
+		member.password = "sss";
+		member.hasInvited = false;
+		member.loggedIn = true; // seems unecessary to me, included in meantime
+		member.isValidated = true; // if user is currently verified by credit card
+		member.privacy = false;
+		String q = "www";
+		if(db.createUser(member)) { System.out.println("Korg Successfully Created"); }
+		if(db.updateUser("noobkiller69@fortnite.edu","firstName","Borg")) {
+			System.out.println("update borked");
+		}
+		User newUser = db.getUser("noobkiller69@fortnite.edu");
+		if (newUser == null) { System.out.println("wrong"); return; }
+		if(newUser.firstName.equals("Borg")){
+			System.out.println("User Successfully Updated");
+			db.deleteUser("noobkiller69@fortnite.edu");
+		}
+		else { System.out.println("User Unsuccessfully Updated"); }
 	}
 	
 	@Test
