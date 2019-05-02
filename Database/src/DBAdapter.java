@@ -279,9 +279,9 @@ public class DBAdapter {
 			Connection conn = getConnection();
 			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.Post SET postID = ?, time = ?, text = ?, userID = ?");
 		    statement.setInt(1, Integer.parseInt(pst.postID));
-		    statement.set(2, pst.timestamp); // I am not sure about this one
+		    statement.setTimestamp(2, pst.timestamp); 
 		    statement.setString(3, pst.text);
-		    statement.setInt(4, pst.userID); //And this one
+		    statement.setString(4, pst.poster.email);
 		    statement.executeUpdate();
 			this.updatePost(Integer.parseInt(pst.postID), "explicit", 0); //double check what the specific values are
 			this.updatePost(Integer.parseInt(pst.postID), "visible", 0); //double check what the specific values are
