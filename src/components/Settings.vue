@@ -96,6 +96,12 @@ export default {
       inviteLink: ''
     }
   },
+  beforeCreate: function(){
+    console.log(this.$session.get('email'))
+    if(!this.$session.exists()){
+      this.$router.push('/')
+    }
+  },
   methods: {
     verifyFormCC: function(event){
       event.preventDefault()
@@ -108,8 +114,14 @@ export default {
       } else{
         //Some fancy networking shit
         const path = this.ip + '/updateCCAddress'
+        
+        const data = {
+          form: this.form1,
+          email: this.$session.get('email'),
+          password: this.$session.get('password'),
+        }
 
-        this.$http.post(path, this.form1)
+        this.$http.post(path, data)
         .then(response => {
           console.log(response)
           var retVal = JSON.parse('{' + response.bodyText)

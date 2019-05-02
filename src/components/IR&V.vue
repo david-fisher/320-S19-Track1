@@ -55,6 +55,23 @@
             </div>
           </div>
           <br>
+          <div class="field">
+            <label class="label">Registration Code:</label>
+            <br>
+            <div class="ui fluid input">
+              <input name="registrationCode" v-model="form.registrationCode" class="input" type="text" placeholder="Registration Code" required>
+            </div>
+          </div>
+          <br>
+          <div class="field">
+            <label class="label">Password:</label>
+            <br>
+            <div class="ui fluid input">
+              <input name="password" v-model="form.password" class="input" type="text" placeholder="Password" required>
+              <input name="confpass" v-model="form.confpass" class="input" type="text" placeholder="Confirm Password" required>
+            </div>
+          </div>
+          <br>
           <div class="submit button">
             <input class="ui black button" style="color:#D6A200" type="submit" value="Submit">
           </div>
@@ -111,7 +128,10 @@ export default {
         email: '',
         creditCardNumber: '',
         expiration: '',
-        CVV: ''
+        CVV: '',
+        registrationCode: '',
+        password: '',
+        confpass: ''
       },
       disabled: true,
       submitText: '',
@@ -139,7 +159,7 @@ export default {
           var retVal = JSON.parse('{' + response.bodyText)
           if(retVal.result.length == 0){
             this.submitText = "You should be redirected shortly..."
-            this.$router.push('/accountcreation')
+            this.$router.push('/login')
           } else {
             this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
           }
@@ -173,24 +193,34 @@ export default {
         this.storeInfo()
       }
     },
+    passwordsEqual: function(){
+      return this.form.password == this.form.confpass
+    },
     storeInfo: function(){
-      const path = this.ip + '/storeInfo'
-  		
-      this.$http.post(path, this.form)
-      .then(response => {
-        console.log(response)
-        var retVal = JSON.parse('{' + response.bodyText)
-        if(retVal.result.length == 0){
-          this.submitText = "Your card has been charged. Please check the amount and enter it into the box below."
-          this.disabled = false
-        } else {
-          this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
-        }
-      })
-      .catch(error => {
-        console.log("Yeah nope")
-        console.log(error)
-      })
+      if(!this.passwordsEqual()){
+        this.submitText = "Yeah, those passwords don't match. Try again." 
+      } else if(this.pass.length < 8){
+        this.submitText = "Nuh uh. Your password must be at least eight characters"
+      } else {
+
+        const path = this.ip + '/storeInfo'
+        
+        this.$http.post(path, this.form)
+        .then(response => {
+          console.log(response)
+          var retVal = JSON.parse('{' + response.bodyText)
+          if(retVal.result.length == 0){
+            this.submitText = "Your card has been charged. Please check the amount and enter it into the box below."
+            this.disabled = false
+          } else {
+            this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
+          }
+        })
+        .catch(error => {
+          console.log("Yeah nope")
+          console.log(error)
+        })
+      }
     },
     verifyForm: function(event){
       event.preventDefault()

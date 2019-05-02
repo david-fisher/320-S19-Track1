@@ -5,11 +5,11 @@
     <h1>Member and Admin Creation Page</h1>
     <form class="form" action="/WebServ/dist/#/storeInfo" method="post" v-on:submit="verifyForm($event)">
       <div>
-        <select v-model="selected">
-          <option v-bind:value="{ role: moderator }">Moderator</option>
-          <option v-bind:value="{ role: admin }">Admin</option>
-          <option v-bind:value="{ role: owner }">Owner</option>
-          <option v-bind:value="{ role: idol }">Idol</option>
+        <select v-model="form.role">
+          <option>Moderator</option>
+          <option>Admin</option>
+          <option>Owner</option>
+          <option>Idol</option>
         </select>
       </div>
       <br>
@@ -50,16 +50,30 @@ export default {
   methods: {
     verifyForm: function(event){
       event.preventDefault();
-      if(this.role.length == 0){
+      if(!this.$session.exists()){
+        this.$router.push('/')
+        return
+      }
+      console.log(this.form.role)
+      console.log(this.form.email)
+      console.log(this.form.pass)
+
+      if(this.form.role.length == 0){
         this.submitText = "You cannot leave role blank. Please make a selection."
-      } else if(this.email.length == 0){
+      } else if(this.form.email.length == 0){
         this.submitText = "You cannot leave email blank. Please input the user's email."
-      } else if(this.pass.length < 8){
+      } else if(this.form.pass.length < 8){
         this.submitText = "Passwords must be at least 8 characters long."
       } else {
         const path = this.ip + '/createUser'
-  		
-        this.$http.post(path, this.form)
+      
+        const data = {
+          form: this.form,
+          email: this.$session.get('email'),
+          password: this.$session.get('password'),
+        }
+
+        this.$http.post(path, data)
         .then(response => {
           console.log(response)
           var retVal = JSON.parse('{' + response.bodyText)
@@ -72,6 +86,7 @@ export default {
         .catch(error => {
           console.log("Yeah nope")
           console.log(error)
+          this.submitText = "There was some kind of communication error. Not sure why. Must be your fault though."
         })
       }
     }

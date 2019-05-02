@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 Vue.use(sui)
 Vue.use(VueResource)
 Vue.use(VueSession)
-Vue.prototype.ip = 'http://cff1c08e.ngrok.io/members-only'
+Vue.prototype.ip = 'http://824e01d8.ngrok.io/members-only'
 
 Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
 

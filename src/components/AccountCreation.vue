@@ -56,6 +56,11 @@ export default {
           console.log(response)
           var retVal = JSON.parse('{' + response.bodyText)
           if(retVal.result.length == 0){
+            if(this.$session.exists()){
+              this.$session.set('password', this.form.pass)
+            } else {
+              this.$router.push('/')
+            }
             this.submitText = "One moment..."
             this.$router.push('/feed')
           } else {
