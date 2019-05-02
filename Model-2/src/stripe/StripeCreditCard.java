@@ -1,6 +1,7 @@
 package stripe;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.stripe.Stripe;
@@ -263,7 +264,17 @@ public class StripeCreditCard implements CreditCard {
 				// Generic Stripe exception
 			}
 		} else {
-			
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("limit", 1);
+			try {
+				SubscriptionCollection subscriptions = Subscription.list(params);
+				List<Subscription> subList = subscriptions.getData();
+				for (Subscription s : subList) {
+					s.cancel();
+				}
+			} catch(StripeException e) {
+				// Generic Stripe exception
+			}
 		}
 	}
 
