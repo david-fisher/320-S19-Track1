@@ -426,8 +426,16 @@ public class DBAdapter {
 		try {
 			this.getConnection();
 			int pstID = Integer.parseInt(id);
+			System.out.println(pstID);
+			//int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.User WHERE email = '" +email+ "'");
+			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +id+ "'");
+//			PreparedStatement statement = conn.prepareStatement("DELETE FROM TrackOneDB.Post WHERE postID = ?");
+//		    System.out.println(statement.toString());
+//		    System.out.println("this can't be right");
+//			statement.setInt(1, pstID);
+//		    statement.executeUpdate();
 			//delete photos and filters before deleting post?
-			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +pstID+ "'");
+			//int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +pstID+ "'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
