@@ -966,7 +966,7 @@ Connection conn;
 		return new JSONObject();
 	}
 	*/
-	public Post[] getPost(int num) {
+	public Post[] getPosts(int num) {
 		//general function - returns entire post object.
 		Post[] arr = new Post[num];
 		int pos = 0;
