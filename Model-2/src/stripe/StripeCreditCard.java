@@ -172,7 +172,7 @@ public class StripeCreditCard implements CreditCard {
 	
 	/**
 	 * Charge a member a randomized amount which will be verified, and return "" if the charge is successful
-	 * @return a String value indicating a successful process, or an error if something is wrong 
+	 * @return a String value indicating a successful process, or an error if something is wrong
 	 */
 	@Override
 	public String charge() {
