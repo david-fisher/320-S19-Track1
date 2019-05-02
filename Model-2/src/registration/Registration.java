@@ -177,7 +177,7 @@ public class Registration {
 	 * */
 
 	public String sexualInsertion(boolean yesOrNo) {
-		if(!yesOrNo) return "Yes.";
+		if(yesOrNo) return "Yes.";
 		return "No.";
 	}
 }
