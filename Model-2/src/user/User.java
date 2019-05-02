@@ -116,7 +116,7 @@ public class User {
 
 	public String editPost(Post post, String text) {
 		if(this.type.equals("admin")) {
-			//DB.setPost(post.postID, text); // commented out in DBA
+			DB.updatePost(Integer.parseInt(post.postID),"text",text);
 			return "Post successfully updated";
 		} else return "Post unsuccessfully updated";
 	}
