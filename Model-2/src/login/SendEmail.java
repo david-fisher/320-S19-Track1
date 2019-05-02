@@ -60,12 +60,10 @@ public class SendEmail {
             msg.setContent(emailContent);
 
             Transport.send(msg);
-            System.out.println("Sent message");
         } catch (MessagingException e) {
-            e.printStackTrace();
+            System.out.println("Message sending Error");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("IO Error");
         }
 
     }
