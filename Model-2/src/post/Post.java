@@ -27,8 +27,7 @@ public class Post
 	 * @param postID the unique test.post ID associated with this test.post
 	 * @param text the text to be populated in the UI
 	 */
-	public Post(User poster, String postID, String text)
-	{
+	public Post(User poster, String postID, String text) {
 		this.poster = poster;
 		this.postID = postID;
 		this.text = text;
@@ -48,20 +47,21 @@ public class Post
 	* @param none
 	* @return an array of the hashtags found in the text
 	*/
-	void parseForHashtags()
-	{
-	  if(text.length() > 0)
-	  {
-      String words[] = text.split(" ");
+	void parseForHashtags() {
+	  if(text.length() > 0) {
+		  String words[] = text.split(" ");
+		  for (String word : words) if (word.charAt(0) == '#') hashtags.add(word);
+	  }
+	}
 
-      for (String word : words)
-      {
-        if (word.charAt(0) == '#')
-        {
-          hashtags.add(word);
-        }
-      }
-    }
+	/* This function will parse the text for hashtags
+	 * @param none
+	 * @return an array of the hashtags found in the text
+	 */
+	public boolean parseForURLs() {
+		// look for URLs
+		kLINK_DETECTION_REGEX = /(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi
+
 	}
 
    /* Removes one hashtag from the arraylist of hashtags
