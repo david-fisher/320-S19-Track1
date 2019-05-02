@@ -26,6 +26,7 @@ public class Registration {
 	private CreditCard card;
 	private String verificationCode;
 	private String invitedBy;
+	private String type;
 
 	public Registration(String firstName,
 						String lastName,
@@ -58,6 +59,7 @@ public class Registration {
 		this.DB = new DBAdapter();
 		this.verificationCode = verificationCode;
 		this.invitedBy = checkVerificationCode();
+		this.type = "member";
 	}
 
 	/**
@@ -160,7 +162,7 @@ public class Registration {
 	 */
 
 	public boolean storeData() {
-		User newUser = new User(this.email, this.firstName, this.lastName, 0, null, "member", this.card);
+		User newUser = new User(this.email, this.firstName, this.lastName, 0, this.invitedBy, this.type, this.card);
 		DB.createUser(newUser);
 		return true;
 	}

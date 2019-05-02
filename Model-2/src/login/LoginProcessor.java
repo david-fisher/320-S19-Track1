@@ -3,29 +3,17 @@ package login;
 import user.*;
 import db.*;
 
-import java.util.HashMap;
-
 public class LoginProcessor {
-	
-	private String email;
-	private String password;
-	DBAdapter DB;
-	
-	public LoginProcessor(String email, String password) {
-		this.email = email;
-		this.password = password;
-		DB = new DBAdapter();
-	}
-	
-	/** 
+
+	/**
 	 *  Returns a boolean value indicating whether the user
 	 *  credentials are correct
 	 *
 	 *  @return boolean indicating if the User has been logged in
 	 */
 
-	public boolean checkCredentials() {
-		User currentUser = DB.getUser(this.email);
+	public static boolean checkCredentials(String email, String password) {
+		User currentUser = Database.adapter.getUser(email);
 		return currentUser.password == password;
 	}
 
@@ -45,7 +33,7 @@ public class LoginProcessor {
 
 	public boolean resetPassword(String newPassword, String verifyNewPassword, String email) {
 		if(newPassword.equals(verifyNewPassword)) { // Check newPassword against verifyNewPassword
-			DB.updateUser(this.email, "password", newPassword);
+			Database.adapter.updateUser(email, "password", newPassword);
 			return true;
 		}
 		return false;
