@@ -49,7 +49,7 @@ public class Comment extends Post
     */
 	void addPoints()
 	{
-    //this.poster.addpoints();
+		this.poster.addPoints(this.pointsForComment);
 		return;
 	}
 

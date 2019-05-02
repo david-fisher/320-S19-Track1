@@ -73,7 +73,7 @@ public class User {
 	 */
 
 	public void addPoints(int points) {
-		//DB.setUserPoints(this.email, points); // commented out in DBA
+		DB.updateUser(email, "points", points);
 	}
 
 	/**

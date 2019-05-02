@@ -41,6 +41,7 @@ public class Post
 		this.createTimeStamp();
 		this.addPoints();
 		this.parseForHashtags();
+		this.sendToDB();
 	}
 
    /* This function will parse the text for hashtags
@@ -156,6 +157,7 @@ public class Post
 	{
 		text = newText;
 		this.parseForHashtags();
+		DB.updatePost(Integer.parseInt(this.postID),"text", text);
 	}
 
    /* getPostId will return the unique postId
@@ -205,6 +207,9 @@ public class Post
 
 	public void sendToDB()
 	{
-
+		if(DB.getPost(postID)==null)
+		{
+			DB.createPost(this);
+		}
 	}
 }

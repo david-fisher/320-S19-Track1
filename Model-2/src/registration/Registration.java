@@ -3,6 +3,8 @@ package registration;
 import db.DBAdapter;
 import stripe.CreditCard;
 import stripe.StripeCreditCard;
+import user.User;
+import java.util.regex.*;
 
 import java.awt.*;
 
@@ -21,6 +23,7 @@ public class Registration {
 	private String expirationMonth;
 	private String expirationYear;
 	private DBAdapter DB;
+	private CreditCard card;
 
 	public Registration(String firstName,
 						String lastName,
@@ -68,24 +71,26 @@ public class Registration {
 	 * @return String indicating if all the checks pass
 	 */
 	public String verify() {
-		if(!emailCheck()) return "Invalid email";
+		if(!emailCheck()) return "Invalid email or already in use";
 		if(!passwordCheck()) return "Passwords don't match";
+		if(!zipCheck()) return "Invalid zip code";
 
-		CreditCard card = new StripeCreditCard(this.email,
-											   this.creditCardNumber,
-											   this.zipCode,
-											   this.cvv,
-											   this.expirationMonth,
-											   this.expirationYear);
 
+
+		CreditCard card = new StripeCreditCard(this.email, this.creditCardNumber, this.zipCode , this.cvv, this.expirationMonth , this.expirationYear);
 		String resultCardValidation = card.verify();
 
-		if(resultCardValidation == null) return "Invalid credit card";
+		if(resultCardValidation == null){
+			return "Invalid credit card";
+		}else{
+			this.card = card;
+		}
 
 		//Create a User object in the database.
 		//NOTE: This user will still be invalid until they verify their charge.
 		storeData();
-		return "";
+
+		return ""; //Empty string is the success code according to Cole
 	}
 
 	/**
@@ -97,9 +102,24 @@ public class Registration {
 	 */
 
 	private boolean emailCheck() {
-		if(DB.getUser(this.email) != null) return false; // verify that email is unique
-		if((!this.email.contains("@")) || (!this.email.contains("."))) return false; // Verify it looks like an email
-		return true;
+		// verify that email is in proper format
+		Pattern p = Pattern.compile("^(.+)@(.+)$"); // https://howtodoinjava.com/regex/java-regex-validate-email-address/
+		Matcher m = p.matcher(this.email);
+		boolean b = m.matches();
+		if(b){
+			//Go do the next check
+		}else{
+			return false;
+		}
+
+		// Check if this email is already use by calling DB.getUser():
+		// If the provided email is not associated with a user (eg. returns null),
+		// Then we know the email is unique
+		if(null == DB.getUser(this.email) ){
+			return false;
+		}else {
+			return true;
+		}
 	}
 
 	/**
@@ -109,8 +129,21 @@ public class Registration {
 	 * @return boolean indicating if the checks pass
 	 */
 
-	private boolean passwordCheck() {
+	private boolean passwordCheck()
+	{
 		return this.choosePassword.equals(this.verifyPassword);
+	}
+
+	private boolean zipCheck()
+	{
+		Pattern p = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$"); //https://howtodoinjava.com/regex/java-regex-validate-us-postal-zip-codes/
+		Matcher m = p.matcher(this.zipCode);
+		boolean b = m.matches();
+		if(b){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	/**
@@ -122,6 +155,8 @@ public class Registration {
 	 */
 
 	private boolean storeData() {
+		User newUser = new User(this.email, this.firstName, this.lastName, 0, null, "member", this.card);
+		DB.createUser(newUser);
 		return true;
 	}
 

@@ -9,10 +9,12 @@ public class LoginProcessor {
 	
 	private String email;
 	private String password;
+	DBAdapter DB;
 	
 	public LoginProcessor(String email, String password) {
 		this.email = email;
 		this.password = password;
+		DB = new DBAdapter();
 	}
 	
 	/** 
@@ -23,10 +25,8 @@ public class LoginProcessor {
 	 */
 
 	public boolean checkCredentials() {
-		/*User currentUser = DBAdapter.getUser(this.email);
-		if(currentUser.getPassword() == password) return true;
-		else return false;*/
-		return false;
+		User currentUser = DB.getUser(this.email);
+		return currentUser.password == password;
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class LoginProcessor {
 
 	public boolean resetPassword(String newPassword, String verifyNewPassword, String email) {
 		if(newPassword.equals(verifyNewPassword)) { // Check newPassword against verifyNewPassword
-			//DBAdapter.setUserPassword(email,newPassword); // set old password to newPassword
+			DB.updateUser(this.email, "password", newPassword);
 			return true;
 		}
 		return false;
