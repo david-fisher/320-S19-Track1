@@ -159,7 +159,7 @@ public class Registration {
 	 * @return boolean indicating if the DB has stored the data
 	 */
 
-	private boolean storeData() {
+	public boolean storeData() {
 		User newUser = new User(this.email, this.firstName, this.lastName, 0, null, "member", this.card);
 		DB.createUser(newUser);
 		return true;
