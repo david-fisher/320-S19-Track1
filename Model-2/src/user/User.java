@@ -12,7 +12,7 @@ public class User {
 	public CreditCard creditCard;
 	public String stripeCreditCardID;
 	public int points;
-	public User invitedBy;
+	public String invitedBy;
 	public boolean isValidated; // Is User currently verified by CC?
 	public String type;
 
@@ -38,7 +38,7 @@ public class User {
 				String firstName,
 				String lastName,
 				int points,
-				User invitedBy,
+				String invitedBy,
 				String type,
 				CreditCard creditCard) {
 		this.creditCard = creditCard;

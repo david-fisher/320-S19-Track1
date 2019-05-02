@@ -1,6 +1,7 @@
 package registration;
 
 import db.DBAdapter;
+import db.Database;
 import stripe.CreditCard;
 import stripe.StripeCreditCard;
 import user.User;
@@ -56,9 +57,9 @@ public class Registration {
 		this.cvv = cvv;
 		this.expirationMonth = expirationMonth;
 		this.expirationYear = expirationYear;
-		this.DB = new DBAdapter();
+		this.DB = Database.adapter;
 		this.verificationCode = verificationCode;
-		this.invitedBy = checkVerificationCode();
+		this.invitedBy = DB.getUserInvite(this.verificationCode);;
 		this.type = "member";
 	}
 
@@ -168,9 +169,8 @@ public class Registration {
 	}
 
 	public String checkVerificationCode() {
-		this.invitedBy = DB.getUserInvite(this.verificationCode);
 		if(this.invitedBy.equals("")) return "Verification code is WRONG!";
-		return "Verification code is very virtually verified with vigor and vim";
+		return "Verification code is RIGHT!";
 	}
 }
 
