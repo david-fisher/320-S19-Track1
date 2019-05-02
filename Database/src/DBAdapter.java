@@ -21,10 +21,19 @@ public class DBAdapter {
 	
 	public boolean createUser(User usr) {
 		try {
-			getConnection();
+
+			Connection conn = getConnection();
 			int log = (usr.loggedIn) ? 1 : 0;
-			int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.User (email,firstName,lastName,password,type,loggedIn) VALUES ('"+usr.email+"','" +usr.firstName+"','" +usr.lastName+"','" +usr.password+"','"+ usr.type+"',"+log+")");
-			if (usr.type == "member") { 
+			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.User SET email = ?, firstName = ?, lastName = ?, password = ?, type = ?,loggedIn = ?");
+		    statement.setString(1, usr.email);
+		    statement.setString(2, usr.firstName);
+		    statement.setString(3, usr.lastName);
+		    statement.setString(4, usr.password);
+		    statement.setString(5, usr.firstName);
+		    statement.setString(6, usr.type);
+		    statement.setInt(7, log);
+		    statement.executeUpdate();
+		    if (usr.type == "member") { 
 				this.updateUser(usr.email, "address", usr.address);
 				this.updateUser(usr.email, "city", usr.city);
 				this.updateUser(usr.email, "state", usr.state);
@@ -136,8 +145,11 @@ public class DBAdapter {
 	public boolean createPhoto(Photo photo) {
 		try {
 			Connection conn = getConnection();
-		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Photo (original) VALUES ('"+photo.photoPath+"')");
-		} catch(SQLException e) {
+			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.Photo SET original = ?, photoID = ?");
+		    statement.setString(1, photo.photoPath);
+		    statement.setInt(2, photo.photoId);
+		    statement.executeUpdate();
+		 } catch(SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -232,8 +244,11 @@ public class DBAdapter {
 	public boolean createURL(String original, String shortened) {
 		try {
 			Connection conn = getConnection();
-		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.URL (original,shortened) VALUES ('"+original+"','"+shortened+"')");
-		} catch(SQLException e) {
+			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.URL SET original = ?, shortened = ?");
+		    statement.setString(1, original);
+		    statement.setString(2, shortened);
+		    statement.executeUpdate();
+		 } catch(SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -260,8 +275,14 @@ public class DBAdapter {
 	
 	public boolean createPost(Post pst) {
 		try {
-			getConnection();
-			int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Post (postID, time, text, userID) VALUES ('" +Integer.parseInt(pst.postID)+"','" +pst.timestamp+"','" +pst.text+"','" +pst.poster.email+"')");
+
+			Connection conn = getConnection();
+			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.Post SET postID = ?, time = ?, text = ?, userID = ?");
+		    statement.setInt(1, Integer.parseInt(pst.postID));
+		    statement.set(2, pst.timestamp); // I am not sure about this one
+		    statement.setString(3, pst.text);
+		    statement.setInt(4, pst.userID); //And this one
+		    statement.executeUpdate();
 			this.updatePost(Integer.parseInt(pst.postID), "explicit", 0); //double check what the specific values are
 			this.updatePost(Integer.parseInt(pst.postID), "visible", 0); //double check what the specific values are
 			if (pst instanceof Comment) { //add to post table then add to comment table
