@@ -1,14 +1,8 @@
-package db;
-
 import javax.imageio.ImageIO;
 
 import java.sql.*;
 import java.util.ArrayList;
-import login.*;
-import post.*;
-import registration.*;
-import stripe.*;
-import user.*;
+
 
 public class DBAdapter {
 
@@ -18,16 +12,25 @@ public class DBAdapter {
 
     // USER FUNCTIONS
     private Connection getConnection() throws SQLException{
-        //function used to get connection to database
-        if(conn != null) return conn;
-        Connection conn = DriverManager.getConnection(DBAddress,"root","root");
-        System.out.println("Log: Connection Established!");
-        return conn;
+        try {
+            System.out.println("Attempting Connection");
+            conn = DriverManager.getConnection(DBAddress,"root","root");
+            //conn.close();
+            return conn;
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+//		//function used to get connection to database
+//		if(conn != null) return conn;
+//		Connection conn = DriverManager.getConnection(DBAddress,"root","root");
+//		//System.out.println("Log: Connection Established!");
+//		return conn;
     }
 
     public boolean createUser(User usr) {
         try {
-
             this.getConnection();
             int log = (usr.loggedIn) ? 1 : 0;
             PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.User SET email = ?, firstName = ?, lastName = ?, password = ?, type = ?,loggedIn = ?");
@@ -37,8 +40,8 @@ public class DBAdapter {
             statement.setString(4, usr.password);
             statement.setString(5, usr.firstName);
             statement.setString(6, usr.type);
-            statement.setInt(7, log);
             statement.executeUpdate();
+            this.updateUser(usr.email, "loggedIn", log);
             if (usr.type == "member") {
                 this.updateUser(usr.email, "address", usr.address);
                 this.updateUser(usr.email, "city", usr.city);
@@ -75,7 +78,7 @@ public class DBAdapter {
                 String firstName = rs.getString("firstName");
                 String lastName = rs.getString("lastName");
                 String inviter = rs.getString("inviter");
-                usr = new User (email, firstName, lastName, 0, null, "member", null); //fix when cc is implemented back in
+                usr = new User (email, firstName, lastName, 0, inviter); //fix when cc is implemented back in
                 if (type == "member") { //set member fields
                     usr.type = type;
                     usr.address = rs.getString("address");
@@ -109,6 +112,34 @@ public class DBAdapter {
 
     private <T> String formatUserUpdateString(String email, String varname, T var) {
         return String.format("UPDATE TrackOneDB.User SET %s = '"+var+"' WHERE email = '"+email+"'", varname);
+    }
+
+    public boolean logUserInvite(String email, String code) {
+        try {
+            this.getConnection();
+            PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.Invite SET inviter = ?, code = ?");
+            statement.setString(1, email);
+            statement.setString(2, code);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public String getUserInvite(String code) {
+        try {
+            this.getConnection();
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM TrackOneDB.Invite WHERE code = ?");
+            statement.setString(1, code);
+            statement.executeUpdate();
+            String email = statement.getResultSet().getString("email");
+            int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Invite WHERE code = '" +code+ "'");
+            return email;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public <T> boolean updateUser(String email, String field, T newValue) {
@@ -161,7 +192,7 @@ public class DBAdapter {
         return true;
     }
 
-    public ImagePost getPhoto(String id) {
+    public Photo getPhoto(String id) {
         int ID = Integer.parseInt(id);
         try {
             this.getConnection();
@@ -173,17 +204,17 @@ public class DBAdapter {
         return null;
     }
 
-    public boolean deletePhoto(ImagePost photo) {
+    public boolean deletePhoto(Photo photo) {
         try {
             this.getConnection();
-            int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Photo WHERE original = '" +photo.path+ "'");
+            int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Photo WHERE original = '" +photo.photoPath+ "'");
         } catch(SQLException e) {
             e.printStackTrace();
             return false;
         }
         return true;
     }
-/*
+
     public boolean insertFilter(Filter filter) {
         try {
             this.getConnection();
@@ -220,7 +251,7 @@ public class DBAdapter {
     //I am being creative here about the format and I am not sure the format of matching two columns in the table.
     //I will fix it after asking Caroline.
 
-    public int[] getFilters(ImagePost photo) {
+    public int[] getFilters(Photo photo) {
         try {
             this.getConnection();
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.FilterPhoto WHERE photoID = '"+photo.photoId+"'");
@@ -243,16 +274,20 @@ public class DBAdapter {
     }
     //return a list of filterID. I have this structure in case they want us to return the path.
 
-*/
+
 
     public boolean createURL(String original, String shortened) {
         try {
             this.getConnection();
-            PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.URL SET original = ?, shortened = ?");
+            //System.out.println("Connection is null: " + (conn==null));
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.URL(original, shortened) VALUES(?, ?)");// original = ?, shortened = ?");
             statement.setString(1, original);
             statement.setString(2, shortened);
             statement.executeUpdate();
         } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }catch(NullPointerException e) {
             e.printStackTrace();
             return false;
         }
@@ -263,7 +298,10 @@ public class DBAdapter {
     public String getOriginalURL(String shortened){
         try {
             this.getConnection();
-            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.URL WHERE shortened = '"+shortened+"'");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM TrackOneDB.URL WHERE shortened = ?");
+            statement.setString(1, shortened);
+            ResultSet rs = statement.executeQuery();
+            //ResultSet rs = conn.createStatement().executeQuery(statement);//"SELECT * FROM TrackOneDB.URL WHERE shortened = '"+shortened+"'");
             while (rs.next()) {
                 String original = rs.getString("original");
                 return original;
@@ -330,7 +368,7 @@ public class DBAdapter {
                     coms.add((Comment)getPost(Integer.toString(comments.getInt("parentID"))));
                 }
                 if (type == "imagePost") { //do later
-                    String path = this.getPhoto(rs.getString("photoID")).path;
+                    String path = this.getPhoto(rs.getString("photoID")).photoPath;
                     ImagePost imgP = new ImagePost(this.getUser(author), postID, path);
                     imgP.timestamp = time;
                     imgP.flag = rs.getInt("explicit");

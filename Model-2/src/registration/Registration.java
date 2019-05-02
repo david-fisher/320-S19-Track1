@@ -13,7 +13,7 @@ public class Registration {
 	private String lastName;
 	private String address1;
 	private String address2;
-	private int phoneNumber;
+	private String phoneNumber;
 	private String email;
 	private String zipCode;
 	private String choosePassword;
@@ -25,13 +25,13 @@ public class Registration {
 	private DBAdapter DB;
 	private CreditCard card;
 	private String verificationCode;
-	private String invitedByl
+	private String invitedBy;
 
 	public Registration(String firstName,
 						String lastName,
 						String address1,
 						String address2,
-						int phoneNumber,
+						String phoneNumber,
 						String email,
 						String zipCode,
 						String choosePassword,
@@ -39,7 +39,8 @@ public class Registration {
 						String creditCardNumber,
 						String cvv,
 						String expirationMonth,
-						String expirationYear) {
+						String expirationYear,
+						String verificationCode) {
 
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -55,6 +56,8 @@ public class Registration {
 		this.expirationMonth = expirationMonth;
 		this.expirationYear = expirationYear;
 		this.DB = new DBAdapter();
+		this.verificationCode = verificationCode;
+		this.invitedBy = checkVerificationCode();
 	}
 
 	/**
@@ -162,9 +165,20 @@ public class Registration {
 		return true;
 	}
 
-	public boolean checkCode() {
-
+	public String checkVerificationCode() {
+		this.invitedBy = DB.getUserInvite(this.verificationCode);
+		if(this.invitedBy.equals("")) return "Verification code is WRONG!";
+		return "Verification code is very virtually verified with vigor and vim";
 	}
 
+
+	/*
+	 * For Cole
+	 * */
+
+	public String sexualInsertion(boolean yesOrNo) {
+		if(!yesOrNo) return "Yes.";
+		return "No.";
+	}
 }
 
