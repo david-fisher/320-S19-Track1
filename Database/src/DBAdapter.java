@@ -338,6 +338,8 @@ public class DBAdapter {
 			statement.setString(5, pst.text);
 			System.out.println(statement.toString());
 			statement.executeUpdate();
+			this.updatePost(Integer.parseInt(pst.postID), "explicit", 0);
+			this.updatePost(Integer.parseInt(pst.postID), "visible", 1);
 			if(pst.type.equals("comment")) {
 				statement = conn.prepareStatement("INSERT INTO TrackOneDB.Comment(parentId, childId) VALUES(?,?)");
 				Comment com = (Comment)pst;
@@ -346,36 +348,14 @@ public class DBAdapter {
 				statement.setInt(2, Integer.parseInt(com.postID));
 				System.out.println(statement.toString());
 				statement.executeUpdate();
+				this.updatePost(Integer.parseInt(pst.postID), "parentID", Integer.parseInt(com.associatedPostID.postID));
 			}
-//			if (pst instanceof Comment) { //add to post table then add to comment table
-//				statement.setInt(1, Integer.parseInt(pst.postID));
-//				statement.setString(2,"comment");
-//			    statement.setTimestamp(3, pst.timestamp); 
-//			    statement.setString(4, pst.text);
-//			    statement.setString(5, pst.poster.email);
-//			    statement.executeUpdate();
-//			    System.out.println(statement.toString());
-//				this.updatePost(Integer.parseInt(pst.postID), "explicit", 0); //double check what the specific values are
-//				this.updatePost(Integer.parseInt(pst.postID), "visible", 0); //double check what the specific values are
-//				Comment com = (Comment)pst;
-//				this.updatePost(Integer.parseInt(com.postID), "type", "comment");
-//				this.updatePost(Integer.parseInt(com.postID), "parentID", Integer.parseInt(com.postID));
-//			    
-//				int rs2 = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Comment (text, parentID, childID) VALUES ('"+com.text+"','" +Integer.parseInt(com.associatedPostID.postID)+"','" +Integer.parseInt(com.postID)+"')");
-//			}
-//			else if (pst instanceof ImagePost) { //add to post table then add to image table & any other relevant tables
-//				statement.setInt(1, Integer.parseInt(pst.postID));
-//			    statement.setTimestamp(2, pst.timestamp); 
-//			    statement.setString(3, pst.text);
-//			    statement.setString(4, pst.poster.email);
-//			    System.out.println(statement.toString());
-//				this.updatePost(Integer.parseInt(pst.postID), "explicit", 0); //double check what the specific values are
-//				this.updatePost(Integer.parseInt(pst.postID), "visible", 0); //double check what the specific values are
-//				ImagePost img = (ImagePost)pst;
-//				this.updatePost(Integer.parseInt(img.postID), "type", "imagePost");
-//			    statement.executeUpdate();
-//				//then add image to image table and add filters to table
-//			}
+			if(pst.type.equals("imagePost")) {
+				ImagePost imgPst = (ImagePost)pst;
+				this.updatePost(Integer.parseInt(pst.postID), "photo", imgPst.path);
+				System.out.println(statement.toString());
+				statement.executeUpdate();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -431,10 +411,13 @@ public class DBAdapter {
 	}
 	
 	public <T> boolean updatePost(int id, String field, T newValue) { //do not use when updating comments
-		String query = formatPostUpdateString(id, field, newValue);
+		//String query = formatPostUpdateString(id, field, newValue);
 		try {
 			this.getConnection();
-			int rs = conn.createStatement().executeUpdate(query);
+			PreparedStatement statement = conn.prepareStatement(("UPDATE TrackOneDB.Post SET "+field+" = ? WHERE postID = ?"));
+		    statement.setObject(1, newValue);
+		    statement.setInt(2, id);
+		    statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -447,8 +430,16 @@ public class DBAdapter {
 		try {
 			this.getConnection();
 			int pstID = Integer.parseInt(id);
+			System.out.println(pstID);
+			//int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.User WHERE email = '" +email+ "'");
+			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +id+ "'");
+//			PreparedStatement statement = conn.prepareStatement("DELETE FROM TrackOneDB.Post WHERE postID = ?");
+//		    System.out.println(statement.toString());
+//		    System.out.println("this can't be right");
+//			statement.setInt(1, pstID);
+//		    statement.executeUpdate();
 			//delete photos and filters before deleting post?
-			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +pstID+ "'");
+			//int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +pstID+ "'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

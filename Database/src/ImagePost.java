@@ -13,13 +13,13 @@ public class ImagePost extends Post
 	String path;
 	
 	public ImagePost(User poster, String postID, String path, String type) { //used to return objects from DB
-		super(poster, postID, "", type);
+		super(poster, "imagePost",postID, "");
 		this.path = path;
 	}
 
 	public ImagePost(User poster, String postID, File file, String type)
 	{
-		super(poster, postID, "", type);
+		super(poster, "imagePost",postID, "");
 		this.file = file;
 
 		String extension = "";
