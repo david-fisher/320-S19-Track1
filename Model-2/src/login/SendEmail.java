@@ -24,7 +24,7 @@ public class SendEmail {
         String fromEmail = "320joeschmoe@gmail.com";
 
         Properties properties = new Properties();
-
+        
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
@@ -35,12 +35,13 @@ public class SendEmail {
                 return new PasswordAuthentication(username,password);
             }
         });
+        
         //Start our mail message
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.setFrom(new InternetAddress(fromEmail));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-            msg.setSubject("CS 320 Invite Example");
+            msg.setSubject("Members Only Invitation!");
 
             Multipart emailContent = new MimeMultipart();
 
@@ -59,12 +60,10 @@ public class SendEmail {
             msg.setContent(emailContent);
 
             Transport.send(msg);
-            System.out.println("Sent message");
         } catch (MessagingException e) {
-            e.printStackTrace();
+            System.out.println("Message sending Error");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("IO Error");
         }
 
     }
