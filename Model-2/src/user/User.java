@@ -77,10 +77,9 @@ public class User {
 	}
 
 	/**
-	 *  Charges the User’s stored credit card by calling the 
-	 *  CC adapter
+	 *  Charges the User’s stored credit card
 	 *
-	 *  @return boolean indicating if it is successful
+	 *  @return String indicating if it is successful
 	 */
 
 	public String chargeCreditCard() {
@@ -88,26 +87,18 @@ public class User {
 	}
 
 	/**
-	 *  Returns a boolean if the data is stored in the fieldName
-	 *  for the User’s specific credential to be updated in the DB.
-	 *
+	 *  Updates user's account info for any valid field in the DB
+	 *  
 	 *  @param  fieldName	String indicating which field in the DB
 	 * 						the data should be stored in
 	 *  @param	data		A generic Object that is the data to be
 	 * 						stored in the DB field.
-	 *  @return boolean indicating if it is successful
+	 *  @return String indicating if it is successful
 	 */
 
 	public String updateAccountInfo(String fieldName, Object data) {
-		if(fieldName.equals("birthday")) {
-			//DB.setUserBirthday(this.email,data); // commented out in DBA
-		} else if(fieldName.equals("card")) {
-			//DB.setUserCard(this.email,data); // commented out in DBA
-		} else if(fieldName.equals("privacy")) {
-			//DB.setUserPrivacy(this.email,data); // commented out in DBA
-		} else return (fieldName + "Account Information Unsuccessfully Updated To: " + data);
-
-		return (fieldName + "Account Information Successfully Updated To: " + data);
+		if(DB.updateUser(this.email, fieldName,data)) return (fieldName + "Account Information Successfully Updated To: " + data);
+		return (fieldName + "Account Information Unsuccessfully Updated To: " + data);
 	}
 
 	/*
