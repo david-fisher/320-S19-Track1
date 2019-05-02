@@ -324,25 +324,53 @@ public class DBAdapter {
 	public boolean createPost(Post pst) {
 		try {
 			this.getConnection();
-			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.Post SET postID = ?, time = ?, text = ?, userID = ?");
-		    statement.setInt(1, Integer.parseInt(pst.postID));
-		    statement.setTimestamp(2, pst.timestamp); 
-		    statement.setString(3, pst.text);
-		    statement.setString(4, pst.poster.email);
-		    statement.executeUpdate();
-			this.updatePost(Integer.parseInt(pst.postID), "explicit", 0); //double check what the specific values are
-			this.updatePost(Integer.parseInt(pst.postID), "visible", 0); //double check what the specific values are
-			if (pst instanceof Comment) { //add to post table then add to comment table
+			//PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.URL(original, shortened) VALUES(?, ?)")
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.Post(postID, type, time, userId, text) VALUES(?,?,?,?,?)");
+			statement.setInt(1, Integer.parseInt(pst.postID));
+			statement.setString(2, pst.type);
+			statement.setTimestamp(3, pst.timestamp);
+			statement.setString(4, pst.poster.email);
+			statement.setString(5, pst.text);
+			System.out.println(statement.toString());
+			statement.executeUpdate();
+			if(pst.type.equals("comment")) {
+				statement = conn.prepareStatement("INSERT INTO TrackOneDB.Comment(parentId, childId) VALUES(?,?)");
 				Comment com = (Comment)pst;
-				this.updatePost(Integer.parseInt(com.postID), "type", "comment");
-				this.updatePost(Integer.parseInt(com.postID), "parentID", Integer.parseInt(com.postID));
-				int rs2 = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Comment (text, parentID, childID) VALUES ('"+com.text+"','" +Integer.parseInt(com.associatedPostID.postID)+"','" +Integer.parseInt(com.postID)+"')");
+				//Post parent = com.associatedPostID
+				statement.setInt(1, Integer.parseInt(com.associatedPostID.postID));
+				statement.setInt(2, Integer.parseInt(com.postID));
+				System.out.println(statement.toString());
+				statement.executeUpdate();
 			}
-			else if (pst instanceof ImagePost) { //add to post table then add to image table & any other relevant tables
-				ImagePost img = (ImagePost)pst;
-				this.updatePost(Integer.parseInt(img.postID), "type", "imagePost");
-				//then add image to image table and add filters to table
-			}
+//			if (pst instanceof Comment) { //add to post table then add to comment table
+//				statement.setInt(1, Integer.parseInt(pst.postID));
+//				statement.setString(2,"comment");
+//			    statement.setTimestamp(3, pst.timestamp); 
+//			    statement.setString(4, pst.text);
+//			    statement.setString(5, pst.poster.email);
+//			    statement.executeUpdate();
+//			    System.out.println(statement.toString());
+//				this.updatePost(Integer.parseInt(pst.postID), "explicit", 0); //double check what the specific values are
+//				this.updatePost(Integer.parseInt(pst.postID), "visible", 0); //double check what the specific values are
+//				Comment com = (Comment)pst;
+//				this.updatePost(Integer.parseInt(com.postID), "type", "comment");
+//				this.updatePost(Integer.parseInt(com.postID), "parentID", Integer.parseInt(com.postID));
+//			    
+//				int rs2 = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Comment (text, parentID, childID) VALUES ('"+com.text+"','" +Integer.parseInt(com.associatedPostID.postID)+"','" +Integer.parseInt(com.postID)+"')");
+//			}
+//			else if (pst instanceof ImagePost) { //add to post table then add to image table & any other relevant tables
+//				statement.setInt(1, Integer.parseInt(pst.postID));
+//			    statement.setTimestamp(2, pst.timestamp); 
+//			    statement.setString(3, pst.text);
+//			    statement.setString(4, pst.poster.email);
+//			    System.out.println(statement.toString());
+//				this.updatePost(Integer.parseInt(pst.postID), "explicit", 0); //double check what the specific values are
+//				this.updatePost(Integer.parseInt(pst.postID), "visible", 0); //double check what the specific values are
+//				ImagePost img = (ImagePost)pst;
+//				this.updatePost(Integer.parseInt(img.postID), "type", "imagePost");
+//			    statement.executeUpdate();
+//				//then add image to image table and add filters to table
+//			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -350,47 +378,47 @@ public class DBAdapter {
 		return true;
 	}
 	
-	public Post getPost(String postID) {
-		try {
-			this.getConnection();
-			int id = Integer.parseInt(postID);
-			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE postID = '"+id+"'");
-			while(rs.next()) {
-				String type = rs.getString("type");
-				Timestamp time = rs.getTimestamp("time");
-				String author = rs.getString("userID");
-				String text = rs.getString("text");
-				int flag = rs.getInt("explicit");
-				if (type == "comment") { //set  fields
-					Post parent = this.getPost(Integer.toString(rs.getInt("parentID")));
-					Comment com = new Comment(this.getUser(author),Integer.toString(id),text, parent);
-					com.timestamp = time;
-					com.flag = rs.getInt("explicit");
-					return com;
-				}
-				ResultSet comments = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Comments WHERE parentID = '"+postID+"'");
-				ArrayList<Comment> coms = new ArrayList<Comment>();
-				while(comments.next()) { //populate comments
-					coms.add((Comment)getPost(Integer.toString(comments.getInt("parentID"))));
-				}
-				if (type == "imagePost") { //do later
-					String path = this.getPhoto(rs.getString("photoID")).photoPath;
-					ImagePost imgP = new ImagePost(this.getUser(author), postID, path);
-					imgP.timestamp = time;
-					imgP.flag = rs.getInt("explicit");
-					return imgP;
-				}
-				Post pst = new Post(this.getUser(author), postID, text);
-				pst.flag = rs.getInt("explicit");
-				pst.timestamp = time;
-				return pst;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return null;
-	}
+//	public Post getPost(String postID) {
+//		try {
+//			this.getConnection();
+//			int id = Integer.parseInt(postID);
+//			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE postID = '"+id+"'");
+//			while(rs.next()) {
+//				String type = rs.getString("type");
+//				Timestamp time = rs.getTimestamp("time");
+//				String author = rs.getString("userID");
+//				String text = rs.getString("text");
+//				int flag = rs.getInt("explicit");
+//				if (type == "comment") { //set  fields
+//					Post parent = this.getPost(Integer.toString(rs.getInt("parentID")));
+//					Comment com = new Comment(this.getUser(author),Integer.toString(id),text, parent);
+//					com.timestamp = time;
+//					com.flag = rs.getInt("explicit");
+//					return com;
+//				}
+//				ResultSet comments = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Comments WHERE parentID = '"+postID+"'");
+//				ArrayList<Comment> coms = new ArrayList<Comment>();
+//				while(comments.next()) { //populate comments
+//					coms.add((Comment)getPost(Integer.toString(comments.getInt("parentID"))));
+//				}
+//				if (type == "imagePost") { //do later
+//					String path = this.getPhoto(rs.getString("photoID")).photoPath;
+//					ImagePost imgP = new ImagePost(this.getUser(author), postID, path);
+//					imgP.timestamp = time;
+//					imgP.flag = rs.getInt("explicit");
+//					return imgP;
+//				}
+//				Post pst = new Post(this.getUser(author), postID, text);
+//				pst.flag = rs.getInt("explicit");
+//				pst.timestamp = time;
+//				return pst;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		return null;
+//	}
 	
 	
 	private <T> String formatPostUpdateString(int id, String varname, T var) {
@@ -460,107 +488,107 @@ public class DBAdapter {
 	}
 	// follower follows followee lol
 	// #english
+//	
+//	Post[] getPosts(int num) {
+//		//general function - returns entire post object.
+//		Post[] arr = new Post[num];
+//		int pos = 0;
+//		try {
+//			this.getConnection();
+//			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post ORDER BY time DESC LIMIT " + num);
+//			while(rs.next()) {
+//				String postID = Integer.toString(rs.getInt("postID"));
+//				//String type = rs.getString("type");
+//				int explicit = rs.getInt("explicit");
+//				Timestamp time = rs.getTimestamp("time");
+//				int userID = rs.getInt("userID");
+//				String text = rs.getString("text");
+//				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
+//				String email = "";
+//				while(rs2.next()) {
+//					email = rs2.getString("email");
+//				}
+//				arr[0] = new Post(getUser(email), postID, text);
+//				arr[0].timestamp = time;
+//				arr[0].setFlag(explicit);
+//				pos ++;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		return arr;
+//	}
 	
-	Post[] getPosts(int num) {
-		//general function - returns entire post object.
-		Post[] arr = new Post[num];
-		int pos = 0;
-		try {
-			this.getConnection();
-			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post ORDER BY time DESC LIMIT " + num);
-			while(rs.next()) {
-				String postID = Integer.toString(rs.getInt("postID"));
-				//String type = rs.getString("type");
-				int explicit = rs.getInt("explicit");
-				Timestamp time = rs.getTimestamp("time");
-				int userID = rs.getInt("userID");
-				String text = rs.getString("text");
-				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
-				String email = "";
-				while(rs2.next()) {
-					email = rs2.getString("email");
-				}
-				arr[0] = new Post(getUser(email), postID, text);
-				arr[0].timestamp = time;
-				arr[0].setFlag(explicit);
-				pos ++;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return arr;
-	}
+//	public Post[] getPostFollowing(User usr) {
+//		String email = usr.email;
+//		int userID = 0;
+//		try {
+//			this.getConnection();
+//			ResultSet rs = conn.createStatement().executeQuery("Select * FROM TrackOneDB.User WHERE email = '"+ email + "'");
+//			while (rs.next()) {
+//				userID = rs.getInt("userID");
+//			}
+//			ArrayList<Integer> arr = new ArrayList<Integer>();
+//			rs = conn.createStatement().executeQuery("Select * FROM TrackOneDB.Follow WHERE userID = " + userID);
+//			while(rs.next()) {
+//				arr.add(rs.getInt("follow"));
+//			}
+//			ArrayList<Post> postArr = new ArrayList<Post>();
+//			for(int i=0; i<arr.size(); i++) {
+//				rs=conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE userID =" + arr.get(i));
+//				while(rs.next()) {
+//					String postID = Integer.toString(rs.getInt("postID"));
+//					//String type = rs.getString("type");
+//					int explicit = rs.getInt("explicit");
+//					Timestamp time = rs.getTimestamp("time");
+//					String text = rs.getString("text");
+//					ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + arr.get(i));
+//					String email2 = "";
+//					while(rs2.next()) {
+//						email2 = rs2.getString("email");
+//					}
+//					Post p = new Post(getUser(email2), postID, text);
+//					p.timestamp = time;
+//					p.setFlag(explicit);
+//					postArr.add(p);
+//				}
+//			}
+//			//sort by datetime****
+//			return (Post[]) postArr.toArray();
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
 	
-	public Post[] getPostFollowing(User usr) {
-		String email = usr.email;
-		int userID = 0;
-		try {
-			this.getConnection();
-			ResultSet rs = conn.createStatement().executeQuery("Select * FROM TrackOneDB.User WHERE email = '"+ email + "'");
-			while (rs.next()) {
-				userID = rs.getInt("userID");
-			}
-			ArrayList<Integer> arr = new ArrayList<Integer>();
-			rs = conn.createStatement().executeQuery("Select * FROM TrackOneDB.Follow WHERE userID = " + userID);
-			while(rs.next()) {
-				arr.add(rs.getInt("follow"));
-			}
-			ArrayList<Post> postArr = new ArrayList<Post>();
-			for(int i=0; i<arr.size(); i++) {
-				rs=conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE userID =" + arr.get(i));
-				while(rs.next()) {
-					String postID = Integer.toString(rs.getInt("postID"));
-					//String type = rs.getString("type");
-					int explicit = rs.getInt("explicit");
-					Timestamp time = rs.getTimestamp("time");
-					String text = rs.getString("text");
-					ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + arr.get(i));
-					String email2 = "";
-					while(rs2.next()) {
-						email2 = rs2.getString("email");
-					}
-					Post p = new Post(getUser(email2), postID, text);
-					p.timestamp = time;
-					p.setFlag(explicit);
-					postArr.add(p);
-				}
-			}
-			//sort by datetime****
-			return (Post[]) postArr.toArray();
-		}catch(SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+//	}
 	
-	}
-	
-	public Post[] getFlaggedPost(int x) {
-		ArrayList<Post> arr = new ArrayList<Post>();
-		try {
-			this.getConnection();
-			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE explicit = "+ x);
-			while(rs.next()) {
-				String postID = Integer.toString(rs.getInt("postID"));
-				//String type = rs.getString("type");
-				int explicit = rs.getInt("explicit");
-				Timestamp time = rs.getTimestamp("time");
-				int userID = rs.getInt("userID");
-				String text = rs.getString("text");
-				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
-				String email = "";
-				while(rs2.next()) {
-					email = rs2.getString("email");
-				}
-				Post p = new Post(getUser(email), postID, text);
-				p.timestamp = time;
-				p.setFlag(explicit);
-				arr.add(p);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return (Post[]) arr.toArray();
-	}
+//	public Post[] getFlaggedPost(int x) {
+//		ArrayList<Post> arr = new ArrayList<Post>();
+//		try {
+//			this.getConnection();
+//			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE explicit = "+ x);
+//			while(rs.next()) {
+//				String postID = Integer.toString(rs.getInt("postID"));
+//				//String type = rs.getString("type");
+//				int explicit = rs.getInt("explicit");
+//				Timestamp time = rs.getTimestamp("time");
+//				int userID = rs.getInt("userID");
+//				String text = rs.getString("text");
+//				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
+//				String email = "";
+//				while(rs2.next()) {
+//					email = rs2.getString("email");
+//				}
+//				Post p = new Post(getUser(email), postID, text);
+//				p.timestamp = time;
+//				p.setFlag(explicit);
+//				arr.add(p);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		return (Post[]) arr.toArray();
+//	}
 } 

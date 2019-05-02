@@ -12,14 +12,14 @@ public class ImagePost extends Post
 	BufferedImage image;
 	String path;
 	
-	public ImagePost(User poster, String postID, String path) { //used to return objects from DB
-		super(poster, postID, "");
+	public ImagePost(User poster, String postID, String path, String type) { //used to return objects from DB
+		super(poster, postID, "", type);
 		this.path = path;
 	}
 
-	public ImagePost(User poster, String postID, File file)
+	public ImagePost(User poster, String postID, File file, String type)
 	{
-		super(poster, postID, "");
+		super(poster, postID, "", type);
 		this.file = file;
 
 		String extension = "";

@@ -6,6 +6,8 @@ public class Post
 {
 	User poster;
 	String postID;
+	String type;
+	
 	public String text;
 	public int flag = 0;
 	int pointsForPost = 5;
@@ -21,11 +23,12 @@ public class Post
 	 * @param postID the unique test.post ID associated with this test.post
 	 * @param text the text to be populated in the UI
 	 */
-	public Post(User poster, String postID, String text)
+	public Post(User poster, String type,String postID, String text)
 	{
 		this.poster = poster;
 		this.postID = postID;
 		this.text = text;
+		this.type = type;
 
 		comments = new ArrayList<Comment>();
 		hashtags = new ArrayList<String>();
