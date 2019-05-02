@@ -45,7 +45,7 @@ public class DBAdapter {
 		    statement.executeUpdate();
 		    if (this.updateUser(usr.email, "loggedIn", log) != true) return false;
 		    if (usr.type == "member") { 
-				if (this.updateUser(usr.email, "address", usr.address) == false) return false;
+				if (this.updateUser(usr.email, "address", usr.address)== false) return false;
 				if (this.updateUser(usr.email, "city", usr.city)== false) return false;
 				if (this.updateUser(usr.email, "state", usr.state)== false) return false;
 				if (this.updateUser(usr.email, "zip", usr.zip)== false) return false;
@@ -79,7 +79,8 @@ public class DBAdapter {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String inviter = rs.getString("inviter");
-				usr = new User (email, firstName, lastName, "", inviter); //fix when cc is implemented back in
+				int points = rs.getInt("points");
+				usr = new User (email, firstName, lastName, "", points, inviter); //fix when cc is implemented back in
 				if (type == "member") { //set member fields
 					usr.type = type;
 					usr.address = rs.getString("address");

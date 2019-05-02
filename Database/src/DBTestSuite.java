@@ -39,12 +39,12 @@ class DBTestSuite {
 		if(testConnection() == false) {
 			return;
 		}
-		User admin = new User("pres@whitehouse.gov", "big", "don", "pass", "vputin@russia.ru");
+		User admin = new User("pres@whitehouse.gov", "big", "don", "pass", 0, "vputin@russia.ru");
 		admin.type = "admin";
 		if(db.createUser(admin)) { System.out.println("Admin Successfully Created"); }
 		else { System.out.println("Admin Unsuccessfully Created."); }
 		if(db.deleteUser(admin.email)) { System.out.println("Admin Sucessfully Deleted"); };
-		User member = new User("noobkiller69@fortnite.edu", "Korg", "Rockman", "password1", "swamy@umass.edu");
+		User member = new User("noobkiller69@fortnite.edu", "Korg", "Rockman", "password1", 47, "swamy@umass.edu");
 		member.type = "member";
 		member.address = "100 Street Lane";
 		member.city = "Townsville";
@@ -70,7 +70,7 @@ class DBTestSuite {
 		if (newUser == null) { System.out.println("wrong"); return; }
 		if(newUser.firstName.equals("Borg")){
 			System.out.println("User Successfully Updated");
-			db.deleteUser("noobkiller69@fortnite.edu");
+			//db.deleteUser("noobkiller69@fortnite.edu");
 		}
 		else { System.out.println("User Unsuccessfully Updated"); }
 	}

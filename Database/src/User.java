@@ -30,13 +30,13 @@ public class User {
 				String firstName,
 				String lastName,
 				String password,
-//				int points,
+				int points,
 				String invitedBy) {
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
-		//this.points = points;
+		this.points = points;
 		//this.creditCard = new StripeCreditCard(email);
 		//this.stripeCreditCardID = creditCard.getId();
 		this.invitedBy = invitedBy;
