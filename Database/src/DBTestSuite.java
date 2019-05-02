@@ -2,6 +2,10 @@
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.Test;
 
 class DBTestSuite {
@@ -10,8 +14,20 @@ class DBTestSuite {
 	
 
 	@Test
-	public void testConnection(){
+	public boolean testConnection(){
 		//tests if we can successfully connect to the database.
+		String DBAddress = "jdbc:mysql://localhost:3306/TrackOneDB"; //access address for database. figure out l8tr
+		Connection conn;
+		
+		try {		
+			conn = DriverManager.getConnection(DBAddress,"root","root");
+			System.out.println("Log: Connection Established!");
+			return true;
+		}
+		catch(SQLException e) {
+			return false;
+		}
+		
 	}
 	
 	@Test
@@ -123,10 +139,26 @@ class DBTestSuite {
 	
 	
 	@Test
-	public void testURLCreation() {
+	public boolean testURLCreation() {
 		//tests if we can successfully connect to the database,
-		//create a URL entry, then fetch that URL from the DB.
+		if(testConnection() == false) {
+			return false;
+		}
+		//Create DBAdapter
+		DBAdapter DB = new DBAdapter();
 		
+		//create a URL entry, then fetch that URL from the DB.
+		DB.createURL("www.umass.edu","u.edu");
+		
+		if(DB.getOriginalURL("u.edu") == "www.umass.edu") {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	@Test
+	public void testURLDuplication() {
 		//Also covers case if the URL already exists.
 	}
 	
@@ -139,8 +171,19 @@ class DBTestSuite {
 	}
 	
 	@Test
-	public void testURLDeletion() {
+	public boolean testURLDeletion() {
 		//tests if we can successfully connect to the database,
+		if(testConnection() == false) {
+			return false;
+		}
+		//Create DBAdapter
+		DBAdapter DB = new DBAdapter();
+		
+		//Add a URL to the DB
+		DB.createURL("www.umass.edu","u.edu");
+		//Check if the URL has been added
+		
+		
 		//delete a URL, then fail to fetch that URL's info from the DB.
 				
 		//Also covers case if the image does not exist.

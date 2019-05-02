@@ -20,11 +20,11 @@ public class Filter extends Photo{
 	}
 
 	public int getYpos() {
-		return ypos;
+		return yPos;
 	}
 
 	public void setYpos(int ypos) {
-		this.ypos = ypos;
+		this.yPos = ypos;
 	}
 
 	public boolean isVisibleToUser() {
