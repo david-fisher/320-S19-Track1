@@ -42,8 +42,8 @@ public class DBAdapter {
 		    statement.setString(4, usr.password);
 		    statement.setString(5, usr.firstName);
 		    statement.setString(6, usr.type);
-		    statement.setInt(7, log);
 		    statement.executeUpdate();
+		    this.updateUser(usr.email, "loggedIn", log);
 		    if (usr.type == "member") { 
 				this.updateUser(usr.email, "address", usr.address);
 				this.updateUser(usr.email, "city", usr.city);
@@ -115,6 +115,8 @@ public class DBAdapter {
 	private <T> String formatUserUpdateString(String email, String varname, T var) {
 		return String.format("UPDATE TrackOneDB.User SET %s = '"+var+"' WHERE email = '"+email+"'", varname);
 	}
+	
+	//public boolean inviteUser(String email, in)
 	
 	public <T> boolean updateUser(String email, String field, T newValue) {
 		String query = formatUserUpdateString(email, field, newValue);

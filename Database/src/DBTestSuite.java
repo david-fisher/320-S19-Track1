@@ -36,10 +36,11 @@ class DBTestSuite {
 	
 	@Test
 	public void testUserCreation(){
-		//tests if we can successfully connect to the database,
-		//create a user, then fetch that user from the DB.
-		
-		//Also covers case where user already exists.
+		User admin = new User("pres@whitehouse.gov", "big", "don", 117, "vputin@russia.ru");
+		admin.type = "admin";
+		if(db.createUser(admin)) { System.out.println("User Successfully Created"); }
+		else { System.out.println("User Unsuccessfully Created."); }
+		if(db.deleteUser(admin.email)) { System.out.println("User Sucessfully Deleted"); };
 	}
 	
 	@Test
@@ -231,8 +232,10 @@ class DBTestSuite {
 	
 	public static void main(String[] args) {
 		DBTestSuite test = new DBTestSuite();
-		System.out.println(test.testConnection());
-		System.out.println(test.testURLCreation());
+		//System.out.println(test.db.deleteUser("pres@whitehouse.gov"));
+		//System.out.println(test.testConnection());
+		test.testUserCreation();
+		//System.out.println(test.testURLCreation());
 	}
 	
 }
