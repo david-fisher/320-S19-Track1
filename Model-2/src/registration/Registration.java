@@ -147,11 +147,7 @@ public class Registration {
 		Pattern p = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$"); //https://howtodoinjava.com/regex/java-regex-validate-us-postal-zip-codes/
 		Matcher m = p.matcher(this.zipCode);
 		boolean b = m.matches();
-		if(b){
-			return true;
-		}else{
-			return false;
-		}
+		return b;
 	}
 
 	/**
