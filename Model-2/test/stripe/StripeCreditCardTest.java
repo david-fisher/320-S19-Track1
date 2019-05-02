@@ -311,7 +311,7 @@ public class StripeCreditCardTest {
 		System.out.println("$" + amount);
 		assert amount >= 0.50;
 
-        assert testCard.verifyCharge(amount) == true;
+        assert testCard.verifyCharge(amount);
 	}
 
 	@Test
@@ -341,7 +341,7 @@ public class StripeCreditCardTest {
 		System.out.println("$" + amount);
 		assert amount >= 0.50;
 
-		assert testCard.verifyCharge(0.31) == false;
+		assert !testCard.verifyCharge(0.31);
 	}
 
 	@Test
