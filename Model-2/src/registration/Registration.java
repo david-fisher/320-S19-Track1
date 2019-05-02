@@ -83,7 +83,7 @@ public class Registration {
 		if(!passwordCheck()) return "Passwords don't match";
 		if(!zipCheck()) return "Invalid zip code";
 
-
+		if(this.invitedBy.contains("@")) return "Your verification code is wrong";
 
 		CreditCard card = new StripeCreditCard(this.email, this.creditCardNumber, this.zipCode , this.cvv, this.expirationMonth , this.expirationYear);
 		String resultCardValidation = card.verify();

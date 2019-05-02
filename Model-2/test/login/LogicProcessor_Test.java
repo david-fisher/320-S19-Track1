@@ -1,6 +1,6 @@
 package login;
 
-import login.*;
+import db.Database;
 import sun.rmi.runtime.Log;
 import user.*;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 public class LogicProcessor_Test {
 
     public User testUser = new User("test@umass.edu", "Test", "UMass", 0, null,"member",null);
+    Database.adapter.updateUser(testUser.email, "password", "password");
+    public LoginProcessor login = new LoginProcessor();
 
     @Test
     public void testLoginCorrect() {
@@ -16,19 +18,19 @@ public class LogicProcessor_Test {
 
     @Test
     public void testLoginIncorrect() {
-        assert(LoginProcessor.checkCredentials("wrongTest@umass.edu", "wrongPassword")); // TODO need to add his password
-        assert(LoginProcessor.checkCredentials("test@umass.edu", "wrongPassword")); // TODO need to add his password
-        assert(LoginProcessor.checkCredentials("wrongTest@umass.edu", "password")); // TODO need to add his password
+        assert(login.checkCredentials("wrongTest@umass.edu", "wrongPassword")); // TODO need to add his password
+        assert(login.checkCredentials("test@umass.edu", "wrongPassword")); // TODO need to add his password
+        assert(login.checkCredentials("wrongTest@umass.edu", "password")); // TODO need to add his password
     }
 
     @Test
     public void testPassReset() {
-        assert(LoginProcessor.resetPassword("newPassword", "newPassword", "test@umass.edu"));
+        assert(login.resetPassword("newPassword", "newPassword", "test@umass.edu")); // TODO need to add his password
     }
 
     @Test
     public void testBadPassReset() {
-        assert(LoginProcessor.resetPassword("newPassword", "wrongNewPassword", "test@umass.edu"));
+        assert(login.resetPassword("newPassword", "wrongNewPassword", "test@umass.edu")); // TODO need to add his password
     }
 
 }
