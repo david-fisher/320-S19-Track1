@@ -11,7 +11,7 @@ public class Registration {
 	private String lastName;
 	private String address1;
 	private String address2;
-	private int phoneNumber;
+	private String phoneNumber;
 	private String email;
 	private String zipCode;
 	private String choosePassword;
@@ -25,7 +25,7 @@ public class Registration {
 						String lastName,
 						String address1,
 						String address2,
-						int phoneNumber,
+						String phoneNumber,
 						String email,
 						String zipCode,
 						String choosePassword,
@@ -130,7 +130,7 @@ public class Registration {
 	 * @return boolean indicating if the DB has stored the data
 	 */
 
-	private boolean storeData() {
+	public boolean storeData() {
 		return true;
 	}
 

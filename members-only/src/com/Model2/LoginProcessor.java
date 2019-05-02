@@ -26,7 +26,7 @@ public class LoginProcessor {
 		/*User currentUser = DBAdapter.getUser(this.email);
 		if(currentUser.getPassword() == password) return true;
 		else return false;*/
-		return false;
+		return true;
 	}
 
 	/**

@@ -24,7 +24,6 @@ public class LoginService {
         JSONObject json_payload = new JSONObject(payload);
         System.out.println(payload);
 
-        
         String email = json_payload.getString("email");
         String password = json_payload.getString("password");
         
@@ -104,6 +103,8 @@ public class LoginService {
 			//Remove code from the hash
 			ServerVariables.verification_codes.remove(code);
 			//TODO: CALL MODEL 2 PASSWORD RESET!
+			LoginProcessor login = new LoginProcessor(email, pass);
+			login.resetPassword(pass, confPass, email);
 		}
 		else {
 			store_result.put("result", "error");

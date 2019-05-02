@@ -3,6 +3,7 @@ package com.MembersOnly;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import org.json.*;
+import com.Model2.*;
 
 @Path("/")
 public class IRVService {
@@ -21,15 +22,24 @@ public class IRVService {
         String zipCode = json_payload.getString("zipCode");
         String phoneNumber = json_payload.getString("phoneNumber");
         String email = json_payload.getString("email");
+        String password = json_payload.getString("pass");
+        String confPassword = json_payload.getString("confPass");
         String creditCardNumber = json_payload.getString("creditCardNumber");
         String expiration = json_payload.getString("expiration");
         String CVV = json_payload.getString("CVV"); 
         System.out.println(firstName);
         
+        String exp_month = expiration.substring(0, 2);
+        String exp_year = expiration.substring(3);
         //TODO: CALL REGISTRATION METHOD AND RETURN PROPER RESULT
-        
+        // 04/23
+        Registration register = new Registration(firstName, lastName, addressLineOne,
+        		                 addressLineTwo, phoneNumber, email, zipCode, password,
+        		                 confPassword,creditCardNumber,
+        		                 CVV, exp_month, exp_year);
+        String registration_result = register.verify();
         JSONObject store_result = new JSONObject();
-        store_result.put("result", "");
+        store_result.put("result", registration_result);
         return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
 	
@@ -64,6 +74,7 @@ public class IRVService {
 	 */
 	public Response storePassword(String payload) {
 		JSONObject json_payload = new JSONObject(payload);
+		
 		String pass = json_payload.getString("pass");
 		String confirmPass = json_payload.getString("confirmPass");
 		
@@ -76,10 +87,17 @@ public class IRVService {
 	@Path("/updateCCAddress")
 	@Produces("application/json")
 	public Response updateCCAddress(String payload) {
-		System.out.println("YAH");
-		System.out.println(payload);
-		JSONObject json = new JSONObject(payload);
-		System.out.println(json.getString("email"));
+		JSONObject json_payload = new JSONObject(payload);
+		String email = json_payload.getString("email");
+		String password = json_payload.getString("password");
+		
+		JSONObject form_data = (JSONObject)json_payload.get("form");
+		
+		String cc_number = form_data.getString("creditCardNumber");
+		String expiration = form_data.getString("expiration");
+		String CVV = form_data.getString("CVV");
+		//Registration update = new Registration()
+		//System.out.println(json.getString("email"));
 		return null;
 	}
 	
