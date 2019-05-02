@@ -1,3 +1,5 @@
+package db;
+
 import javax.imageio.ImageIO;
 
 
