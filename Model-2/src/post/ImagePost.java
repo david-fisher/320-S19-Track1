@@ -91,7 +91,7 @@ public class ImagePost extends Post
 	 */
 	public boolean CP(String filename)
 	{
-		if(filename.equals("shrekImg_stub"))
+		if(filename.equals("shrek.jpg"))
 		{
 			return true;
 		}
