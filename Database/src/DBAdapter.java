@@ -147,19 +147,19 @@ public class DBAdapter {
 	}
 	
 	public <T> boolean updateUser(String email, String field, T newValue) {
-		String query = formatUserUpdateString(email, field, newValue);
+		//String query = formatUserUpdateString(email, field, newValue);
 		try {
 			this.getConnection();
 			PreparedStatement statement = conn.prepareStatement(("UPDATE TrackOneDB.User SET "+field+" = ? WHERE email = ?"));
 		    statement.setObject(1, newValue);
-		    statement.setString(2,  email);
+		    statement.setString(2, email);
 		    statement.executeUpdate();
+		    return true;
 			//int rs = conn.createStatement().executeUpdate(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 	
 	public boolean deleteUser(String email) { //delete posts all posts users made?

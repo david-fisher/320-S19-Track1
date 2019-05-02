@@ -59,7 +59,7 @@ class DBTestSuite {
 		member.privacy = false;
 		String q = "www";
 		if(db.createUser(member)) { System.out.println("Korg Successfully Created"); }
-		if(db.updateUser("noobkiller69@fortnite.edu", "firstName", "Borg")) {
+		if(db.updateUser("noobkiller69@fortnite.edu","firstName","Borg")) {
 			System.out.println("update borked");
 		}
 		User newUser = db.getUser("noobkiller69@fortnite.edu");
