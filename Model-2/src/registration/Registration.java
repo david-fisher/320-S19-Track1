@@ -170,15 +170,5 @@ public class Registration {
 		if(this.invitedBy.equals("")) return "Verification code is WRONG!";
 		return "Verification code is very virtually verified with vigor and vim";
 	}
-
-
-	/*
-	 * For Cole
-	 * */
-
-	public String sexualInsertion(boolean yesOrNo) {
-		if(yesOrNo) return "Yes.";
-		return "No.";
-	}
 }
 
