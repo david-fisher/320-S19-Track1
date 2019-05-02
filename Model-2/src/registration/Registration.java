@@ -24,6 +24,8 @@ public class Registration {
 	private String expirationYear;
 	private DBAdapter DB;
 	private CreditCard card;
+	private String verificationCode;
+	private String invitedByl
 
 	public Registration(String firstName,
 						String lastName,
@@ -158,6 +160,10 @@ public class Registration {
 		User newUser = new User(this.email, this.firstName, this.lastName, 0, null, "member", this.card);
 		DB.createUser(newUser);
 		return true;
+	}
+
+	public boolean checkCode() {
+
 	}
 
 }
