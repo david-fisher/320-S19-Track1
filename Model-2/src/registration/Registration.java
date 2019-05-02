@@ -59,7 +59,7 @@ public class Registration {
 		this.expirationYear = expirationYear;
 		this.DB = Database.adapter;
 		this.verificationCode = verificationCode;
-		this.invitedBy = DB.getUserInvite(this.verificationCode);;
+		this.invitedBy = DB.getUserInvite(this.verificationCode);
 		this.type = "member";
 	}
 
