@@ -1,6 +1,46 @@
 
 <template>
-  <div align="center" style="border:1px solid black">
+<div>
+  
+  <div class="ui true grey fixed inverted menu">
+    <div class="ui container">
+      <div class="header item">
+        <img src="../assets/light_logo.png" class="logo">
+          Members Only
+      </div> 
+
+      <a class="item" href="#TODOGETFEEDHERE">
+        Feed
+      </a> 
+
+      <div role="listbox" class="simple ui item dropdown">
+        <div role="alert" aria-live="polite" class="text">Account
+          </div>
+        <i aria-hidden="true" class="dropdown icon"></i>
+        <span class="sizer">
+        </span>
+        <div class="menu transition">
+          <a role="option" class="item" href="#TODOPUTPROFILEHERE">
+            My Profile
+          </a>
+          <a role="option" class="item" href="#TODO">
+            Generate Invite Link
+          </a> 
+          <a role="option" class="item" href="#TODO">
+            Settings
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ;) -->
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div align="center" style="border:1px solid black">
     <h1>Member and Admin Creation Page</h1>
     <form class="form" action="/WebServ/dist/#/storeInfo" method="post" v-on:submit="verifyForm($event)">
       <div>
@@ -12,15 +52,19 @@
         </select>
       </div>
       <br>
-      <div class="ui fluid input">
-        <label class="label" for="email"><b>Email: </b></label>
-        <input type="text" v-model="form.email" placeholder="Email" id="email" required>
-      </div>
-      <br>
-      <div class="ui fluid input">
-        <label class="label" for="password"><b>Password: </b></label>
-        <input type="password" v-model="form.pass" placeholder="Password" id="password" required>
-      </div>
+
+        <div class="field">
+            <div class="ui left icon input">
+              <input type="email" placeholder="Email" v-model="form.email" id="email" required>
+              <i class="user icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <input type="password" placeholder="Password"  v-model="form.pass" id="password" required>
+              <i class="lock icon"></i>
+            </div>
+        </div>
       <br>
       <div class="submission check">
         <p style="color:#FF0000">{{ submitText }}</p>
@@ -31,6 +75,13 @@
       </div>
     </form>
   </div>
+
+
+  </div>
+
+  
+
+  
 </template>
 
 <script>
