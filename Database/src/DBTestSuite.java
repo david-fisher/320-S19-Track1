@@ -10,23 +10,25 @@ import org.junit.jupiter.api.Test;
 
 class DBTestSuite {
 
-	//declare database instance and data here
+	DBAdapter db = new DBAdapter();
 	
 
 	@Test
 	public boolean testConnection(){
-		//tests if we can successfully connect to the database.
+		//tests if we can successfully connect to the database independent of anything else.
 		String DBAddress = "jdbc:mysql://localhost:3306/TrackOneDB"; //access address for database. figure out l8tr
 		Connection conn;
 		
 		try {		
 			conn = DriverManager.getConnection(DBAddress,"root","root");
 			System.out.println("Log: Connection Established!");
+			conn.close();
 			return true;
 		}
 		catch(SQLException e) {
 			return false;
 		}
+		
 		
 	}
 	

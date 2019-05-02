@@ -32,7 +32,7 @@ public class Post
 		adminHashtags = new ArrayList<String>();
 
 		this.createTimeStamp();
-		this.addPoints();
+		//this.addPoints();
 		this.parseForHashtags();
 	}
 
@@ -189,9 +189,4 @@ public class Post
     * @params none
     * @return a boolean indicating success or failure
     */
-	void addPoints()
-	{
-		this.poster.addPoints(this.pointsForPost);
-		return;
-	}
 }

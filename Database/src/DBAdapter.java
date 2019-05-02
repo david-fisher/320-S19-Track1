@@ -11,6 +11,7 @@ public class DBAdapter {
 	private String DBAddress = "jdbc:mysql://localhost:3306/TrackOneDB"; //access address for database. figure out l8tr
 	private Connection conn;
 	
+	// USER FUNCTIONS
 	private Connection getConnection() throws SQLException{
 		//function used to get connection to database
 		if(conn != null) return conn;
@@ -42,7 +43,7 @@ public class DBAdapter {
 				this.updateUser(usr.email, "ccv", usr.ccv);
 				this.updateUser(usr.email, "ccExpMon", usr.expM);
 				this.updateUser(usr.email, "ccExpYr", usr.expY);
-				this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
+				//this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
 				this.updateUser(usr.email, "phone", usr.phone);
 				this.updateUser(usr.email, "birthday", usr.birthday);
 				this.updateUser(usr.email, "points", usr.points);
@@ -69,7 +70,7 @@ public class DBAdapter {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String inviter = rs.getString("inviter");
-				usr = new User (email, firstName, lastName, 0, inviter, null);
+				usr = new User (email, firstName, lastName, 0, inviter); //fix when cc is implemented back in
 				if (type == "member") { //set member fields
 					usr.type = type;
 					usr.address = rs.getString("address");
@@ -80,9 +81,9 @@ public class DBAdapter {
 					usr.ccv = rs.getString("ccv");
 					usr.expM = rs.getString("ccExpMon");
 					usr.expY = rs.getString("ccExpYr");
-					usr.creditCard = new StripeCreditCard(email, usr.ccNum, 
-										usr.zip, usr.ccv, usr.expM, usr.expY);
-					usr.stripeCreditCardID = rs.getString("stripeID");
+					//usr.creditCard = new StripeCreditCard(email, usr.ccNum, 
+										//usr.zip, usr.ccv, usr.expM, usr.expY);
+					//usr.stripeCreditCardID = rs.getString("stripeID");
 					usr.points += rs.getInt("points");
 					usr.phone = rs.getString("phone");
 					usr.password = rs.getString("password");
@@ -142,12 +143,11 @@ public class DBAdapter {
 	// follower follows followee lol
 	// #english
 	
-	public boolean createPhoto(Photo photo) {
+	public boolean createPhoto(String path) {
 		try {
 			Connection conn = getConnection();
-			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.Photo SET original = ?, photoID = ?");
-		    statement.setString(1, photo.photoPath);
-		    statement.setInt(2, photo.photoId);
+			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.Photo SET original = ?");
+		    statement.setString(1, path);
 		    statement.executeUpdate();
 		 } catch(SQLException e) {
 			e.printStackTrace();
@@ -427,7 +427,7 @@ public class DBAdapter {
 				int userID = rs.getInt("userID");
 				String text = rs.getString("text");
 				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
-				String email;
+				String email = "";
 				while(rs2.next()) {
 					email = rs2.getString("email");
 				}
@@ -445,7 +445,7 @@ public class DBAdapter {
 	
 	public Post[] getPostFollowing(User usr) {
 		String email = usr.email;
-		int userID;
+		int userID = 0;
 		try {
 			this.getConnection();
 			ResultSet rs = conn.createStatement().executeQuery("Select * FROM TrackOneDB.User WHERE email = '"+ email + "'");
@@ -467,7 +467,7 @@ public class DBAdapter {
 					Timestamp time = rs.getTimestamp("time");
 					String text = rs.getString("text");
 					ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + arr.get(i));
-					String email2;
+					String email2 = "";
 					while(rs2.next()) {
 						email2 = rs2.getString("email");
 					}
@@ -499,7 +499,7 @@ public class DBAdapter {
 				int userID = rs.getInt("userID");
 				String text = rs.getString("text");
 				ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + userID);
-				String email;
+				String email = "";
 				while(rs2.next()) {
 					email = rs2.getString("email");
 				}

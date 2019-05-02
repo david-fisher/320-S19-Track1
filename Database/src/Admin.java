@@ -6,7 +6,7 @@ public class Admin extends User {
 				 String lastName,  
 				 int points,
 				 User invitedBy) {
-		super(email, firstName, lastName, points, null, null);
+		super(email, firstName, lastName, points, "");
 	}
 
 	/**
