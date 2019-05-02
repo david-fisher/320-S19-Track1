@@ -28,9 +28,6 @@ public class StripeCreditCardTest {
 		StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode,
 														 cvv, exp_month, exp_year);
 		
-		System.out.println("Generated member with Stripe Id: " + testCard.getId());
-		System.out.println();
-		
 		assert testCard.getId() != null;
 	}
 	
@@ -142,11 +139,8 @@ public class StripeCreditCardTest {
 
 		String charge = testCard.charge();
 		assert charge.equals("");
-		System.out.print("Charge success! Amount: ");
 		
 		double amount = testCard.getAmount();
-		System.out.println("$" + amount);
-		System.out.println();
 		assert amount >= 0.50;
 	}
 	
@@ -274,15 +268,11 @@ public class StripeCreditCardTest {
 		// Create the test card with the information above
 		StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode,
 														 cvv, exp_month, exp_year);
-		
-		System.out.println("Processing randomized charges...");
 		for (int i = 0; i < 10; i++) {
 			String charge = testCard.charge();
 			assert charge.equals("");
-			System.out.print("Charge success! Amount: ");
 					
 			double amount = testCard.getAmount();
-			System.out.println("$" + amount);
 			assert amount >= 0.50;
 		}
 	}
@@ -304,14 +294,10 @@ public class StripeCreditCardTest {
 		StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode,
 														 cvv, exp_month, exp_year);
 		
-		System.out.println("Processing a charge");
-		
 		String charge = testCard.charge();
 		assert charge.equals("");
-		System.out.print("Charge success! Amount: ");
 					
 		double amount = testCard.getAmount();
-		System.out.println("$" + amount);
 		assert amount >= 0.50;
 
         assert testCard.verifyCharge(amount);
@@ -334,14 +320,10 @@ public class StripeCreditCardTest {
 		StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode,
 				cvv, exp_month, exp_year);
 
-		System.out.println("Processing a charge");
-
 		String charge = testCard.charge();
 		assert charge.equals("");
-		System.out.print("Charge success! Amount: ");
 
 		double amount = testCard.getAmount();
-		System.out.println("$" + amount);
 		assert amount >= 0.50;
 
 		assert !testCard.verifyCharge(0.31);
