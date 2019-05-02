@@ -32,8 +32,6 @@ public class User {
 	public boolean loggedIn;
 	public String password;
 
-	public DBAdapter DB;
-
 	public User(String email,
 				String firstName,
 				String lastName,
@@ -50,12 +48,11 @@ public class User {
 		this.invitedBy = invitedBy;
 		this.isValidated = false;
 		this.type = type;
-		DB = new DBAdapter();
 		this.addUserToDB();
 	}
 
 	public void addUserToDB() {
-		if(DB.getUser(this.email) == null ) DB.createUser(this);
+		if(Database.adapter.getUser(this.email) == null ) Database.adapter.createUser(this);
 	}
 	
 	public boolean checkIfUserValid(double charge) {
@@ -73,7 +70,7 @@ public class User {
 	 */
 
 	public void addPoints(int points) {
-		DB.updateUser(email, "points", points);
+		Database.adapter.updateUser(email, "points", points);
 	}
 
 	/**
@@ -97,7 +94,7 @@ public class User {
 	 */
 
 	public String updateAccountInfo(String fieldName, Object data) {
-		if(DB.updateUser(this.email, fieldName,data)) return (fieldName + "Account Information Successfully Updated To: " + data);
+		if(Database.adapter.updateUser(this.email, fieldName,data)) return (fieldName + "Account Information Successfully Updated To: " + data);
 		return (fieldName + "Account Information Unsuccessfully Updated To: " + data);
 	}
 
@@ -107,7 +104,7 @@ public class User {
 
 	public String editPost(Post post, String text) {
 		if(this.type.equals("admin")) {
-			DB.updatePost(Integer.parseInt(post.postID),"text",text);
+			Database.adapter.updatePost(Integer.parseInt(post.postID),"text",text);
 			return "Post successfully updated";
 		} else return "Post unsuccessfully updated";
 	}
