@@ -1,36 +1,40 @@
 package login;
 
-import db.Database;
-import sun.rmi.runtime.Log;
+import db.*;
 import user.*;
+import sun.rmi.runtime.Log;
 import org.junit.jupiter.api.Test;
 
 public class LogicProcessor_Test {
 
     public User testUser = new User("test@umass.edu", "Test", "UMass", 0, null,"member",null);
-    Database.adapter.updateUser(testUser.email, "password", "password");
+    public DBAdapter database = Database.adapter;
     public LoginProcessor login = new LoginProcessor();
 
     @Test
     public void testLoginCorrect() {
-        assert(LoginProcessor.checkCredentials("test@umass.edu", "password")); // TODO need to add his password
+        database.updateUser("test@umass.edu", "password", "password");
+        assert(LoginProcessor.checkCredentials("test@umass.edu", "password"));
     }
 
     @Test
     public void testLoginIncorrect() {
-        assert(login.checkCredentials("wrongTest@umass.edu", "wrongPassword")); // TODO need to add his password
-        assert(login.checkCredentials("test@umass.edu", "wrongPassword")); // TODO need to add his password
-        assert(login.checkCredentials("wrongTest@umass.edu", "password")); // TODO need to add his password
+        database.updateUser("test@umass.edu", "password", "password");
+        assert(login.checkCredentials("wrongTest@umass.edu", "wrongPassword"));
+        assert(login.checkCredentials("test@umass.edu", "wrongPassword"));
+        assert(login.checkCredentials("wrongTest@umass.edu", "password"));
     }
 
     @Test
     public void testPassReset() {
-        assert(login.resetPassword("newPassword", "newPassword", "test@umass.edu")); // TODO need to add his password
+        database.updateUser("test@umass.edu", "password", "password");
+        assert(login.resetPassword("newPassword", "newPassword", "test@umass.edu"));
     }
 
     @Test
     public void testBadPassReset() {
-        assert(login.resetPassword("newPassword", "wrongNewPassword", "test@umass.edu")); // TODO need to add his password
+        database.updateUser("test@umass.edu", "password", "password");
+        assert(login.resetPassword("newPassword", "wrongNewPassword", "test@umass.edu"));
     }
 
 }
