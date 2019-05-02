@@ -3,7 +3,7 @@ package stripe;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import stripe.*;
 
 public class StripeCreditCardTest {
@@ -51,7 +51,7 @@ public class StripeCreditCardTest {
 		
 		String verify = testCard.verify();
 		assert verify != null;
-		assert verify == testCard.getId();
+		assert verify.equals(testCard.getId());
 	}
 	
 	@Test

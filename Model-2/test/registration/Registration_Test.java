@@ -3,7 +3,6 @@ import org.junit.jupiter.api.Test;
 
 public class Registration_Test {
 
-
 	/* Registration - Testing
 	Null values           [eg. Value not provided]
 	String provided       [eg. Field requires integer]
@@ -13,8 +12,6 @@ public class Registration_Test {
 	Data not in DB [eg. db.DBAdapter returns false on storeData()]
 	Values not realistically valid [eg. zip code is int, but too long]
     */
-
-
 
 	@Test
 	public void identityTester() {
