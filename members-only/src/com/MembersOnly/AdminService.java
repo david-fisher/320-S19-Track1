@@ -27,13 +27,5 @@ public class AdminService {
 	public Response adminEditCommentHashtag(String payload) {
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }

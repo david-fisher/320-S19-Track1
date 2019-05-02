@@ -3,6 +3,7 @@ package com.MembersOnly;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import org.json.*;
+import java.util.ArrayList;
 
 import com.Model2.*;
 
@@ -13,7 +14,10 @@ public class PostService {
 	@Produces("application/json")
 	public Response loadProfile(String payload) {
 		//SendEmail.sendMail("cikoro@umass.edu", "Hi. This is a test of members only!");
-
+        
+		JSONObject vals = new JSONObject();
+		vals.put("userId", 1);
+		//vals.put(key, value)
 		return null;
 	}
 	

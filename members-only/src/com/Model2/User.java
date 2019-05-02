@@ -1,7 +1,8 @@
 package com.Model2;
 
-//import stripe.*;
-//import db.*;
+/*import post.*;
+import stripe.*;
+import db.*; */
 
 public class User {
 
@@ -11,7 +12,7 @@ public class User {
 	public CreditCard creditCard;
 	public String stripeCreditCardID;
 	public int points;
-	public User invitedBy;
+	public String invitedBy;
 	public boolean isValidated; // Is User currently verified by CC?
 	public String type;
 
@@ -31,11 +32,13 @@ public class User {
 	public boolean loggedIn;
 	public String password;
 
+	public DBAdapter DB;
+
 	public User(String email,
 				String firstName,
 				String lastName,
 				int points,
-				User invitedBy,
+				String invitedBy,
 				String type,
 				CreditCard creditCard) {
 		this.creditCard = creditCard;
@@ -47,11 +50,12 @@ public class User {
 		this.invitedBy = invitedBy;
 		this.isValidated = false;
 		this.type = type;
+		DB = new DBAdapter();
 		this.addUserToDB();
 	}
 
 	public void addUserToDB() {
-		//if(!DBAdapter.getUser(this.email)) DBAdapter.post(this);
+		if(DB.getUser(this.email) == null ) DB.createUser(this);
 	}
 	
 	public boolean checkIfUserValid(double charge) {
@@ -63,20 +67,19 @@ public class User {
 	 *  Increments User point total in the DB by either a positive
 	 *  or negative amount (if points are removed).
 	 *
-	 *  @param
-	 *  @return void
+	 *  @param	points Integer representing the number of points to be
+	 *                 incremented or decremented (using a negative number)
+	 *  @return	void
 	 */
 
 	public void addPoints(int points) {
-		//DBAdapter.setUserPoints(this.email, points);
+		DB.updateUser(email, "points", points);
 	}
 
 	/**
-	 *  Charges the User’s stored credit card by calling the 
-	 *  adapter.
+	 *  Charges the User’s stored credit card
 	 *
-	 *  @param
-	 *  @return boolean indicating if it is successful
+	 *  @return String indicating if it is successful
 	 */
 
 	public String chargeCreditCard() {
@@ -84,17 +87,28 @@ public class User {
 	}
 
 	/**
-	 *  Returns a boolean if the data is stored in the fieldName
-	 *  for the User’s specific credential to be updated in the DB.
-	 *
+	 *  Updates user's account info for any valid field in the DB
+	 *  
 	 *  @param  fieldName	String indicating which field in the DB
-	 * 				the data should be stored in
+	 * 						the data should be stored in
 	 *  @param	data		A generic Object that is the data to be
-	 * 				stored in the DB field.
-	 *  @return boolean indicating if it is successful
+	 * 						stored in the DB field.
+	 *  @return String indicating if it is successful
 	 */
 
-	public String updateAccountInfo(String fieldName, Object data) { // TODO this does not do what it's supposed to
-		return "No Error Occurred";
+	public String updateAccountInfo(String fieldName, Object data) {
+		if(DB.updateUser(this.email, fieldName,data)) return (fieldName + "Account Information Successfully Updated To: " + data);
+		return (fieldName + "Account Information Unsuccessfully Updated To: " + data);
+	}
+
+	/*
+	 * Admin Functionality
+	 */
+
+	public String editPost(Post post, String text) {
+		if(this.type.equals("admin")) {
+			DB.updatePost(Integer.parseInt(post.postID),"text",text);
+			return "Post successfully updated";
+		} else return "Post unsuccessfully updated";
 	}
 }

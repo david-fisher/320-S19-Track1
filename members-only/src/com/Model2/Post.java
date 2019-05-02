@@ -1,12 +1,12 @@
 package com.Model2;
 
-//import user.*;
-
+/*
+import db.DBAdapter;
+import user.*;
+*/
 import java.awt.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
-import com.Model2.DBAdapter;
 
 public class Post
 {
@@ -42,6 +42,7 @@ public class Post
 		this.createTimeStamp();
 		this.addPoints();
 		this.parseForHashtags();
+		this.sendToDB();
 	}
 
    /* This function will parse the text for hashtags
@@ -157,6 +158,7 @@ public class Post
 	{
 		text = newText;
 		this.parseForHashtags();
+		DB.updatePost(Integer.parseInt(this.postID),"text", text);
 	}
 
    /* getPostId will return the unique postId
@@ -206,6 +208,9 @@ public class Post
 
 	public void sendToDB()
 	{
-
+		if(DB.getPost(postID)==null)
+		{
+			DB.createPost(this);
+		}
 	}
 }

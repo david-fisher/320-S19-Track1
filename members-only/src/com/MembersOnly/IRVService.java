@@ -23,10 +23,11 @@ public class IRVService {
         String phoneNumber = json_payload.getString("phoneNumber");
         String email = json_payload.getString("email");
         String password = json_payload.getString("pass");
-        String confPassword = json_payload.getString("confPass");
+        String confPassword = json_payload.getString("confpass");
         String creditCardNumber = json_payload.getString("creditCardNumber");
         String expiration = json_payload.getString("expiration");
         String CVV = json_payload.getString("CVV"); 
+        String registrationCode = json_payload.getString("registrationCode");
         System.out.println(firstName);
         
         String exp_month = expiration.substring(0, 2);
@@ -36,19 +37,30 @@ public class IRVService {
         Registration register = new Registration(firstName, lastName, addressLineOne,
         		                 addressLineTwo, phoneNumber, email, zipCode, password,
         		                 confPassword,creditCardNumber,
-        		                 CVV, exp_month, exp_year);
+        		                 CVV, exp_month, exp_year, registrationCode);
+        
         String registration_result = register.verify();
+        
+        boolean stored = false;
+        if(registration_result.equals("")){
+        	stored = register.storeData();
+        }
         JSONObject store_result = new JSONObject();
+        
+        if(!stored && registration_result.length() == 0) {
+        	registration_result = "Could not store User. Try again later and hope it works.";
+        }
         store_result.put("result", registration_result);
+        
         return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
 	
 	
-	//Please note that payload in this method is not a JSON.
 	@POST
 	@Path("/chargeVerify")
 	@Produces("application/json")
 	public Response chargeVerify(String payload) {
+		
 		double charge = 0.0;
 		try {
 		    charge = Double.parseDouble(payload);
@@ -64,24 +76,6 @@ public class IRVService {
         return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
 	
-	@POST
-	@Path("/storePassword")
-	@Produces("application/json")
-	/***
-	 * 
-	 * @param payload: pass, confirmPass
-	 * @return
-	 */
-	public Response storePassword(String payload) {
-		JSONObject json_payload = new JSONObject(payload);
-		
-		String pass = json_payload.getString("pass");
-		String confirmPass = json_payload.getString("confirmPass");
-		
-		//CALL THE CODE IN MODEL2 to store the password.
-		return null;
-		//return Response.status(200).entity(store_result.toString().substring(1)).build();
-	}
 	
 	@POST
 	@Path("/updateCCAddress")

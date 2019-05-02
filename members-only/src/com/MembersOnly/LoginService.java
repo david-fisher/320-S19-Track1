@@ -64,7 +64,6 @@ public class LoginService {
 		String email = json_payload.getString("email");
 		
 		
-		//TODO: CHECK IF VALID EMAIL IN MEMBERS ONLY. IF NOT VALID, RETURN AN ERROR TO FRONTEND
 		
 		String uniqueID = UUID.randomUUID().toString().substring(0,8);
 		if(ServerVariables.verification_codes.containsKey(uniqueID)) {
@@ -72,7 +71,7 @@ public class LoginService {
 		}
 		
         ServerVariables.verification_codes.put(uniqueID, email);
-        SendEmail.sendMail(email, "Your access code is: " + uniqueID);
+        //SendEmail.sendMail(email, "Your access code is: " + uniqueID);
 		JSONObject send_code_result = new JSONObject();
 	    send_code_result.put("result", "");
 	    System.out.println(ServerVariables.verification_codes.toString());

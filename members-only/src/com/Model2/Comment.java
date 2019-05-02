@@ -1,9 +1,9 @@
 package com.Model2;
 
-//import com.Model2.DBAdapter;
-
-//import user.*;
-
+/*
+import db.DBAdapter;
+import user.*;
+*/
 public class Comment extends Post
 {
 	public Post associatedPostID;
@@ -50,7 +50,7 @@ public class Comment extends Post
     */
 	void addPoints()
 	{
-    //this.poster.addpoints();
+		this.poster.addPoints(this.pointsForComment);
 		return;
 	}
 

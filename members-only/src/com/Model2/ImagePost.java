@@ -40,7 +40,6 @@ public class ImagePost extends Post
 					BufferedImage image = ImageIO.read(file);
 					String newPhotoPath = "images/src/" + file.getName();
 					ImageIO.write(image, "png", new File(newPhotoPath));
-					sendAddressToBD(newPhotoPath);
 					path = newPhotoPath;
 					this.addPoints();
 				} catch (IOException ex) {
@@ -53,7 +52,7 @@ public class ImagePost extends Post
     {
 		 System.out.println("wrong file type");
     }
-
+		this.sendToDB();
 	}
 
   /*Helper funciton to check file extention
@@ -69,14 +68,6 @@ public class ImagePost extends Post
 		return false;
 	}
 
-	/* Sends path of newly saved image to the DB
-	 * @ Params String the path of the new file
-	 * @ return void
-	 */
-	public void sendAddressToBD(String path)
-  {
-	  //send path to bd
-  }
 
   public File getImage()
   {
@@ -89,7 +80,7 @@ public class ImagePost extends Post
 	*/
 	void addPoints()
 	{
-		//poster.addpoints(this.pointsForPhoto)
+		this.poster.addPoints(this.pointsForPhoto);
 		return;
 	}
 
@@ -100,7 +91,7 @@ public class ImagePost extends Post
 	 */
 	public boolean CP(String filename)
 	{
-		if(filename.equals("shrekImg_stub"))
+		if(filename.equals("shrek.jpg"))
 		{
 			return true;
 		}
