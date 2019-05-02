@@ -4,20 +4,26 @@
     <h1>Member and Admin Creation Page</h1>
     <form class="form" action="/WebServ/dist/#/storeInfo" method="post" v-on:submit="verifyForm($event)">
       <div>
-        <select v-model="selected">
-          <option v-bind:value="{ role: moderator }">Moderator</option>
-          <option v-bind:value="{ role: admin }">Admin</option>
+        <select v-model="form.role">
+          <option>Moderator</option>
+          <option>Admin</option>
+          <option>Owner</option>
+          <option>Idol</option>
         </select>
       </div>
       <br>
       <div class="ui fluid input">
-        <label class="label" for="username"><b>Username: </b></label>
-        <input type="text" v-model="form.name" placeholder="Username" id="username" required>
+        <label class="label" for="email"><b>Email: </b></label>
+        <input type="text" v-model="form.email" placeholder="Email" id="email" required>
       </div>
       <br>
       <div class="ui fluid input">
         <label class="label" for="password"><b>Password: </b></label>
         <input type="password" v-model="form.pass" placeholder="Password" id="password" required>
+      </div>
+      <br>
+      <div class="submission check">
+        <p style="color:#FF0000">{{ submitText }}</p>
       </div>
       <br>
       <div>
@@ -33,14 +39,54 @@ export default {
   data () {
     return {
       form: {
-        role: ''
-      }
+        role: '',
+        email: '',
+        pass: ''
+      },
+      submitText: ''
     }
   },
   methods: {
     verifyForm: function(event){
-      if(!submit(this.form)){
-        event.preventDefault()
+      event.preventDefault();
+      if(!this.$session.exists()){
+        this.$router.push('/')
+        return
+      }
+      console.log(this.form.role)
+      console.log(this.form.email)
+      console.log(this.form.pass)
+
+      if(this.form.role.length == 0){
+        this.submitText = "You cannot leave role blank. Please make a selection."
+      } else if(this.form.email.length == 0){
+        this.submitText = "You cannot leave email blank. Please input the user's email."
+      } else if(this.form.pass.length < 8){
+        this.submitText = "Passwords must be at least 8 characters long."
+      } else {
+        const path = this.ip + '/createUser'
+      
+        const data = {
+          form: this.form,
+          email: this.$session.get('email'),
+          password: this.$session.get('password'),
+        }
+
+        this.$http.post(path, data)
+        .then(response => {
+          console.log(response)
+          var retVal = JSON.parse('{' + response.bodyText)
+          if(retVal.result.length == 0){
+            this.submitText = "Account created!"
+          } else {
+            this.submitText = retVal.result + " is invalid. You must not leave this blank, and it must be valid."
+          }
+        })
+        .catch(error => {
+          console.log("Yeah nope")
+          console.log(error)
+          this.submitText = "There was some kind of communication error. Not sure why. Must be your fault though."
+        })
       }
     }
   }

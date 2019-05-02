@@ -103,12 +103,12 @@ export default {
       event.preventDefault()
       const path = this.ip +'/updatePassword'
 
-      this.$http.post(path, this.form)
+      this.$http.post(path, this.form2)
       .then(response => {
         var retVal = JSON.parse('{' + response.bodyText)
         console.log(retVal)
         if(retVal.result.length == 0){
-          this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
+          this.submitText = "You should be redirected shortly..."
           this.$router.push('/')
         } else {
           this.submitText = "Password was unable to be updated"

@@ -101,7 +101,18 @@
 
 
 <script>
-
+export default{
+  data(){
+    return{
+      potato: ''
+    }
+  },
+  beforeCreate: function(){
+    console.log('Email: ' + this.$session.get('email'))
+    console.log('Password: ' + this.$session.get('password'))
+    console.log('started: ' + this.$session.exists())
+  },
+}
 
 
 </script>

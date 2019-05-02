@@ -49,6 +49,11 @@ export default {
       submitText: ''
     }
   },
+  beforeCreate: function(){
+    console.log('Email: ' + this.$session.get('email'))
+    console.log('Password: ' + this.$session.get('password'))
+    console.log('started: ' + this.$session.exists())
+  },
   methods: {
     verifyForm: function(event){
       event.preventDefault()
@@ -59,9 +64,15 @@ export default {
       .then(response => {
         var retVal = JSON.parse('{' + response.bodyText)
         console.log(retVal)
-        if(retVal.loginResult.length == 0){
+        if(retVal.result.length == 0){
           this.submitText = "You should be redirected shortly... ALSO CHANGE THIS LATER"
-          this.$router.push('/')
+          if(this.$session.exists()){
+            this.$session.destroy()
+          }
+          this.$session.start()
+          this.$session.set('email', this.form.email)
+          this.$session.set('password', this.form.password)
+          this.$router.push('/user/settings')
         } else {
           this.submitText = "Email or Password is invalid."
         }
