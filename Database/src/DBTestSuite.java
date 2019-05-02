@@ -182,11 +182,16 @@ class DBTestSuite {
 		//Add a URL to the DB
 		DB.createURL("www.umass.edu","u.edu");
 		//Check if the URL has been added
-		
+		if(testURLCreation() == false) {
+			return false;
+		}
 		
 		//delete a URL, then fail to fetch that URL's info from the DB.
-				
+		
+		//TODO create a deleteURL function in DBAdapter
+		
 		//Also covers case if the image does not exist.
+		return false;
 	}
 	
 	public static void main(String[] args) {
