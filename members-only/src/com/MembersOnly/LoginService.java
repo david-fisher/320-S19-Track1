@@ -6,7 +6,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import org.json.*;
 
-import com.Model2.SendEmail;
+import com.Model2.*;
 
 @Path("/")
 public class LoginService {
@@ -22,18 +22,29 @@ public class LoginService {
 	public Response login(String payload) {
         
         JSONObject json_payload = new JSONObject(payload);
+        System.out.println(payload);
+
         
         String email = json_payload.getString("email");
         String password = json_payload.getString("password");
         
         String response;
-        //TODO: REPLACE THIS SECTION WITH MODEL2 LOGIN SECTION.
+        LoginProcessor login = new LoginProcessor(email, password);
+        boolean login_value = login.checkCredentials();
+        if(login_value) {
+        	response = "";
+        }
+        else {
+        	response = "Error: Incorrect email or password";
+        }
+        //LoginProcessor login = new LoginProcessor();
+        /*
 		if(email.equals("a@a.a")) {
 			response = "";
 		}
 		else {
 			response = "Error on login: email != a@a.a";
-		}
+		}*/
         
         JSONObject result = new JSONObject();
         result.put("result", response);
@@ -57,6 +68,10 @@ public class LoginService {
 		//TODO: CHECK IF VALID EMAIL IN MEMBERS ONLY. IF NOT VALID, RETURN AN ERROR TO FRONTEND
 		
 		String uniqueID = UUID.randomUUID().toString().substring(0,8);
+		if(ServerVariables.verification_codes.containsKey(uniqueID)) {
+			uniqueID = UUID.randomUUID().toString().substring(0,8);
+		}
+		
         ServerVariables.verification_codes.put(uniqueID, email);
         SendEmail.sendMail(email, "Your access code is: " + uniqueID);
 		JSONObject send_code_result = new JSONObject();

@@ -1,6 +1,6 @@
 package com.Model2;
 
-import stripe.*;
+//import stripe.*;
 //import db.*;
 
 public class User {

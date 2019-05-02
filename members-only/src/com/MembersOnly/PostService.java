@@ -13,7 +13,7 @@ public class PostService {
 	@Produces("application/json")
 	public Response loadProfile(String payload) {
 		//SendEmail.sendMail("cikoro@umass.edu", "Hi. This is a test of members only!");
-		//System.out.println("Done");
+
 		return null;
 	}
 	
@@ -24,14 +24,6 @@ public class PostService {
 		return null;
 	}
 	
-
-	
-	@POST
-	@Path("/postComment")
-	@Produces("application/json")
-	public Response postComment(String payload) {
-		return null;
-	}
 	
 	@POST
 	@Path("/postText")
@@ -51,6 +43,20 @@ public class PostService {
 	@Path("/editImage")
 	@Produces("application/json")
 	public Response editImage(String payload) {
+		return null;
+	}
+	
+	@POST
+	@Path("/loadComments")
+	@Produces("application/json")
+	public Response loadComments(String payload) {
+		return null;
+	}
+	
+	@POST
+	@Path("/postComment")
+	@Produces("application/json")
+	public Response postComment(String payload) {
 		return null;
 	}
 

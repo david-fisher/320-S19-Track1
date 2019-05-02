@@ -72,6 +72,42 @@ public class IRVService {
 		//return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
 	
+	@POST
+	@Path("/updateCCAddress")
+	@Produces("application/json")
+	public Response updateCCAddress(String payload) {
+		System.out.println("YAH");
+		System.out.println(payload);
+		JSONObject json = new JSONObject(payload);
+		System.out.println(json.getString("email"));
+		return null;
+	}
+	
+	
+	//NOTE THAT THE FOLLOWING METHODS AREN'T TECHNICALLY UNDER IRV, BUT ECLIPSE WON'T ALLOW ANY
+	//MORE CLASSES...
+	@POST
+	@Path("/updateProfileDescription")
+	@Produces("application/json")
+	public Response updateProfileDescription(String payload) {
+		return null;
+	}
+	@POST
+	@Path("/updateVisibility")
+	@Produces("application/json")
+	public Response updateVisibility(String payload) {
+		return null;
+	}
+	
+	@POST
+	@Path("/generateInvite")
+	@Produces("application/json")
+	public Response generateInvite(String payload) {
+		return null;
+	}
+	
+
+	
 	
 	
  }
