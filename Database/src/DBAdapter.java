@@ -32,7 +32,6 @@ public class DBAdapter {
 	
 	public boolean createUser(User usr) {
 		try {
-
 			this.getConnection();
 			int log = (usr.loggedIn) ? 1 : 0;
 			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.User SET email = ?, firstName = ?, lastName = ?, password = ?, type = ?,loggedIn = ?");
@@ -116,7 +115,33 @@ public class DBAdapter {
 		return String.format("UPDATE TrackOneDB.User SET %s = '"+var+"' WHERE email = '"+email+"'", varname);
 	}
 	
-	//public boolean inviteUser(String email, in)
+	public boolean logUserInvite(String email, String code) {
+		try {
+			this.getConnection();
+			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.Invite SET inviter = ?, code = ?");
+		    statement.setString(1, email);
+		    statement.setString(2, code);
+		    statement.executeUpdate();
+		    return true;
+		} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+		}
+	}
+	public String getUserInvite(String code) {
+		try {
+			this.getConnection();
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM TrackOneDB.Invite WHERE code = ?");
+		    statement.setString(1, code);
+		    statement.executeUpdate();
+		    String email = statement.getResultSet().getString("email");
+		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Invite WHERE code = '" +code+ "'");
+		    return email;
+		} catch (SQLException e) {
+				e.printStackTrace();
+				return "";
+		}
+	}
 	
 	public <T> boolean updateUser(String email, String field, T newValue) {
 		String query = formatUserUpdateString(email, field, newValue);
