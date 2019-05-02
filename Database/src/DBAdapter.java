@@ -13,9 +13,11 @@ public class DBAdapter {
 	
 	// USER FUNCTIONS
 	private Connection getConnection() throws SQLException{
+		if (conn != null) return conn;
 		try {		
 			System.out.println("Attempting Connection");
 			conn = DriverManager.getConnection(DBAddress,"root","root");
+			System.out.println("Connection Established");
 			//conn.close();
 			return conn;
 		}
@@ -41,25 +43,26 @@ public class DBAdapter {
 		    statement.setString(4, usr.password);
 		    statement.setString(5, usr.firstName);
 		    statement.setString(6, usr.type);
+		    //System.out.println(statement.toString());
 		    statement.executeUpdate();
-		    this.updateUser(usr.email, "loggedIn", log);
+		    if (this.updateUser(usr.email, "loggedIn", log) != true) return false;
 		    if (usr.type == "member") { 
-				this.updateUser(usr.email, "address", usr.address);
-				this.updateUser(usr.email, "city", usr.city);
-				this.updateUser(usr.email, "state", usr.state);
-				this.updateUser(usr.email, "zip", usr.zip);
-				this.updateUser(usr.email, "ccNum", usr.ccNum);
-				this.updateUser(usr.email, "ccv", usr.ccv);
-				this.updateUser(usr.email, "ccExpMon", usr.expM);
-				this.updateUser(usr.email, "ccExpYr", usr.expY);
+				if (this.updateUser(usr.email, "address", usr.address) == false) return false;
+				if (this.updateUser(usr.email, "city", usr.city)== false) return false;
+				if (this.updateUser(usr.email, "state", usr.state)== false) return false;
+				if (this.updateUser(usr.email, "zip", usr.zip)== false) return false;
+				if (this.updateUser(usr.email, "ccNum", usr.ccNum)== false) return false;
+				if (this.updateUser(usr.email, "ccv", usr.ccv)== false) return false;
+				if (this.updateUser(usr.email, "ccExpMon", usr.expM)== false) return false;
+				if (this.updateUser(usr.email, "ccExpYr", usr.expY)== false) return false;
 				//this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
-				this.updateUser(usr.email, "phone", usr.phone);
-				this.updateUser(usr.email, "birthday", usr.birthday);
-				this.updateUser(usr.email, "points", usr.points);
-				this.updateUser(usr.email, "inviter", usr.invitedBy);
-				this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0);
-				this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0);
-				this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0);
+				if (this.updateUser(usr.email, "phone", usr.phone)== false) return false;
+				if (this.updateUser(usr.email, "birthday", usr.birthday)== false) return false;
+				if (this.updateUser(usr.email, "points", usr.points)== false) return false;
+				if (this.updateUser(usr.email, "inviter", usr.invitedBy)== false) return false;
+				if (this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0)== false) return false;
+				if (this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0)== false) return false;
+				if (this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0)== false) return false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -111,7 +114,7 @@ public class DBAdapter {
 		return null;
 	}
 	
-	private <T> String formatUserUpdateString(String email, String varname, T var) {
+	public <T> String formatUserUpdateString(String email, String varname, T var) {
 		return String.format("UPDATE TrackOneDB.User SET %s = '"+var+"' WHERE email = '"+email+"'", varname);
 	}
 	
@@ -147,7 +150,11 @@ public class DBAdapter {
 		String query = formatUserUpdateString(email, field, newValue);
 		try {
 			this.getConnection();
-			int rs = conn.createStatement().executeUpdate(query);
+			PreparedStatement statement = conn.prepareStatement(("UPDATE TrackOneDB.User SET "+field+" = ? WHERE email = ?"));
+		    statement.setObject(1, newValue);
+		    statement.setString(2,  email);
+		    statement.executeUpdate();
+			//int rs = conn.createStatement().executeUpdate(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

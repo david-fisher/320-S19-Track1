@@ -16,7 +16,7 @@ public class User {
 	protected String expM;
 	protected String expY;
 	protected String birthday;
-	protected String stripeCreditCardID;
+	//protected String stripeCreditCardID;
 	protected int points;
 	protected String phone;
 	protected String password;
