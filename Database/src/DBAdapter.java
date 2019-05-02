@@ -15,9 +15,9 @@ public class DBAdapter {
 	private Connection getConnection() throws SQLException{
 		if (conn != null) return conn;
 		try {		
-			System.out.println("Attempting Connection");
+			//System.out.println("Attempting Connection");
 			conn = DriverManager.getConnection(DBAddress,"root","root");
-			System.out.println("Connection Established");
+			//System.out.println("Connection Established");
 			//conn.close();
 			return conn;
 		}
@@ -25,45 +25,43 @@ public class DBAdapter {
 			e.printStackTrace();
 			return null;
 		}
-//		//function used to get connection to database
-//		if(conn != null) return conn;
-//		Connection conn = DriverManager.getConnection(DBAddress,"root","root");
-//		//System.out.println("Log: Connection Established!");
-//		return conn;
 	}
 	
 	public boolean createUser(User usr) {
 		try {
 			this.getConnection();
+			System.out.println("Connection is null when creating User: " + (conn==null));
 			int log = (usr.loggedIn) ? 1 : 0;
-			PreparedStatement statement = conn.prepareStatement("UPDATE TrackOneDB.User SET email = ?, firstName = ?, lastName = ?, password = ?, type = ?,loggedIn = ?");
+			//System.out.println(log);
+			//PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.URL(original, shortened) VALUES(?, ?)")
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.User(email, firstName, lastName, password, type, loggedIn) VALUES(?, ?, ?, ?, ?, ?)");
 		    statement.setString(1, usr.email);
 		    statement.setString(2, usr.firstName);
 		    statement.setString(3, usr.lastName);
 		    statement.setString(4, usr.password);
-		    statement.setString(5, usr.firstName);
-		    statement.setString(6, usr.type);
-		    //System.out.println(statement.toString());
+		    statement.setString(5, usr.type);
+		    statement.setInt(6, log);
+		    System.out.println(statement.toString());
 		    statement.executeUpdate();
-		    if (this.updateUser(usr.email, "loggedIn", log) != true) return false;
-		    if (usr.type == "member") { 
-				if (this.updateUser(usr.email, "address", usr.address) == false) return false;
-				if (this.updateUser(usr.email, "city", usr.city)== false) return false;
-				if (this.updateUser(usr.email, "state", usr.state)== false) return false;
-				if (this.updateUser(usr.email, "zip", usr.zip)== false) return false;
-				if (this.updateUser(usr.email, "ccNum", usr.ccNum)== false) return false;
-				if (this.updateUser(usr.email, "ccv", usr.ccv)== false) return false;
-				if (this.updateUser(usr.email, "ccExpMon", usr.expM)== false) return false;
-				if (this.updateUser(usr.email, "ccExpYr", usr.expY)== false) return false;
-				//this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
-				if (this.updateUser(usr.email, "phone", usr.phone)== false) return false;
-				if (this.updateUser(usr.email, "birthday", usr.birthday)== false) return false;
-				if (this.updateUser(usr.email, "points", usr.points)== false) return false;
-				if (this.updateUser(usr.email, "inviter", usr.invitedBy)== false) return false;
-				if (this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0)== false) return false;
-				if (this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0)== false) return false;
-				if (this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0)== false) return false;
-			}
+//		    if (this.updateUser(usr.email, "loggedIn", log) != true) return false;
+//		    if (usr.type == "member") { 
+//				if (this.updateUser(usr.email, "address", usr.address) == false) return false;
+//				if (this.updateUser(usr.email, "city", usr.city)== false) return false;
+//				if (this.updateUser(usr.email, "state", usr.state)== false) return false;
+//				if (this.updateUser(usr.email, "zip", usr.zip)== false) return false;
+//				if (this.updateUser(usr.email, "ccNum", usr.ccNum)== false) return false;
+//				if (this.updateUser(usr.email, "ccv", usr.ccv)== false) return false;
+//				if (this.updateUser(usr.email, "ccExpMon", usr.expM)== false) return false;
+//				if (this.updateUser(usr.email, "ccExpYr", usr.expY)== false) return false;
+//				//this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
+//				if (this.updateUser(usr.email, "phone", usr.phone)== false) return false;
+//				if (this.updateUser(usr.email, "birthday", usr.birthday)== false) return false;
+//				if (this.updateUser(usr.email, "points", usr.points)== false) return false;
+//				if (this.updateUser(usr.email, "inviter", usr.invitedBy)== false) return false;
+//				if (this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0)== false) return false;
+//				if (this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0)== false) return false;
+//				if (this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0)== false) return false;
+//			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -71,7 +69,6 @@ public class DBAdapter {
 		return true;
 	}
 
-	
 	public User getUser(String email) {
 		try {
 			this.getConnection();
@@ -82,7 +79,7 @@ public class DBAdapter {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String inviter = rs.getString("inviter");
-				usr = new User (email, firstName, lastName, 0, inviter); //fix when cc is implemented back in
+				usr = new User (email, firstName, lastName, "", inviter); //fix when cc is implemented back in
 				if (type == "member") { //set member fields
 					usr.type = type;
 					usr.address = rs.getString("address");
@@ -288,7 +285,7 @@ public class DBAdapter {
 		try {
 			this.getConnection();
 			//System.out.println("Connection is null: " + (conn==null));
-			PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.URL(original, shortened) VALUES(?, ?)");// original = ?, shortened = ?");
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.URL(original, shortened) VALUES(?, ?)");
 			statement.setString(1, original);
 		    statement.setString(2, shortened);
 		    statement.executeUpdate();

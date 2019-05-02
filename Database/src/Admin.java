@@ -3,10 +3,11 @@ public class Admin extends User {
 
 	public Admin(String email, 
 				 String firstName, 
-				 String lastName,  
-				 int points,
+				 String lastName,
+				 String password,
+				 //int points,
 				 User invitedBy) {
-		super(email, firstName, lastName, points, "");
+		super(email, firstName, lastName, password, "");
 	}
 
 	/**
