@@ -1,6 +1,7 @@
 package post;
 
 import db.DBAdapter;
+import db.Database;
 import user.*;
 
 import java.awt.*;
@@ -12,7 +13,6 @@ public class Post
 	public User poster;
 	public String postID;
 	public String text;
-	DBAdapter DB;
 	public int flag = 0;
 	int pointsForPost = 5;
 	public Timestamp timestamp;
@@ -32,7 +32,6 @@ public class Post
 		this.postID = postID;
 		this.text = text;
 
-		DB = new DBAdapter();
 		comments = new ArrayList<Comment>();
 		hashtags = new ArrayList<String>();
 		adminHashtags = new ArrayList<String>();
@@ -157,7 +156,7 @@ public class Post
 	{
 		text = newText;
 		this.parseForHashtags();
-		DB.updatePost(Integer.parseInt(this.postID),"text", text);
+		Database.adapter.updatePost(Integer.parseInt(this.postID),"text", text);
 	}
 
    /* getPostId will return the unique postId
@@ -207,9 +206,9 @@ public class Post
 
 	public void sendToDB()
 	{
-		if(DB.getPost(postID)==null)
+		if(Database.adapter.getPost(postID)==null)
 		{
-			DB.createPost(this);
+			Database.adapter.createPost(this);
 		}
 	}
 }

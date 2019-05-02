@@ -23,7 +23,6 @@ public class Registration {
 	private String cvv;
 	private String expirationMonth;
 	private String expirationYear;
-	private DBAdapter DB;
 	private CreditCard card;
 	private String verificationCode;
 	private String invitedBy;
@@ -57,9 +56,8 @@ public class Registration {
 		this.cvv = cvv;
 		this.expirationMonth = expirationMonth;
 		this.expirationYear = expirationYear;
-		this.DB = Database.adapter;
 		this.verificationCode = verificationCode;
-		this.invitedBy = DB.getUserInvite(this.verificationCode);
+		this.invitedBy = Database.adapter.getUserInvite(this.verificationCode);
 		this.type = "member";
 	}
 
@@ -123,7 +121,7 @@ public class Registration {
 		// Check if this email is already use by calling DB.getUser():
 		// If the provided email is not associated with a user (eg. returns null),
 		// Then we know the email is unique
-		if(null == DB.getUser(this.email) ){
+		if(null == Database.adapter.getUser(this.email) ){
 			return false;
 		}else {
 			return true;
@@ -160,7 +158,7 @@ public class Registration {
 
 	public boolean storeData() {
 		User newUser = new User(this.email, this.firstName, this.lastName, 0, this.invitedBy, this.type, this.card);
-		DB.createUser(newUser);
+		Database.adapter.createUser(newUser);
 		return true;
 	}
 
