@@ -33,18 +33,131 @@ class DBTestSuite {
 		
 		
 	}
+	@Test
+	public void testFollowUser() {
+		db.deleteUser("nol6@fortnite.edu");
+		db.deleteUser("noobl6@fortnite.edu");
+		db.deleteUser("noobl26@fortnite.edu");
+		User member = new User("nol6@fortnite.edu", "Korg", "Rockman", "password1", 1700, "swamy@umass.edu");
+		member.type = "member";
+		member.address = "100 Street Lane";
+		member.city = "Townsville";
+		member.state = "LA";
+		member.zip = "42069";
+		member.ccNum = "111111111111";
+		member.ccv = "123";
+		member.expM = "09";
+		member.expY = "2019";
+		member.birthday = "aaaaaa";
+		member.phone = "2222222";
+		member.password = "sss";
+		member.hasInvited = false;
+		member.loggedIn = true; // seems unecessary to me, included in meantime
+		member.isValidated = true; // if user is currently verified by credit card
+		member.privacy = false;
+		String q = "www";
+		if(db.createUser(member)) { System.out.println("Korg Successfully Created"); }
+		User member2 = new User("noobl6@fortnite.edu", "Korg", "Rockman", "password1", 1700, "swamy@umass.edu");
+		member2.type = "member";
+		member2.address = "100 Street Lane";
+		member2.city = "Townsville";
+		member2.state = "LA";
+		member2.zip = "42069";
+		member2.ccNum = "111111111111";
+		member2.ccv = "123";
+		member2.expM = "09";
+		member2.expY = "2019";
+		member2.birthday = "aaaaaa";
+		member2.phone = "2222222";
+		member2.password = "sss";
+		member2.hasInvited = false;
+		member2.loggedIn = true; // seems unecessary to me, included in meantime
+		member2.isValidated = true; // if user is currently verified by credit card
+		member2.privacy = false;
+		String r = "www";
+		if(db.createUser(member2)) { System.out.println("Korg Successfully Created"); }
+		db.followUser(member.email, member2.email);
+		
+		User member3 = new User("noobl26@fortnite.edu", "Korg", "Rockman", "password1", 1700, "swamy@umass.edu");
+		member3.type = "member";
+		member3.address = "100 Street Lane";
+		member3.city = "Townsville";
+		member3.state = "LA";
+		member3.zip = "42069";
+		member3.ccNum = "111111111111";
+		member3.ccv = "123";
+		member3.expM = "09";
+		member3.expY = "2019";
+		member3.birthday = "aaaaaa";
+		member3.phone = "2222222";
+		member3.password = "sss";
+		member3.hasInvited = false;
+		member3.loggedIn = true; // seems unecessary to me, included in meantime
+		member3.isValidated = true; // if user is currently verified by credit card
+		member3.privacy = false;
+		String e = "www";
+		//if(db.createUser(member2)) { System.out.println("Korg Successfully Created"); }
+		db.followUser(member.email, member3.email);
+	}
+	
+	@Test
+	public void testUnFollowUser() {
+		db.deleteUser("f@fortnite.edu");
+		db.deleteUser("f1@fortnite.edu");
+		User member = new User("f@fortnite.edu", "Korg", "Rockman", "password1", 1700, "swamy@umass.edu");
+		member.type = "member";
+		member.address = "100 Street Lane";
+		member.city = "Townsville";
+		member.state = "LA";
+		member.zip = "42069";
+		member.ccNum = "111111111111";
+		member.ccv = "123";
+		member.expM = "09";
+		member.expY = "2019";
+		member.birthday = "aaaaaa";
+		member.phone = "2222222";
+		member.password = "sss";
+		member.hasInvited = false;
+		member.loggedIn = true; // seems unecessary to me, included in meantime
+		member.isValidated = true; // if user is currently verified by credit card
+		member.privacy = false;
+		String q = "www";
+		if(db.createUser(member)) { System.out.println("Korg Successfully Created"); }
+		User member2 = new User("f1@fortnite.edu", "Korg", "Rockman", "password1", 1700, "swamy@umass.edu");
+		member2.type = "member";
+		member2.address = "100 Street Lane";
+		member2.city = "Townsville";
+		member2.state = "LA";
+		member2.zip = "42069";
+		member2.ccNum = "111111111111";
+		member2.ccv = "123";
+		member2.expM = "09";
+		member2.expY = "2019";
+		member2.birthday = "aaaaaa";
+		member2.phone = "2222222";
+		member2.password = "sss";
+		member2.hasInvited = false;
+		member2.loggedIn = true; // seems unecessary to me, included in meantime
+		member2.isValidated = true; // if user is currently verified by credit card
+		member2.privacy = false;
+		String r = "www";
+		if(db.createUser(member2)) { System.out.println("Korg Successfully Created"); }
+		
+		db.followUser(member.email, member2.email);
+		db.unfollowUser(member.email, member2.email);
+	}
 	
 	@Test
 	public void testUserCreation(){
 		if(testConnection() == false) {
 			return;
 		}
-		User admin = new User("pres@whitehouse.gov", "big", "don", "pass", 0, "vputin@russia.ru");
+		User admin = new User("pres@whitehouse.gov", "big", "don", "pass", 80000,"vputin@russia.ru");
 		admin.type = "admin";
 		if(db.createUser(admin)) { System.out.println("Admin Successfully Created"); }
 		else { System.out.println("Admin Unsuccessfully Created."); }
 		if(db.deleteUser(admin.email)) { System.out.println("Admin Sucessfully Deleted"); };
-		User member = new User("noobkiller69@fortnite.edu", "Korg", "Rockman", "password1", 47, "swamy@umass.edu");
+		User member = new User("noobkiller69@fortnite.edu", "Korg", "Rockman", "password1", 1700, "swamy@umass.edu");
 		member.type = "member";
 		member.address = "100 Street Lane";
 		member.city = "Townsville";
@@ -70,7 +183,7 @@ class DBTestSuite {
 		if (newUser == null) { System.out.println("wrong"); return; }
 		if(newUser.firstName.equals("Borg")){
 			System.out.println("User Successfully Updated");
-			//db.deleteUser("noobkiller69@fortnite.edu");
+			db.deleteUser("noobkiller69@fortnite.edu");
 		}
 		else { System.out.println("User Unsuccessfully Updated"); }
 	}
@@ -95,7 +208,7 @@ class DBTestSuite {
 	public void testPostCreation() {
 		DBAdapter db = new DBAdapter();
 		assertTrue(testConnection());
-		User usr = new User("sgshshsk@umasss.edu","Yu","Fu", "april", "yufu006@gmail.com");
+		User usr = new User("sgshshsk@umasss.edu","Yu","Fu", "april", 1700,"yufu006@gmail.com");
 		usr.type = "admin";
 		if(db.createUser(usr)) { System.out.println("Adm Successfully Created"); }
 		else { System.out.println("Adm Unsuccessfully Created."); }
@@ -239,7 +352,9 @@ class DBTestSuite {
 //		System.out.println(test.db.deleteUser("noobkiller69@fortnite.edu"));
 //		//System.out.println(test.testConnection());
 //		test.testUserCreation();
-		test.testPostCreation();
+//		test.testPostCreation();
+		test.testFollowUser();
+		test.testUnFollowUser();
 		//System.out.println(test.testURLCreation());
 	}
 	

@@ -41,7 +41,7 @@ public class DBAdapter {
 		    statement.setString(4, usr.password);
 		    statement.setString(5, usr.type);
 		    statement.setInt(6, log);
-		    System.out.println(statement.toString());
+		    //System.out.println(statement.toString());
 		    statement.executeUpdate();
 		    if (this.updateUser(usr.email, "loggedIn", log) != true) return false;
 		    if (usr.type == "member") { 
@@ -176,7 +176,11 @@ public class DBAdapter {
 	public boolean followUser(String follower,String followee) {
 		try {
 			this.getConnection();
-		    int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.Follow (follow,userID) VALUES ('"+followee+"','"+follower+")");
+			//"SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'"
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.Follow (follow,userID) VALUES(?,?)");
+		    statement.setString(1, follower);
+		    statement.setString(2, followee);
+		    statement.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -480,7 +484,7 @@ public class DBAdapter {
 	public boolean unfollowUser(String follower,String followee) {
 		try {
 			this.getConnection();
-		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Follow (follow,userID) VALUES ('"+followee+"','"+follower+")");
+		    int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Follow WHERE userID = '"+followee+"' AND follow = '"+follower+"'");
 		} catch(SQLException e) {
 			e.printStackTrace();
 			return false;

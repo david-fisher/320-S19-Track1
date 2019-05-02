@@ -59,8 +59,8 @@ CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Invite` (
 
 CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Follow` (
   `followID` INT NOT NULL AUTO_INCREMENT,
-  `userID` INT NOT NULL,
-  `follow` INT NOT NULL,
+  `userID` VARCHAR(45) NOT NULL,
+  `follow` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`followID`));
 
 CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Comment` (
