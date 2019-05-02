@@ -88,7 +88,7 @@ public class User {
 
 	/**
 	 *  Updates user's account info for any valid field in the DB
-	 *  
+	 *
 	 *  @param  fieldName	String indicating which field in the DB
 	 * 						the data should be stored in
 	 *  @param	data		A generic Object that is the data to be
