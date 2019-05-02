@@ -69,7 +69,7 @@ public class User {
 	 */
 
 	public void addPoints(int points) {
-		//DBAdapter.setUserPoints(this.email, points);
+		DB.updateUser(email, "points", points);
 	}
 
 	/**
