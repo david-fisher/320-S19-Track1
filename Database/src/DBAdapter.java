@@ -1023,7 +1023,7 @@ Connection conn;
 					ResultSet rs2 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE userID = " + arr.get(i));
 					String email2;
 					while(rs2.next()) {
-						email = rs2.getString("email");
+						email2 = rs2.getString("email");
 					}
 					Post p = new Post(getUser(email2), postID, text);
 					p.timestamp = time;
