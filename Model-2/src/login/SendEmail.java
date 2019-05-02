@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMultipart;
 
 public class SendEmail {
 
-    public static void sendMail(String toEmail, String emailText) {
+    public static void sendMail(String toEmail, String emailText, String subjectLine) {
         //authentication info
         final String username = "320joeschmoe@gmail.com";
         final String password = "320@T1JoJoSchmo";
@@ -38,7 +38,7 @@ public class SendEmail {
         try {
             msg.setFrom(new InternetAddress(fromEmail));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-            msg.setSubject("Members Only Invitation!");
+            msg.setSubject(subjectLine);
 
             Multipart emailContent = new MimeMultipart();
 
