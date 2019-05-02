@@ -1,6 +1,5 @@
 
 <template>
-
   <div align="center" style="border:1px solid black">
     <h1>Member and Admin Creation Page</h1>
     <form class="form" action="/WebServ/dist/#/storeInfo" method="post" v-on:submit="verifyForm($event)">
