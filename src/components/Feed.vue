@@ -182,10 +182,11 @@ export default {
 
       this.$http.post(path, data)
       .then(response => {
-        console.log(response)
         var retVal = JSON.parse('{' + response.bodyText)
-        if(retVal.result.length == 0) {
-          console.log("yeet");
+        console.log(retVal)
+        if(retVal.result.length == 0){
+          console.log("what")
+          this.$router.push('/feed')
         } else {
           console.log("you are a failure");
         }
