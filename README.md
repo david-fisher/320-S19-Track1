@@ -37,11 +37,11 @@ Members Only requires a server to host the RESTful API at a URL to receive HTTP 
 
 2. Install Eclipse Java EE: The Java EE edition of Eclipse allows for seamless integration with Tomcat and allows us to easily create and host a Dynamic Web Project folder structure, which is what type of project we are using.
 
-3. Pull from the Demo repo: This hosts the finalized code seen in our demo for the project. Make sure to import your project into your Eclipse workspace and update the dependencies of your build path with the included Jars in the WebContent foflder. Also make sure that your folder is being intepreted by Eclipse as a Dynamic Web Project so that it can be hosted on a Tomcat server.
+3. Pull from the Demo repo: This hosts the finalized code seen in our demo for the project. Make sure to import your project into your Eclipse workspace and update the dependencies of your build path with the included Jars in the WebContent folder. Also make sure that your folder is being intepreted by Eclipse as a Dynamic Web Project so that it can be hosted on a Tomcat server. The only relevant folder for the REST service is the folder titled 'members-only'.
 
 4. Get ngrok and use its port forwarding: Go to ngrok.com and follow the instructions to port forward to your Tomcat server. You will now be able to run URL requests using the Ngrok link.
 
-5. Install mySQL 
+5. Install mySQLServer for the database and make sure it is running on the localhost:3306.
 
 # mySQL installation guide
 
