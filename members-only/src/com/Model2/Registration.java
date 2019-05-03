@@ -21,7 +21,7 @@ public class Registration {
 	private String cvv;
 	private String expirationMonth;
 	private String expirationYear;
-	private CreditCard card;
+	public CreditCard card;
 	private String verificationCode;
 	private String invitedBy;
 	private String type;
@@ -74,24 +74,25 @@ public class Registration {
 	 *
 	 * @return String indicating if all the checks pass
 	 */
-	public String verify() {
-		if(!emailCheck()) return "Invalid email or already in use";
-		if(!passwordCheck()) return "Passwords don't match";
-		if(!zipCheck()) return "Invalid zip code";
+	public Registration verify() {
+		if(!emailCheck()) return null;
+		if(!passwordCheck()) return null;
+		if(!zipCheck()) return null;
 
-		if(!this.invitedBy.contains("@")) return "Your verification code is wrong";
+		if(!this.invitedBy.contains("@")) return null;
 
 		CreditCard card = new StripeCreditCard(this.email, this.creditCardNumber, this.zipCode , this.cvv, this.expirationMonth , this.expirationYear);
 		String resultCardValidation = card.verify();
 
-		if(resultCardValidation == null) return "Invalid credit card";
+		if(resultCardValidation == null) return null;
 		else this.card = card;
 
 		//Create a User object in the database.
 		//NOTE: This user will still be invalid until they verify their charge.
 		storeData();
+		((StripeCreditCard)this.card).charge();
 
-		return ""; //Empty string is the success code according to Cole
+		return this; //Empty string is the success code according to Cole
 	}
 
 	/**
@@ -107,12 +108,16 @@ public class Registration {
 		Pattern p = Pattern.compile("^(.+)@(.+)$"); // https://howtodoinjava.com/regex/java-regex-validate-email-address/
 		Matcher m = p.matcher(this.email);
 		boolean b = m.matches();
+		System.out.println(this.email + " is valid: " + b);
 		if(!b) return false;
 
 		// Check if this email is already use by calling DB.getUser():
 		// If the provided email is not associated with a user (eg. returns null),
 		// Then we know the email is unique
-		if(null != Database.adapter.getUser(this.email))return false;
+		User ech = Database.adapter.getUser(this.email);
+		if(ech != null) {
+			return false;
+		}
 		else return true;
 	}
 
@@ -144,7 +149,7 @@ public class Registration {
 	 */
 
 	private boolean storeData() {
-		User newUser = new User(this.email, this.firstName, this.lastName, 0, this.invitedBy, this.type, this.creditCardNumber, this.expirationMonth, this.expirationYear, this.cvv, this.zipCode);
+		User newUser = new User(this.email, this.firstName, this.lastName, 0, this.invitedBy, this.type, this.creditCardNumber, this.expirationMonth, this.expirationYear, this.cvv, this.zipCode, null);
 		Database.adapter.createUser(newUser);
 		return true;
 	}

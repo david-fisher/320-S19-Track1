@@ -34,6 +34,7 @@ public class Post {
 		this.poster = poster;
 		this.postID = postID;
 		this.text = text;
+		this.type = type;
 
 		comments = new ArrayList<Comment>();
 		hashtags = new ArrayList<String>();
@@ -44,7 +45,34 @@ public class Post {
 		this.addPoints();
 		this.parseForHashtags();
 		this.sendToDB();
+	}
+	
+	public Post(User poster, String type, String postID, String text, boolean potato) {
+		this.poster = poster;
+		this.postID = postID;
+		this.text = text;
 		this.type = type;
+
+		comments = new ArrayList<Comment>();
+		hashtags = new ArrayList<String>();
+		adminHashtags = new ArrayList<String>();
+
+		this.parseForURLs();
+		this.createTimeStamp();
+		this.addPoints();
+		this.parseForHashtags();
+	}
+	
+	public Post(User poster, String type, String postID) {
+		this.poster = poster;
+		this.postID = postID;
+		this.text = "";
+		this.type = type;
+		
+		comments = new ArrayList<Comment>();
+		
+		this.createTimeStamp();
+		this.addPoints();
 	}
 
    /* This function will parse the text for hashtags
@@ -218,5 +246,10 @@ public class Post {
 	}
 
 
-	public void sendToDB() { if(Database.adapter.getPost(postID)==null) Database.adapter.createPost(this); }
+	public void sendToDB() { 
+		if(Database.adapter.getPost(postID) == null) {
+			System.out.println("Post created!");
+			Database.adapter.createPost(this); 
+		}
+	}
 }
