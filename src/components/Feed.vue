@@ -32,17 +32,17 @@
 
 
     <div id="feedHolder">
-      <div id="feed" style="float:left"  >
-        <div v-for="item in jsonData.items1" v-bind:key="item.postID">
+      <div id="feed" style="float:left">
+        <div v-for="item in items1" v-bind:key="item.postID">
           <div class="item">
             <div class="header-container">
               <div class="header">
-                <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
-                <div class="username"> {{ item.poster.firstName + " " + item.poster.lastName }}  </div>
+                <div class="avatar"> <img v-bind:src="item.avatar" alt="Smiley face" height="33" width="33"> </div>
+                <div class="username"> {{ item.firstName + " " + item.lastName }}  </div>
               </div>
             </div>
             <div v-if="item.imageOrText">
-              <img src="../assets/picture.jpg" alt="Smiley face" width="600">
+              <canvas id="imageCanvas" ref="imageCanvas"></canvas>
             </div>
             <div v-else>
               <h5>{{item.text}}</h5>
@@ -118,6 +118,14 @@ export default {
       postTextJSON: {
         message: ""
       },
+      items1: [
+        {
+          text: 'hi'
+        },
+        {
+          text: 'ew'
+        }
+      ],
       jsonData : {}
     }
   },
@@ -128,26 +136,39 @@ export default {
       this.$router.push('/')
       return;
     }
-    const path = this.ip + '/getFeed';
-    var jsonObj = {};
-    this.$http.get(path)
-    .then(response => {
-      console.log(response);
-      jsonObj = response;
-    })
-    .catch(error => {
-      console.log("you're a failure");
-    });
-    this.jsonData = jsonObj;
+    
   },
   mounted: function(){
     var canvas = this.$refs.imageCanvas
     canvas.width = 0
     canvas.height = 0
     console.log(canvas.width)
+
+    const path = this.ip + '/getFeed';
+    const data = {
+      email: this.$session.get('email'),
+      password: this.$session.get('password')
+    }
+    console.log(data)
+    var jsonObj = {};
+
+    this.$http.post(path, data)
+    .then(response => {
+      var retVal = JSON.parse('{' + response.bodyText)
+      console.log(retVal)
+      jsonObj = retVal;
+      this.items1 = jsonObj.items;
+      console.log(this.items1)
+    })
+    .catch(error => {
+      console.log("you're a failure");
+    });
   },
 
   methods: {
+    potato(){
+      console.log(this.items1)
+    },
     postComment : function(event, postTheId) {
       event.preventDefault();
 
@@ -157,7 +178,8 @@ export default {
       
       this.$http.post(path, this.comment)
       .then(response => {
-        console.log(response);
+        var retVal = JSON.parse('{' + response.bodyText)
+        console.log(retVal)
       })
       .catch(error => {
         console.log("comment failed");
@@ -204,6 +226,8 @@ export default {
       this.postTextJSON.password = this.$session.get('password');
 
       var path = this.ip + "/postText";
+
+      console.log(this.postTextJSON)
 
       this.$http.post(path, this.postTextJSON)
       .then(response => {
@@ -287,7 +311,7 @@ body {
     box-shadow: 0 0 0 1px #e6e6e6;
 }
 #feed .item .header-container {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     left: 0;
     right: 0;
@@ -295,7 +319,7 @@ body {
     clip: rect(0, auto, auto, 0);
 }
 #feed .item .header {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     left: 0;
     right: 0;
@@ -402,7 +426,7 @@ body {
     box-shadow: 0 0 0 1px #e6e6e6;
 }
 #feed .item .header-container {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     left: 0;
     right: 0;
@@ -410,7 +434,7 @@ body {
     clip: rect(0, auto, auto, 0);
 }
 #feed2 .item .header {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     left: 0;
     right: 0;

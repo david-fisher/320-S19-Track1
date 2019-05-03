@@ -158,16 +158,14 @@ export default {
   methods: {
     changePhoto: function(){
       var canvas = this.$refs.imageCanvas
-      var thing = {
-        photo: canvas.toDataURL()
-      }
+      var thing = canvas.toDataURL()
 
       const path = this.ip + '/changePhoto'
       
       console.log(thing.photo)
 
       const data = {
-        form: thing,
+        pic: thing,
         email: this.$session.get('email'),
         password: this.$session.get('password'),
       }
@@ -253,7 +251,7 @@ export default {
       const path = this.ip + '/updateProfileDescription'
       
         const data = {
-          form: this.form2,
+          desc: this.form2.description,
           email: this.$session.get('email'),
           password: this.$session.get('password'),
         }
