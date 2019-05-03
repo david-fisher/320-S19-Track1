@@ -4,9 +4,11 @@ import db.DBAdapter;
 import user.*;
 import stripe.*;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class User_Test
-{
+public class User_Test {
+
     String email = "test@gmail.com";
     String cardNum = "4000056655665556";
     String zipCode = "00000";
@@ -15,8 +17,7 @@ public class User_Test
     String exp_year = "2020";
 
     // Create the test card with the information above
-    StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode,
-            cvv, exp_month, exp_year);
+    StripeCreditCard testCard = new StripeCreditCard(email, cardNum, zipCode, cvv, exp_month, exp_year);
     /**
      * Calls CC adapter to charge User’s card,
      * verifies if the card is charged
