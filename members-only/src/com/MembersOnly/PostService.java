@@ -36,6 +36,7 @@ public class PostService {
 		
 		return null;
 	}
+	
 	@POST
 	@Path("/getFeed")
 	@Produces("application/json")
@@ -51,6 +52,7 @@ public class PostService {
 			User usr = Database.adapter.getUser(email);
 			String picture = usr.profilePic;
 			String firstName = usr.firstName;
+			String blurb = usr.description;
 			ArrayList<Post> fetchedPosts = Database.adapter.fetchRecentPosts(10);
 			JSONArray items = new JSONArray();
 			JSONArray otherItems = new JSONArray();
@@ -60,6 +62,7 @@ public class PostService {
 				jsonObj.put("text", post.text);
 				jsonObj.put("firstName", post.getUser().firstName);
 				jsonObj.put("lastName", post.getUser().lastName);
+				jsonObj.put("email", post.getUser().email);
 				System.out.println("type: " + post.type);
 				jsonObj.put("imageOrText", !post.type.equals("textPost"));
 				ArrayList<Comment> comments = post.comments;
@@ -107,6 +110,8 @@ public class PostService {
 			result.put("userName", firstName);
 			result.put("items1", items);
 			result.put("items2", otherItems);
+			System.out.println("Desc: " + blurb);
+			result.put("profDesc", blurb);
 			System.out.println(items);
 		}
 		else {

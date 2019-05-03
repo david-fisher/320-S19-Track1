@@ -16,6 +16,7 @@ public class LoginProcessor {
 
 	public static boolean checkCredentials(String email, String password) {
 		User currentUser = Database.adapter.getUser(email);
+		System.out.println(currentUser.password);
 		return currentUser.password.equals(password);
 	}
 
