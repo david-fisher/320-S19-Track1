@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Welcome from '@/components/Welcome'
+import ModFeed from '@/components/ModFeed'
 import LoginPage from '@/components/LoginPage'
 import Irv from '@/components/IR&V'
 import PasswordReset from '@/components/PasswordReset'
@@ -52,6 +53,6 @@ export default new Router({
       path: '/moderatorAndAdminCreation',
       name: 'ModeratorAndAdminCreation',
       component: ModeratorAndAdminCreation
-    }
+    },
   ]
 })
