@@ -1,6 +1,7 @@
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Post
 {
@@ -194,3 +195,12 @@ public class Post
     * @return a boolean indicating success or failure
     */
 }
+class SortbyComments implements Comparator<Post> 
+{ 
+    // Used for sorting in ascending order of 
+    // roll number 
+    public int compare(Post a, Post b) 
+    { 
+        return b.comments.size() - a.comments.size(); 
+    } 
+} 

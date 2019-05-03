@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 
 public class DBAdapter {
@@ -31,7 +33,7 @@ public class DBAdapter {
 	public boolean createUser(User usr) {
 		try {
 			this.getConnection();
-			System.out.println("Connection is null when creating User: " + (conn==null));
+			//System.out.println("Connection is null when creating User: " + (conn==null));
 			int log = (usr.loggedIn) ? 1 : 0;
 			//System.out.println(log);
 			//PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.URL(original, shortened) VALUES(?, ?)")
@@ -57,6 +59,7 @@ public class DBAdapter {
 				//this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
 				if (this.updateUser(usr.email, "phone", usr.phone)== false) return false;
 				if (this.updateUser(usr.email, "birthday", usr.birthday)== false) return false;
+				if (this.updateUser(usr.email, "profilePic", usr.profilePic)== false) return false;
 				if (this.updateUser(usr.email, "points", usr.points)== false) return false;
 				if (this.updateUser(usr.email, "inviter", usr.invitedBy)== false) return false;
 				if (this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0)== false) return false;
@@ -98,6 +101,8 @@ public class DBAdapter {
 					usr.points += rs.getInt("points");
 					usr.phone = rs.getString("phone");
 					usr.password = rs.getString("password");
+					usr.profilePic = rs.getString("profilePic");
+					usr.blurb = rs.getString("blurb");
 					usr.loggedIn = true;
 					usr.hasInvited = (rs.getInt("hasInvited") == 1);
 					usr.isValidated = (rs.getInt("validAccount") == 1);
@@ -112,11 +117,7 @@ public class DBAdapter {
 		}
 		return null;
 	}
-	
-	public <T> String formatUserUpdateString(String email, String varname, T var) {
-		return String.format("UPDATE TrackOneDB.User SET %s = '"+var+"' WHERE email = '"+email+"'", varname);
-	}
-	
+		
 	public boolean logUserInvite(String email, String code) {
 		try {
 			this.getConnection();
@@ -382,19 +383,24 @@ public class DBAdapter {
 					com.flag = rs.getInt("explicit");
 					return com;
 				}
-				ResultSet comments = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Comment WHERE parentID = '"+postID+"'");
+				ResultSet comments = conn.createStatement().executeQuery("SELECT childID FROM TrackOneDB.Comment WHERE parentID = '"+postID+"'");
 				ArrayList<Comment> coms = new ArrayList<Comment>();
 				while(comments.next()) { //populate comments
-					coms.add((Comment)getPost(Integer.toString(comments.getInt("parentID"))));
+					Post parent = this.getPost(Integer.toString(comments.getInt("childID")));
+					Comment c = new Comment(parent.poster,"comment",Integer.toString(comments.getInt("childID")),
+							parent.text, parent);
+					coms.add(c);
 				}
 				if (type == "imagePost") { //do later
 					String path = this.getPhoto(rs.getString("photoID")).photoPath;
 					ImagePost imgP = new ImagePost(this.getUser(author), "imagePost",postID, path);
+					imgP.comments = coms;
 					imgP.timestamp = time;
 					imgP.flag = rs.getInt("explicit");
 					return imgP;
 				}
 				Post pst = new Post(this.getUser(author), "textPost",postID, text);
+				pst.comments = coms;
 				pst.flag = rs.getInt("explicit");
 				pst.timestamp = time;
 				return pst;
@@ -407,9 +413,6 @@ public class DBAdapter {
 	}
 	
 	
-	private <T> String formatPostUpdateString(int id, String varname, T var) {
-		return String.format("UPDATE TrackOneDB.Post SET %s = '"+var+"' WHERE postID = '"+id+"'", varname);
-	}
 	
 	public <T> boolean updatePost(int id, String field, T newValue) { //do not use when updating comments
 		//String query = formatPostUpdateString(id, field, newValue);
@@ -434,13 +437,6 @@ public class DBAdapter {
 			System.out.println(pstID);
 			//int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.User WHERE email = '" +email+ "'");
 			int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +id+ "'");
-//			PreparedStatement statement = conn.prepareStatement("DELETE FROM TrackOneDB.Post WHERE postID = ?");
-//		    System.out.println(statement.toString());
-//		    System.out.println("this can't be right");
-//			statement.setInt(1, pstID);
-//		    statement.executeUpdate();
-			//delete photos and filters before deleting post?
-			//int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Post WHERE postID = '" +pstID+ "'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -492,6 +488,42 @@ public class DBAdapter {
 			return false;
 		}
 		return true;
+	}
+	
+	public ArrayList<Post> getPopularPosts(int postsFetched){
+		try {
+			this.getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE type != 'comment'");
+			ArrayList<Post> posts = new ArrayList<Post>();
+			while(rs.next()) { posts.add(this.getPost(Integer.toString(rs.getInt("postID")))); }
+			Collections.sort(posts, new SortbyComments());
+			if (posts.size() <= postsFetched) return posts;
+			ArrayList<Post> returnPosts = new ArrayList<Post>();
+			for (int i = 0; i < postsFetched; i++) { returnPosts.add(posts.get(i)); }
+			return returnPosts;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ArrayList<Post> fetchRecentPosts(int posts){
+		try {
+			this.getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post ORDER BY `time` DESC LIMIT '"+posts+"'");
+			ArrayList<Post> p = new ArrayList<Post>();
+			while(rs.next()) {
+				if (rs.getString("type").equals("comments")) continue;
+				String pID = Integer.toString(rs.getInt("postID"));
+				p.add(this.getPost(rs.getString(pID)));
+			}
+			return p;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	// follower follows followee lol
 	// #english

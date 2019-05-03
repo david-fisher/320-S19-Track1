@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS `TrackOneDB`.`User` (
   `ccExpYr` VARCHAR(4) NULL,
   `stripeID` VARCHAR(45) NULL,
   `phone` VARCHAR(45) NULL,
+  `profilePic` VARCHAR(45) NULL,
+  `blurb` VARCHAR(512),
   `birthday` VARCHAR(45) NULL,
   `points` INT NULL,
   `inviter` VARCHAR(45) NULL,

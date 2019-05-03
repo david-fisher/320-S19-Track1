@@ -6,6 +6,7 @@ public class User {
 	protected String firstName;
 	protected String lastName;
 	protected String type;
+	protected String profilePic;
 	//protected CreditCard creditCard;
 	protected String address;
 	protected String city;
@@ -20,6 +21,7 @@ public class User {
 	protected int points;
 	protected String phone;
 	protected String password;
+	protected String blurb;
 	protected String invitedBy;
 	protected boolean hasInvited;
 	protected boolean loggedIn; // seems unecessary to me, included in meantime

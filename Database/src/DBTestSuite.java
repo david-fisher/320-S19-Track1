@@ -389,15 +389,43 @@ class DBTestSuite {
 		return false;
 	}
 	
+	public void popularPosts() {
+		db.deletePost("1");
+		db.deletePost("2");
+		db.deletePost("3");
+		db.deletePost("4");
+		db.deletePost("5");
+		db.deletePost("6");
+		db.deleteUser("email");
+		User author = new User("email", "joe", "aaaa", "I want 2 die", 420, "jeff");
+		author.type = "member";
+		Post p1 = new Post(author, "textPost", "1", "hi1");
+		Post p2 = new Post(author, "textPost", "2", "hi2");
+		Post p3 = new Post(author, "textPost", "3", "hi3");
+		Comment c1 = new Comment(author,"comment","4","blaze it", p1);
+		Comment c2 = new Comment(author,"comment","5","yooo", p1);
+		Comment c3 = new Comment(author,"comment","6","hihi", p2);
+		db.createUser(author);
+		db.createPost(p1);
+		db.createPost(p2);
+		db.createPost(p3);
+		db.createPost(c1);
+		db.createPost(c2);
+		db.createPost(c3);
+		db.updatePost(1, "explicit", 1);
+		ArrayList<Post> postz = db.getPopularPosts(2);
+		for (int i = 0; i < postz.size(); i++) {System.out.println(postz.get(i).text); }
+	}
+	
 	public static void main(String[] args) {
 		DBTestSuite test = new DBTestSuite();
 //		System.out.println(test.db.deleteUser("noobkiller69@fortnite.edu"));
 //		//System.out.println(test.testConnection());
-//		test.testUserCreation();
+// 		test.testUserCreation();
 //		test.testPostCreation();
 		//test.testFollowUser();
 		//test.testUserPosts();
-		test.testFlaggedPosts();
+		test.popularPosts();
 		//test.testUnFollowUser();
 		//System.out.println(test.testURLCreation());
 	}
