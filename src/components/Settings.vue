@@ -51,6 +51,7 @@
         </div>
       </div>
       <br>
+      <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Submit</button>
       <div class="submission check">
         <p style="color:#FF0000">{{ form3SubmitText }}</p>
       </div>
