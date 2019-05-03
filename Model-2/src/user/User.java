@@ -3,6 +3,11 @@ package user;
 import post.*;
 import stripe.*;
 import db.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class User {
 
@@ -15,6 +20,8 @@ public class User {
 	public String invitedBy;
 	public boolean isValidated; // Is User currently verified by CC?
 	public String type;
+	public String description;
+	public BufferedImage photo;
 
 	//Additional fields made by DB team
 	public String address;
@@ -49,6 +56,7 @@ public class User {
 		this.isValidated = false;
 		this.type = type;
 		this.addUserToDB();
+		this.description = "";
 	}
 
 	public void addUserToDB() {
@@ -96,6 +104,18 @@ public class User {
 	public String updateAccountInfo(String fieldName, Object data) {
 		if(Database.adapter.updateUser(this.email, fieldName,data)) return (fieldName + "Account Information Successfully Updated To: " + data);
 		return (fieldName + "Account Information Unsuccessfully Updated To: " + data);
+	}
+
+	public boolean updateProfileDescription(String text) {
+		//Database.adapter.updateProfile(text);
+		//this.description = text;
+		return true;
+	}
+
+	public boolean updateProfilePhoto(BufferedImage photo) {
+		//Database.adapter.updateProfilePhoto(photo);
+		//this.photo = photo;
+		return true;
 	}
 
 	/*
