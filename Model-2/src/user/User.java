@@ -119,12 +119,25 @@ public class User {
 	}
 
 	/*
-	 * Admin Functionality
+	 * Admin Functionality //TODO because none of these work
 	 */
 
 	//edit image
+	public String editImage(Post post, BufferedImage updatedImage) {
+		if(this.type.equals("admin")) {
+			Database.adapter.updatePost(Integer.parseInt(post.postID),"image",updatedImage);
+			return "Image successfully updated";
+		} else return "Image unsuccessfully updated";
+	}
+
 	//edit post hashtag
 	//edit comment hashtag
+	public String editHashtag(Post post, String hashtag) {
+		if(this.type.equals("admin")) {
+			Database.adapter.updatePost(Integer.parseInt(post.postID),"hashtag",hashtag);
+			return "Hashtag successfully updated";
+		} else return "Hashtag unsuccessfully updated";
+	}
 
 	public String editPost(Post post, String text) {
 		if(this.type.equals("admin")) {
