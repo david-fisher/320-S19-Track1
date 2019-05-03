@@ -38,14 +38,9 @@ public class Comment extends Post {
 	 */
 	public void linkPostToComment() { associatedPostID.addComment(this); }
 
-
-
    /* Adds Points to the users point stack
 	* @params none
 	* @return a boolean indicating success or failure
     */
-	void addPoints() {
-		this.poster.addPoints(this.pointsForComment);
-		return;
-	}
+	void addPoints() { this.poster.addPoints(this.pointsForComment); }
 }
