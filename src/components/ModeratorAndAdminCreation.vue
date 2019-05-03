@@ -9,7 +9,7 @@
           Members Only
       </a> 
 
-      <a class="item" href="#TODOGETFEEDHERE">
+      <a class="item" href="#Feed">
         Feed
       </a> 
 
