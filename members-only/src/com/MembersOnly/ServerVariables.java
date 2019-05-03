@@ -6,4 +6,5 @@ public class ServerVariables {
 
 	public static int post_id;
 	public static HashMap<String, String> verification_codes = new HashMap<String, String>();
+	public static HashMap<String, String> reg_codes = new HashMap<String, String>();
 }

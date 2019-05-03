@@ -1,7 +1,13 @@
 package com.Model2;
 
-//import stripe.*;
-//import db.*;
+/*import post.*;
+import stripe.*;
+import db.*;*/
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class User {
 
@@ -10,10 +16,19 @@ public class User {
 	public String lastName;
 	public CreditCard creditCard;
 	public String stripeCreditCardID;
+	/*
+	public String creditCardNumber;
+	public String expirationMonth;
+	public String expirationYear;
+	public String CVV;
+	public String stripeCreditCardID;
+	public String zipcode; */
 	public int points;
-	public User invitedBy;
+	public String invitedBy;
 	public boolean isValidated; // Is User currently verified by CC?
 	public String type;
+	public String description;
+	public String profilePic;
 
 	//Additional fields made by DB team
 	public String address;
@@ -35,23 +50,30 @@ public class User {
 				String firstName,
 				String lastName,
 				int points,
-				User invitedBy,
+				String invitedBy,
 				String type,
-				CreditCard creditCard) {
-		this.creditCard = creditCard;
+				String creditCardNumber,
+				String expirationMonth,
+				String expirationYear,
+				String CVV,
+				String zipcode) {
+		this.creditCard = new StripeCreditCard(email, creditCardNumber, zipcode, CVV, expirationMonth, expirationYear);
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.points = points;
+		this.password = "";
+		
 		this.stripeCreditCardID = creditCard.getId();
 		this.invitedBy = invitedBy;
 		this.isValidated = false;
 		this.type = type;
-		this.addUserToDB();
+		//this.addUserToDB();
+		this.description = "";
 	}
 
 	public void addUserToDB() {
-		//if(!DBAdapter.getUser(this.email)) DBAdapter.post(this);
+		if(Database.adapter.getUser(this.email) == null ) Database.adapter.createUser(this);
 	}
 	
 	public boolean checkIfUserValid(double charge) {
@@ -63,20 +85,19 @@ public class User {
 	 *  Increments User point total in the DB by either a positive
 	 *  or negative amount (if points are removed).
 	 *
-	 *  @param
-	 *  @return void
+	 *  @param	points Integer representing the number of points to be
+	 *                 incremented or decremented (using a negative number)
+	 *  @return	void
 	 */
 
 	public void addPoints(int points) {
-		//DBAdapter.setUserPoints(this.email, points);
+		Database.adapter.updateUser(email, "points", points);
 	}
 
 	/**
-	 *  Charges the User’s stored credit card by calling the 
-	 *  adapter.
+	 *  Charges the User’s stored credit card
 	 *
-	 *  @param
-	 *  @return boolean indicating if it is successful
+	 *  @return String indicating if it is successful
 	 */
 
 	public String chargeCreditCard() {
@@ -84,17 +105,60 @@ public class User {
 	}
 
 	/**
-	 *  Returns a boolean if the data is stored in the fieldName
-	 *  for the User’s specific credential to be updated in the DB.
+	 *  Updates user's account info for any valid field in the DB
 	 *
 	 *  @param  fieldName	String indicating which field in the DB
-	 * 				the data should be stored in
+	 * 						the data should be stored in
 	 *  @param	data		A generic Object that is the data to be
-	 * 				stored in the DB field.
-	 *  @return boolean indicating if it is successful
+	 * 						stored in the DB field.
+	 *  @return String indicating if it is successful
 	 */
 
-	public String updateAccountInfo(String fieldName, Object data) { // TODO this does not do what it's supposed to
-		return "No Error Occurred";
+	public String updateAccountInfo(String fieldName, Object data) {
+		if(Database.adapter.updateUser(this.email, fieldName,data)) return (fieldName + "Account Information Successfully Updated To: " + data);
+		return (fieldName + "Account Information Unsuccessfully Updated To: " + data);
+	}
+
+	public boolean updateProfileDescription(String text) {
+		//Database.adapter.updateProfile(text);
+		//this.description = text;
+		return true;
+	}
+
+	public boolean updateProfilePhoto(String photo) {
+		//Database.adapter.updateProfilePhoto(photo);
+		//this.profilePic = photo;
+		return true;
+	}
+
+	/**
+	 *  |========================================================================|
+	 *  |     Admin Functionality | TODO because none of these work	|			 |
+	 *  |========================================================================|
+	 *
+	 */
+
+	//edit image
+	public String editImage(Post post, BufferedImage updatedImage) {
+		if(this.type.equals("admin")) {
+			Database.adapter.updatePost(Integer.parseInt(post.postID),"image",updatedImage);
+			return "Image successfully updated";
+		} else return "Image unsuccessfully updated";
+	}
+
+	//edit post hashtag
+	//edit comment hashtag
+	public String editHashtag(Post post, String hashtag) {
+		if(this.type.equals("admin")) {
+			Database.adapter.updatePost(Integer.parseInt(post.postID),"hashtag",hashtag);
+			return "Hashtag successfully updated";
+		} else return "Hashtag unsuccessfully updated";
+	}
+
+	public String editPost(Post post, String text) {
+		if(this.type.equals("admin")) {
+			Database.adapter.updatePost(Integer.parseInt(post.postID),"text",text);
+			return "Post successfully updated";
+		} else return "Post unsuccessfully updated";
 	}
 }

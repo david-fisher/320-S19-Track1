@@ -6,6 +6,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import org.json.*;
 
+import com.Model2.LoginProcessor;
 import com.Model2.*;
 
 @Path("/")
@@ -24,26 +25,18 @@ public class LoginService {
         JSONObject json_payload = new JSONObject(payload);
         System.out.println(payload);
 
-        String email = json_payload.getString("email");
+        String email = json_payload.getString("email").toLowerCase();
         String password = json_payload.getString("password");
         
         String response;
-        LoginProcessor login = new LoginProcessor(email, password);
-        boolean login_value = login.checkCredentials();
+        boolean login_value = LoginProcessor.checkCredentials(email, password);
         if(login_value) {
         	response = "";
         }
         else {
         	response = "Error: Incorrect email or password";
         }
-        //LoginProcessor login = new LoginProcessor();
-        /*
-		if(email.equals("a@a.a")) {
-			response = "";
-		}
-		else {
-			response = "Error on login: email != a@a.a";
-		}*/
+        
         
         JSONObject result = new JSONObject();
         result.put("result", response);
@@ -64,18 +57,15 @@ public class LoginService {
 		String email = json_payload.getString("email");
 		
 		
-		//TODO: CHECK IF VALID EMAIL IN MEMBERS ONLY. IF NOT VALID, RETURN AN ERROR TO FRONTEND
-		
 		String uniqueID = UUID.randomUUID().toString().substring(0,8);
 		if(ServerVariables.verification_codes.containsKey(uniqueID)) {
 			uniqueID = UUID.randomUUID().toString().substring(0,8);
 		}
 		
         ServerVariables.verification_codes.put(uniqueID, email);
-        SendEmail.sendMail(email, "Your access code is: " + uniqueID);
+        SendEmail.sendMail(email, "Your access code is: " + uniqueID, "Your Members Only Password Reset Code");
 		JSONObject send_code_result = new JSONObject();
 	    send_code_result.put("result", "");
-	    System.out.println(ServerVariables.verification_codes.toString());
 		return Response.status(200).entity(send_code_result.toString().substring(1)).build();
 	}
 	
@@ -102,15 +92,12 @@ public class LoginService {
 			store_result.put("result", "");
 			//Remove code from the hash
 			ServerVariables.verification_codes.remove(code);
-			//TODO: CALL MODEL 2 PASSWORD RESET!
-			LoginProcessor login = new LoginProcessor(email, pass);
-			login.resetPassword(pass, confPass, email);
+			LoginProcessor.resetPassword(pass, confPass, email);
 		}
 		else {
 			store_result.put("result", "error");
 		}
 		
-	    
 		return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
 	

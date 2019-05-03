@@ -1,15 +1,13 @@
 package com.Model2;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.stripe.Stripe;
 import com.stripe.exception.CardException;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Charge;
-import com.stripe.model.Customer;
-import com.stripe.model.Subscription;
-import com.stripe.model.Token;
+import com.stripe.model.*;
 
 public class StripeCreditCard implements CreditCard {
 
@@ -72,6 +70,11 @@ public class StripeCreditCard implements CreditCard {
 	 * Boolean indicating whether we have linked a credit card to this member
 	 */
 	private boolean isLinked;
+
+	/**
+	 * Id of the customer subscription / FOR TESTING
+	 */
+	public String subscriptionId;
 	
 	/**
 	 * Creates a credit card object given the appropriate information
@@ -130,7 +133,7 @@ public class StripeCreditCard implements CreditCard {
 		// Generate random amount between 50-75 cents
 		int amount = (int) (Math.random() * 25 + 50);
 		this.amount = amount;
-		
+		System.out.println(amount);
 		Map<String, Object> chargeParameters = new HashMap<String, Object>();
     	chargeParameters.put("amount", Integer.toString(amount));
     	chargeParameters.put("currency", "usd");
@@ -139,6 +142,7 @@ public class StripeCreditCard implements CreditCard {
 			return Charge.create(chargeParameters);
 		} catch (StripeException e) {
 			// Generic error message
+			
 			return null;
 		}
 	}
@@ -171,8 +175,8 @@ public class StripeCreditCard implements CreditCard {
 	}
 	
 	/**
-	 * Charge a member a randomized amount which will be verified, and return true if the charge is successful
-	 * @return a boolean value indicating whether or not a transaction has been successfully processed 
+	 * Charge a member a randomized amount which will be verified, and return "" if the charge is successful
+	 * @return a String value indicating a successful process, or an error if something is wrong
 	 */
 	@Override
 	public String charge() {
@@ -233,20 +237,53 @@ public class StripeCreditCard implements CreditCard {
 	public void setSubscription(boolean on) {
 		// Avoid enabling subscriptions on a banned card
 		if (isBanned) { return; }
+		if (on) {
+			Map<String, Object> productParameters = new HashMap<>();
+			productParameters.put("name", "membersOnly");
 
-		Map<String, Object> item = new HashMap<String, Object>();
+			Map<String, Object> planParams = new HashMap<String, Object>();
+			planParams.put("amount", getAmount());
+			planParams.put("interval", "month");
+			planParams.put("product", "productParams");
+			planParams.put("currency", "usd");
 
-		Map<String, Object> items = new HashMap<String, Object>();
-		items.put("0", item);
-		
-		Map<String, Object> subscriptionParameters = new HashMap<String, Object>();
-		subscriptionParameters.put("customer", member.getId());
-		subscriptionParameters.put("items", item);
-		
-		try {
-			Subscription.create(subscriptionParameters);
-		} catch (StripeException e) {
-			// Generic error message
+			try {
+				Plan p = Plan.create(planParams);
+
+				Map<String, Object> item = new HashMap<String, Object>();
+				item.put("plan", "membersOnly");
+
+				Map<String, Object> items = new HashMap<String, Object>();
+				items.put("0", item);
+
+				Map<String, Object> subscriptionParameters = new HashMap<String, Object>();
+				subscriptionParameters.put("customer", member.getId());
+				subscriptionParameters.put("items", item);
+
+				try {
+					Subscription s = Subscription.create(subscriptionParameters);
+					subscriptionId = s.getId();
+				} catch (StripeException e) {
+					// Generic error message
+				}
+
+			} catch (StripeException e) {
+				// Generic Stripe exception
+			}
+		} else {
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("limit", 1);
+			try {
+				SubscriptionCollection subscriptions = Subscription.list(params);
+				List<Subscription> subList = subscriptions.getData();
+				for (Subscription s : subList) {
+					s.cancel();
+				}
+				// Cancel any existing subscription
+				subscriptionId = null;
+			} catch(StripeException e) {
+				// Generic Stripe exception
+			}
 		}
 	}
 
