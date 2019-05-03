@@ -18,15 +18,15 @@
       </div>
     </div>
     <div class="makePost">
-        <form v-on:submit="postImage($event)" class="ui form">
-          <input type="file" id="imageLoader" @change="onFileChanged"/>
-          <canvas id="imageCanvas" ref="imageCanvas"></canvas>
-          <input  style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button" type="submit" value="Post"> 
-        </form>
-        <form v-on:submit="postText($event)" class="ui form">
-          <textarea v-model="postTextJSON.message" cols="7" rows="5" charswidth="23" name="text_body" placeholder="Post"></textarea>
-          <input  style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button" type="submit" value="Post"> 
-        </form>
+    <form v-on:submit="postImage($event)" class="ui form">
+      <input type="file" id="imageLoader" @change="onFileChanged"/>
+      <canvas id="imageCanvas" ref="imageCanvas"></canvas>
+      <input  style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button" type="submit" value="Post"> 
+    </form>
+    <form v-on:submit="postText($event)" class="ui form">
+      <textarea v-model="postTextJSON.message" cols="7" rows="5" charswidth="23" name="text_body" placeholder="Post"></textarea>
+      <input  style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button" type="submit" value="Post"> 
+    </form>
 
     </div>
 
@@ -42,7 +42,7 @@
               </div>
             </div>
             <div v-if="item.imageOrText">
-              <canvas id="imageCanvas" ref="imageCanvas"></canvas>
+              <img v-bind:src="item.imgPath">
             </div>
             <div v-else>
               <h5>{{item.text}}</h5>
@@ -50,7 +50,7 @@
             <div class="content">
               <div class="comments" style="padding-left: 20px;">
                 <div v-for="comment in item.comments" v-bind:key="comment.postID">
-                  <div class="name">{{ comment.poster.firstName + " " + comment.poster.lastName }}</div>
+                  <div class="name">{{ comment.firstName + " " + comment.lastName }}</div>
                   <div class="comment">{{ comment.text }}</div>
                   <br>
                 </div>
@@ -67,16 +67,16 @@
       </div>
 
       <div id="feed2" style="float:right">
-        <div v-for="item in jsonData.items2" v-bind:key="item.postID">
+        <div v-for="item in items2" v-bind:key="item.postID">
           <div class="item">
             <div class="header-container">
               <div class="header">
-                <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
-                <div class="username"> {{ item.poster.firstName + " " + item.poster.lastName }}  </div>
+                <div class="avatar"> <img v-bind:src="item.avatar" alt="Smiley face" height="33" width="33"> </div>
+                <div class="username"> {{ item.firstName + " " + item.lastName }}  </div>
               </div>
             </div>
             <div v-if="item.imageOrText">
-              <img src="../assets/picture.jpg" alt="Smiley face" width="600">
+              <img v-bind:src="item.imgPath">
             </div>
             <div v-else>
               <h5>{{item.text}}</h5>
@@ -120,10 +120,12 @@ export default {
       },
       items1: [
         {
-          text: 'hi'
-        },
+          text: 'loading, please wait...'
+        }
+      ],
+      items2: [
         {
-          text: 'ew'
+          text: 'loading, please wait...'
         }
       ],
       jsonData : {}
@@ -139,10 +141,6 @@ export default {
     
   },
   mounted: function(){
-    var canvas = this.$refs.imageCanvas
-    canvas.width = 0
-    canvas.height = 0
-    console.log(canvas.width)
 
     const path = this.ip + '/getFeed';
     const data = {
@@ -157,7 +155,8 @@ export default {
       var retVal = JSON.parse('{' + response.bodyText)
       console.log(retVal)
       jsonObj = retVal;
-      this.items1 = jsonObj.items;
+      this.items1 = jsonObj.items1;
+      this.items2 = jsonObj.items2;
       console.log(this.items1)
     })
     .catch(error => {

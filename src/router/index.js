@@ -40,6 +40,11 @@ export default new Router({
       component: Settings
     },
     {
+      path: '/otherUser',
+      name: 'ProfilePage',
+      component: ProfilePage
+    },
+    {
       path: '/feed',
       name: 'Feed',
       component: Feed
