@@ -70,6 +70,11 @@ public class StripeCreditCard implements CreditCard {
 	 * Boolean indicating whether we have linked a credit card to this member
 	 */
 	private boolean isLinked;
+
+	/**
+	 * Id of the customer subscription / FOR TESTING
+	 */
+	public String subscriptionId;
 	
 	/**
 	 * Creates a credit card object given the appropriate information
@@ -255,7 +260,8 @@ public class StripeCreditCard implements CreditCard {
 				subscriptionParameters.put("items", item);
 
 				try {
-					Subscription.create(subscriptionParameters);
+					Subscription s = Subscription.create(subscriptionParameters);
+					subscriptionId = s.getId();
 				} catch (StripeException e) {
 					// Generic error message
 				}
@@ -272,6 +278,8 @@ public class StripeCreditCard implements CreditCard {
 				for (Subscription s : subList) {
 					s.cancel();
 				}
+				// Cancel any existing subscription
+				subscriptionId = null;
 			} catch(StripeException e) {
 				// Generic Stripe exception
 			}
