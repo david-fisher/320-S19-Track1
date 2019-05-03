@@ -311,13 +311,14 @@ public class DBAdapter {
                 statement.setInt(2, Integer.parseInt(com.postID));
                 System.out.println(statement.toString());
                 statement.executeUpdate();
+                System.out.println("THIS IS A COMMENT");
                 this.updatePost(Integer.parseInt(pst.postID), "parentID", Integer.parseInt(com.associatedPostID.postID));
             }
             if(pst.type.equals("imagePost")) {
+            	System.out.println("THIS IS AN IMG");
                 ImagePost imgPst = (ImagePost)pst;
                 this.updatePost(Integer.parseInt(pst.postID), "photo", imgPst.path);
-                System.out.println(statement.toString());
-                statement.executeUpdate();
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -330,6 +331,7 @@ public class DBAdapter {
         try {
             this.getConnection();
             int id = Integer.parseInt(postID);
+            System.out.println("grabbing post with ID: " + postID + " in getPost");
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE postID = '"+id+"'");
             while(rs.next()) {
                 String type = rs.getString("type");
@@ -337,13 +339,14 @@ public class DBAdapter {
                 String author = rs.getString("userID");
                 String text = rs.getString("text");
                 int flag = rs.getInt("explicit");
-                if (type == "comment") { //set  fields
+                if (type.equals("comment")) { //set  fields
                     Post parent = this.getPost(Integer.toString(rs.getInt("parentID")));
                     Comment com = new Comment(this.getUser(author),"comment",Integer.toString(id),text, parent);
                     com.timestamp = time;
                     com.flag = rs.getInt("explicit");
                     return com;
                 }
+                System.out.println("Got here");
                 ResultSet comments = conn.createStatement().executeQuery("SELECT childID FROM TrackOneDB.Comment WHERE parentID = '"+postID+"'");
                 ArrayList<Comment> coms = new ArrayList<Comment>();
                 while(comments.next()) { //populate comments
@@ -351,18 +354,26 @@ public class DBAdapter {
                     Comment c = new Comment(parent.poster,"comment",Integer.toString(comments.getInt("childID")), parent.text, parent);
                     coms.add(c);
                 }
-                if (type == "imagePost") { //do later
-                    String path = this.getPhoto(rs.getString("photoID")).path;
-                    ImagePost imgP = new ImagePost(this.getUser(author), "imagePost", postID, path);
+                System.out.println("no here!");
+                if (type.equals("imagePost")) { //do later
+                    String path = (rs.getString("photo"));
+                    User user = this.getUser(author);
+                    System.out.println("got user");
+                    ImagePost imgP = new ImagePost(user, "imagePost", postID, path, false);
                     imgP.comments = coms;
                     imgP.timestamp = time;
                     imgP.flag = rs.getInt("explicit");
+                    System.out.println("Got img!");
                     return imgP;
                 }
-                Post pst = new Post(this.getUser(author), "textPost",postID, text);
+                System.out.println("Down here!");
+                //The boolean here does nothing, but it allows us to make a thing without recursively doing shit
+                Post pst = new Post(this.getUser(author), "textPost",postID, text, false);
+                System.out.println("here?");
                 pst.comments = coms;
                 pst.flag = rs.getInt("explicit");
                 pst.timestamp = time;
+                System.out.println("wtf");
                 return pst;
             }
         } catch (SQLException e) {
@@ -468,16 +479,23 @@ public class DBAdapter {
         }
     }
 
-    public ArrayList<Post> fetchRecentPosts(int posts){
+    public ArrayList<Post> fetchRecentPosts(int numPosts){
         try {
             this.getConnection();
-            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post ORDER BY `time` DESC LIMIT '"+posts+"'");
+            System.out.println(numPosts);
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post ORDER BY `time` DESC LIMIT "+numPosts+"");
             ArrayList<Post> p = new ArrayList<Post>();
             while(rs.next()) {
+            	System.out.println("Looping in FRP");
                 if (rs.getString("type").equals("comments")) continue;
                 String pID = Integer.toString(rs.getInt("postID"));
-                p.add(this.getPost(rs.getString(pID)));
+                System.out.println("Finding post with ID: " + pID);
+                Post post = this.getPost(pID);
+                System.out.println("The type of this post is: " + post.type);
+                p.add(post);
+                System.out.println("Finished loop in FRP");
             }
+            System.out.println("returning from fetchRecentPosts");
             return p;
         } catch (SQLException e) {
             // TODO Auto-generated catch block

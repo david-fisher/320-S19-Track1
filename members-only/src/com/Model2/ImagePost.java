@@ -20,6 +20,14 @@ public class ImagePost extends Post {
 		super(poster, type, postID);
 		this.path = path;
 		this.type = type;
+		this.sendToDB();
+	}
+	
+	//This boolean doesn't do anything except let us overload the constructor.
+	public ImagePost(User poster, String type, String postID, String path, boolean ech) { //used to return objects from DB
+		super(poster, type, postID);
+		this.path = path;
+		this.type = type;
 	}
 
 	public ImagePost(User poster, String type, String postID, File file) {

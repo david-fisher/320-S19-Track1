@@ -39,11 +39,11 @@ public class OwnerService {
 		JSONObject json_payload = new JSONObject(payload);
 		
 		JSONObject form_data = (JSONObject)json_payload.get("form");
-		String authEmail = json_payload.getString("email");
+		String authEmail = json_payload.getString("email").toLowerCase();
 		String authPassword = json_payload.getString("password");
 		
 		String userRole = form_data.getString("role");
-		String email = form_data.getString("email");
+		String email = form_data.getString("email").toLowerCase();
 		String password = form_data.getString("pass");
 		boolean isLoggedIn = LoginProcessor.checkCredentials(email, password);
 		if(isLoggedIn) {

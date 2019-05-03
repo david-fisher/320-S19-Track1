@@ -54,7 +54,7 @@ public class LoginService {
 	 */
 	public Response sendResetCode(String payload) {
 		JSONObject json_payload = new JSONObject(payload);
-		String email = json_payload.getString("email");
+		String email = json_payload.getString("email").toLowerCase();
 		
 		
 		String uniqueID = UUID.randomUUID().toString().substring(0,8);

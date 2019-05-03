@@ -28,7 +28,7 @@ public class IRVService {
         String state = json_payload.getString("state");
         String zipCode = json_payload.getString("zipCode");
         String phoneNumber = json_payload.getString("phoneNumber");
-        String email = json_payload.getString("email");
+        String email = json_payload.getString("email").toLowerCase();
         String password = json_payload.getString("password");
         String confPassword = json_payload.getString("confpass");
         String creditCardNumber = json_payload.getString("creditCardNumber");
@@ -80,9 +80,8 @@ public class IRVService {
 		catch(Exception e) {
 			return Response.status(200).entity("error").build();
 		}
-		String email = jsonPayload.getString("email");
+		String email = jsonPayload.getString("email").toLowerCase();
 		String password = jsonPayload.getString("password");
-		//TODO: INSERT MODEL2 CODE TO VERIFY THE CHARGE
 		Registration reg = mappo.get(email);
 		StripeCreditCard card = (StripeCreditCard)reg.card;
 		boolean correct = card.verifyCharge(charge);
@@ -103,7 +102,7 @@ public class IRVService {
 	@Produces("application/json")
 	public Response updateCCAddress(String payload) {
 		JSONObject json_payload = new JSONObject(payload);
-		String email = json_payload.getString("email");
+		String email = json_payload.getString("email").toLowerCase();
 		String password = json_payload.getString("password");
 		
 		JSONObject form_data = (JSONObject)json_payload.get("form");
@@ -141,7 +140,7 @@ public class IRVService {
 	public Response updateProfileDescription(String payload) {
 		System.out.println(payload);
 		JSONObject jsonPayload = new JSONObject(payload);
-		String email = jsonPayload.getString("email");
+		String email = jsonPayload.getString("email").toLowerCase();
 		String password = jsonPayload.getString("password");
 		String description = jsonPayload.getString("desc");
 		boolean isLoggedIn = LoginProcessor.checkCredentials(email, password);
@@ -162,7 +161,7 @@ public class IRVService {
 		result.put("result", response);
         return Response.status(200).entity(result.toString().substring(1)).build();	
 	}
-	
+	/*
 	@POST
 	@Path("/updateVisibility")
 	@Produces("application/json")
@@ -188,7 +187,7 @@ public class IRVService {
 		JSONObject result = new JSONObject();
 		result.put("result", response);
         return Response.status(200).entity(result.toString().substring(1)).build();	
-	}
+	} */
 	
 	@POST
 	@Path("/generateInvite")
@@ -212,7 +211,7 @@ public class IRVService {
 	@Produces("application/json")
 	public Response changePhoto(String payload) {
 		JSONObject jsonPayload = new JSONObject(payload);
-		String email = jsonPayload.getString("email");
+		String email = jsonPayload.getString("email").toLowerCase();
 		String password = jsonPayload.getString("password");
 		String pic = jsonPayload.getString("pic");
 		boolean isLoggedIn = LoginProcessor.checkCredentials(email, password);
