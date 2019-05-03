@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.lang.Object;
 
 import org.junit.jupiter.api.Test;
@@ -238,6 +239,23 @@ class DBTestSuite {
 		//Also covers case if the post already exists.
 	}
 	
+	public void testUserPosts() {
+		db.deletePost("1");
+		db.deletePost("2");
+		db.deletePost("3");
+		db.deleteUser("email");
+		User author = new User("email", "joe", "aaaa", "I want 2 die", 420, "jeff");
+		author.type = "member";
+		Post post1 = new Post(author, "textPost", "1", "hi1");
+		Post post2 = new Post(author, "textPost", "2", "hi2");
+		Post post3 = new Post(author, "textPost", "3", "hi3");
+		db.createUser(author);
+		db.createPost(post1);
+		db.createPost(post2);
+		db.createPost(post3);
+		ArrayList<Post> postz = db.getUserPosts(author.email);
+		for (int i = 0; i < postz.size(); i++) {System.out.println(postz.get(i).text); }
+	}
 //	@Test
 //	public void testPostModification() {
 //		DBAdapter db = new DBAdapter();
@@ -358,8 +376,9 @@ class DBTestSuite {
 //		//System.out.println(test.testConnection());
 //		test.testUserCreation();
 //		test.testPostCreation();
-		test.testFollowUser();
-		test.testUnFollowUser();
+		//test.testFollowUser();
+		test.testUserPosts();
+		//test.testUnFollowUser();
 		//System.out.println(test.testURLCreation());
 	}
 	

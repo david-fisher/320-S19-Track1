@@ -38,6 +38,7 @@ public class Post
 		//this.addPoints();
 		this.parseForHashtags();
 	}
+	
 
    /* This function will parse the text for hashtags
 	* @param none
