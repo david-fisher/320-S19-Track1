@@ -78,15 +78,20 @@ public class DBAdapter {
 
     public User getUser(String email) {
         try {
+        	Class.forName("com.mysql.jdbc.Driver").newInstance();
+
             this.getConnection();
             User usr;
+            System.out.println(conn);
+            System.out.println(conn.toString());
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
+            System.out.println(rs);
             while(rs.next()) {
                 String type = rs.getString("type");
                 String firstName = rs.getString("firstName");
                 String lastName = rs.getString("lastName");
                 String inviter = rs.getString("inviter");
-                usr = new User (email, firstName, lastName, 0, inviter); //fix when cc is implemented back in
+                /*usr = new User (email, firstName, lastName, 0, inviter, "member"); //fix when cc is implemented back in
                 if (type == "member") { //set member fields
                     usr.type = type;
                     usr.address = rs.getString("address");
@@ -111,11 +116,11 @@ public class DBAdapter {
                 }
                 //return (Admin)usr;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-        return null;
+        }*/
+       // return null;
     }
 
     private <T> String formatUserUpdateString(String email, String varname, T var) {
@@ -199,7 +204,7 @@ public class DBAdapter {
         }
         return true;
     }
-
+/*
     public Photo getPhoto(String id) {
         int ID = Integer.parseInt(id);
         try {
@@ -282,7 +287,7 @@ public class DBAdapter {
     }
     //return a list of filterID. I have this structure in case they want us to return the path.
 
-
+ */
 
     public boolean createURL(String original, String shortened) {
         try {
@@ -351,7 +356,7 @@ public class DBAdapter {
         }
         return true;
     }
-
+/*
     public Post getPost(String postID) {
         try {
             this.getConnection();
@@ -393,6 +398,7 @@ public class DBAdapter {
         }
         return null;
     }
+    */
 
 
     private <T> String formatPostUpdateString(int id, String varname, T var) {

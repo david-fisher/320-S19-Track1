@@ -24,6 +24,7 @@ public class OwnerService {
 	@Path("/ignore")
 	@Produces("application/json")
 	public Response ignore(String payload) {
+		//Set post flag to false
 		return null;
 	}
 	

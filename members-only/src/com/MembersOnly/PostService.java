@@ -17,7 +17,21 @@ public class PostService {
         
 		JSONObject vals = new JSONObject();
 		vals.put("userId", 1);
-		//vals.put(key, value)
+		vals.put("avatar", 1 /*Insert user avatar IO*/);
+		vals.put("userName", "name");
+		ArrayList<Post> posts = new ArrayList<Post>();
+		vals.put("items", posts);
+		//vals.put("items", 2);
+		//vals.put(key, value);
+		
+		return null;
+	}
+	
+	@POST
+	@Path("/persons")
+	@Produces("application/json")
+	public Response persons(String payload) {
+		//List
 		return null;
 	}
 	
@@ -43,12 +57,14 @@ public class PostService {
 		return null;
 	}
 	
-	@POST
+	/*@POST
 	@Path("/editImage")
 	@Produces("application/json")
 	public Response editImage(String payload) {
 		return null;
+		
 	}
+	 */
 	
 	@POST
 	@Path("/loadComments")

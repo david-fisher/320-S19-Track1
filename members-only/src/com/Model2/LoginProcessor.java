@@ -15,7 +15,9 @@ public class LoginProcessor {
 	 */
 
 	public static boolean checkCredentials(String email, String password) {
+		assert(Database.adapter != null);
 		User currentUser = Database.adapter.getUser(email);
+		System.out.println(currentUser);
 		return currentUser.password.equals(password);
 	}
 
@@ -30,7 +32,7 @@ public class LoginProcessor {
 	 *  @return boolean indicating if the password is reset
 	 */
 
-	public boolean resetPassword(String newPassword, String verifyNewPassword, String email) {
+	public static boolean resetPassword(String newPassword, String verifyNewPassword, String email) {
 		if(newPassword.equals(verifyNewPassword)) { // Check newPassword against verifyNewPassword
 			Database.adapter.updateUser(email, "password", newPassword);
 			return true;
