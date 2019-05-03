@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.*;
 
-public class Post
-{
+public class Post {
 	public User poster;
 	public String postID;
 	public String text;
@@ -59,18 +58,16 @@ public class Post
 	  }
 	}
 
-	public String extractAndFormat(String url){
+	public String extractAndFormat(String url) {
 		// Parses for the shortened text.  Text between first and last .
 		if(url.contains("www")){
 			int startdom = url.indexOf(".")+1;
 			int lastdom = url.lastIndexOf(".");
 			String shortened = url.substring(startdom, lastdom);
 			return "[" + shortened + "]" + "(" + url + ")";
-		}else{
+		} else {
 			int startdom = url.indexOf("/")+2;
-			if(startdom == 1){
-			    startdom = 0;
-            }
+			if(startdom == 1) startdom = 0;
 			int lastdom = url.lastIndexOf(".");
 			String shortened = url.substring(startdom, lastdom);
 			return "[" + shortened + "]" + "(" + url + ")";
@@ -84,6 +81,7 @@ public class Post
 					+ "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
 					+ "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
 			Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+
 	public void parseForURLs() {
 		// look for URLs
 		// modify the post text so url turns from www.cnn.com/cnnPost to [cnn](www.cnn.com/cnnPost)
@@ -104,9 +102,7 @@ public class Post
 			formattedUrl = this.extractAndFormat(url);
 			// System.out.println(url+ " " + formattedUrl);
 			// System.out.println();
-			if(currPos < matchStart){
-				newText += this.text.substring(currPos, matchStart);
-			}
+			if(currPos < matchStart) newText += this.text.substring(currPos, matchStart);
 			newText += formattedUrl;
 			currPos = matchEnd;
 		}
@@ -118,116 +114,88 @@ public class Post
 	* @param toBeRemoved the string to be removed from arraylist
 	* @return returns true if it worked and false if not found or fail
 	*/
-   public boolean removeHashtag(String tag)
-	{
-		if(adminHashtags.contains(tag))
-		{
+   public boolean removeHashtag(String tag) {
+   		if(adminHashtags.contains(tag)) {
 			adminHashtags.remove(tag);
 			return true;
 		}
 		return false;
-	}
+   }
 
    /* Add a hashtag to the arraylist of hashtags
     * @param toBeAdded the string to be added to the arraylist
 	* @return returns a boolean to indicate the success or failure of the action
 	*/
-   public boolean addHashtag(String tag)
-	{
-		if(adminHashtags.contains(tag))
-		{
-			return false;
-		}
+   public boolean addHashtag(String tag) {
+		if(adminHashtags.contains(tag)) return false;
 		adminHashtags.add(tag);
 		return true;
-	}
+   }
 
    /* The removeComments method will remove a comment from the arraylist
 	* @param none
 	* @return a boolean to confirm the success or fail of this action
 	*/
-   public boolean removeComment(Comment comment)
-	{
-		if(comments.contains(comment))
-		{
+   public boolean removeComment(Comment comment) {
+		if(comments.contains(comment)) {
 			comments.remove(comment);
 			return true;
 		}
 		return false;
-	}
+   }
 
    /* The addComments method will add an object of type comment to the arrayList
 	* of type comments
 	* @param comment the comment to be added
 	* @return a boolean communicating the success of the addition
 	*/
-   public boolean addComment(Comment comment)
-	{
-		if(comments.contains(comment))
-		{
-			return false;
-		}
+   public boolean addComment(Comment comment) {
+		if(comments.contains(comment)) return false;
 		comments.add(comment);
 		return true;
-	}
+   }
 
    /* The getUser method will return the user object of the poster
 	* @param none
 	* @return an object of type user that is the user who created the test.post
 	*/
-   public User getUser()
-	{
-		return poster;
-	}
+   public User getUser() { return poster; }
 
 	/*
 	 * allows for flaggin a test.post
 	 * @param int 0 = no flag, 1 = sent to mod, 2 = sent to owner
 	 * @return none
 	 */
-	public void setFlag(int flag)
-	{
-		this.flag = flag;
-	}
+	public void setFlag(int flag) { this.flag = flag; }
 
    /* getText will return the text of the test.post
 	* @params none
 	* @return a string containing the text of the test.post
 	*/
-   public String getText()
-	{
-		return text;
-	}
+   public String getText() { return text; }
 
    /* The setText class will set the text of the test.post to the string
     * @param newText will be new value of the test.post’s text
 	* @return a boolean indicating success
 	*/
-   public void setText(String newText)
-	{
-		text = newText;
+   public void setText(String newText) {
+   		text = newText;
 		this.parseForHashtags();
 		Database.adapter.updatePost(Integer.parseInt(this.postID),"text", text);
-	}
+   }
 
    /* getPostId will return the unique postId
 	* @param none
 	* @return a string containing the unique postID
 	*/
-   public String getPostID()
-	{
-		return postID;
-	}
+   public String getPostID() { return postID; }
 
    /* The createTimestamp method will create a Timestamp to help with
 	* sorting of posts.
 	* @params none
 	* @return none;
 	*/
-	void createTimeStamp()
-	{
-		timestamp = new Timestamp(System.currentTimeMillis());
-	}
+	void createTimeStamp() { timestamp = new Timestamp(System.currentTimeMillis()); }
 
    /* The compareTimestamps method will compare this test.post’s timestamp with
 	* another test.post’s timestamp and return true if this time is newer than the
@@ -235,12 +203,8 @@ public class Post
 	* @param test.post a test.post to compare the timestamp of to this object’s timestamp
 	* @return boolean if this timestamp is newer than the object passed in
 	*/
-   public boolean compareTimes(Post otherPost)
-	{
-		if(this.timestamp.compareTo(otherPost.timestamp) < 0)
-		{
-			return true;
-		}
+   public boolean compareTimes(Post otherPost) {
+   		if(this.timestamp.compareTo(otherPost.timestamp) < 0) return true;
 		return false;
 	}
 
@@ -248,26 +212,16 @@ public class Post
     * @params none
     * @return a boolean indicating success or failure
     */
-	void addPoints()
-	{
+	void addPoints() {
 		this.poster.addPoints(this.pointsForPost);
 		return;
 	}
 
 
-	public void sendToDB()
-	{
-		if(Database.adapter.getPost(postID)==null)
-		{
-			Database.adapter.createPost(this);
-		}
-	}
+	public void sendToDB() { if(Database.adapter.getPost(postID)==null) Database.adapter.createPost(this); }
 }
 
 class SortbyComments implements Comparator<Post> {
-	// Used for sorting in ascending order of
-	// roll number
-	public int compare(Post a, Post b) {
-		return b.comments.size() - a.comments.size();
-	}
+	// Used for sorting in ascending order of roll number
+	public int compare(Post a, Post b) { return b.comments.size() - a.comments.size(); }
 }
