@@ -1,5 +1,21 @@
 <template>
   <div>
+
+    <div class="ui true grey fixed inverted menu">
+      <div class="ui container">
+        <a class="header item" href="#">
+          <img src="../assets/light_logo.png" class="logo">
+            Members Only
+        </a> 
+      </div>
+    </div>
+
+    <!-- ;) -->
+    <br>
+    <br>
+    <br>
+    <br>
+
     <div>
       <h2 class="ui black header">
         <img src="../assets/light_logo.png" class="ui image">
@@ -29,11 +45,6 @@
           </button>
         </div>
       </form>
-      <div>
-        <a href="#">
-          Back
-        </a>
-      </div>
       </div>
   </div>
 </template>

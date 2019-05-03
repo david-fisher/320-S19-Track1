@@ -2,24 +2,30 @@
   <div>
     <div align="center" style="border:1px solid black">
       <h1>Account Creation</h1>
-      <form class="form" action="/storeInfo" method="post" v-on:submit="verifyPassword($event)">
-        <div class="ui fluid input">
-          <label class="label" for="password"><b>Password: </b></label>
-          <input type="password" v-model="form.pass" placeholder="Password" id="password" required>
-        </div>
-        <br>
-        <br>
-        <div class="ui fluid input">
-          <label class="label" for="confirmPassword"><b>Confirm Password: </b></label>
-          <input type="password" v-model="form.confirmPass" placeholder="Confirmed Password" id="confirmPassword" required>
-        </div>
-        <br>
-        <div class="submission check">
-          <p style="color:#FF0000">{{ submitText }}</p>
-        </div>
-        <br>
-        <div>
-          <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Login</button>
+
+
+      <form class="ui form" action="/storeInfo" method="post" v-on:submit="verifyForm($event)">
+        <div class="ui stacked segment">
+          <div class="field">
+            <div class="ui left icon input">
+              <input type="password" placeholder="Password" v-model="form.pass" id="password" required>
+              <i class="lock icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <input type="password" placeholder="Confirm Password"  v-model="form.confirmPass" id="confirmPassword" required>
+              <i class="lock icon"></i>
+            </div>
+          </div>
+
+          <div class="submission check">
+            <p style="color:#FF0000">{{ submitText }}</p>
+          </div>
+
+          <button type="submit" style="color:#D6A200" class="ui black fluid large button">
+            Login
+          </button>
         </div>
       </form>
     </div>
