@@ -9,7 +9,7 @@
           </form>
         </div>
         <img class="item right" src="../assets/dark_logo.png" alt="Smiley face" height="60" width="60">
-        <a class="item right" >
+        <a class="item right" href="#/myProfile" target="_blank" >
           <i class="user circle outline icon"></i>
         </a>
         <a class="active item">
@@ -108,7 +108,7 @@
 export default {
   name : "Feed",
   data() {
-    return{
+    return {
       search : "",
       comment: {
         email : "",
@@ -122,7 +122,6 @@ export default {
       jsonData : {}
     }
   },
-
 
 
   beforeCreate: function(){
@@ -166,7 +165,6 @@ export default {
     });
   },
 
-
   postImage: function(event) {
     event.preventDefault();
 
@@ -202,7 +200,6 @@ export default {
 
   },
 
-
   postText : function(event) {
     event.preventDefault();
     this.postTextJSON.email = this.$session.get('email');
@@ -218,8 +215,6 @@ export default {
       console.log("Yeah nope")
       console.log(error)
     })
-
-
   },
 
 
