@@ -90,7 +90,7 @@ public class DBAdapter {
                 String lastName = rs.getString("lastName");
                 String inviter = rs.getString("inviter");
                 int points = rs.getInt("points");
-                usr = new User (email, firstName, lastName, points, "", inviter, null); // TODO NULL SHOULD BE CC
+                usr = new User (email, firstName, lastName, points, "", inviter, null);
                 if (type == "member") { //set member fields
                     usr.type = type;
                     usr.address = rs.getString("address");
@@ -101,9 +101,8 @@ public class DBAdapter {
                     usr.ccv = rs.getString("ccv");
                     usr.expM = rs.getString("ccExpMon");
                     usr.expY = rs.getString("ccExpYr");
-                    //usr.creditCard = new StripeCreditCard(email, usr.ccNum,
-                    //usr.zip, usr.ccv, usr.expM, usr.expY);
-                    //usr.stripeCreditCardID = rs.getString("stripeID");
+                    usr.creditCard = new StripeCreditCard(email, usr.ccNum,usr.zip, usr.ccv, usr.expM, usr.expY);
+                    usr.stripeCreditCardID = rs.getString("stripeID");
                     usr.points += rs.getInt("points");
                     usr.phone = rs.getString("phone");
                     usr.password = rs.getString("password");
@@ -233,70 +232,6 @@ public class DBAdapter {
         }
         return true;
     }
-
-    // ========================= Not doing photo filtering ================================
-
-    /*public boolean insertFilter(Filter filter) {
-        try {
-            this.getConnection();
-            ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.path+"'");
-            int filterID=0;
-            while(rs0.next()) {
-                filterID = rs0.getInt("photoID");
-            }
-            int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.FilteredPhoto (xPos,yPos,visibleToUser,photoID,filterID) VALUES ('"+filter.xPos+"','"+filter.yPos+"','"+filter.visibleToUser+"','"+filter.photoId+"','"+filterID+"')");
-
-        } catch(SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }*/
-    //assuming the photoID is the original photo, and the path is the filter.
-
-    /*public boolean deleteFilter(Filter filter) {
-        try {
-            this.getConnection();
-            ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.path+"'");
-            int filterID=0;
-            while(rs0.next()) {
-                filterID = rs0.getInt("photoID");
-            }
-            int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.FilteredPhoto WHERE photoID = AND filterID ='" +filter.photoId+ "AND"+filterID+"'");
-        }catch(SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }*/
-    //I am being creative here about the format and I am not sure the format of matching two columns in the table.
-    //I will fix it after asking Caroline.
-
-    /*public int[] getFilters(Photo photo) {
-        try {
-            this.getConnection();
-            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.FilterPhoto WHERE photoID = '"+photo.photoId+"'");
-            ArrayList<Integer> filterID = new ArrayList<Integer>();
-            while(rs.next()) {
-                filterID.add(rs.getInt("filterID"));
-            }
-            int[] filters = new int[filterID.size()];
-            for(int i=0;i<filterID.size();i++) {
-                filters[i] = filterID.get(i);
-            }
-            return filters;
-        }
-        catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        }
-
-    }*/
-    //return a list of filterID. I have this structure in case they want us to return the path.
-
-    // ========================= Not doing photo filtering ================================
-
 
     public boolean createURL(String original, String shortened) {
         try {
@@ -533,4 +468,68 @@ public class DBAdapter {
             return null;
         }
     }
+
+    // ========================= Not doing photo filtering in 1.0 ================================
+
+    /*public boolean insertFilter(Filter filter) {
+        try {
+            this.getConnection();
+            ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.path+"'");
+            int filterID=0;
+            while(rs0.next()) {
+                filterID = rs0.getInt("photoID");
+            }
+            int rs = conn.createStatement().executeUpdate("INSERT INTO TrackOneDB.FilteredPhoto (xPos,yPos,visibleToUser,photoID,filterID) VALUES ('"+filter.xPos+"','"+filter.yPos+"','"+filter.visibleToUser+"','"+filter.photoId+"','"+filterID+"')");
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }*/
+    //assuming the photoID is the original photo, and the path is the filter.
+
+    /*public boolean deleteFilter(Filter filter) {
+        try {
+            this.getConnection();
+            ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.path+"'");
+            int filterID=0;
+            while(rs0.next()) {
+                filterID = rs0.getInt("photoID");
+            }
+            int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.FilteredPhoto WHERE photoID = AND filterID ='" +filter.photoId+ "AND"+filterID+"'");
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }*/
+    //I am being creative here about the format and I am not sure the format of matching two columns in the table.
+    //I will fix it after asking Caroline.
+
+    /*public int[] getFilters(Photo photo) {
+        try {
+            this.getConnection();
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.FilterPhoto WHERE photoID = '"+photo.photoId+"'");
+            ArrayList<Integer> filterID = new ArrayList<Integer>();
+            while(rs.next()) {
+                filterID.add(rs.getInt("filterID"));
+            }
+            int[] filters = new int[filterID.size()];
+            for(int i=0;i<filterID.size();i++) {
+                filters[i] = filterID.get(i);
+            }
+            return filters;
+        }
+        catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+
+    }*/
+    //return a list of filterID. I have this structure in case they want us to return the path.
+
+    // ========================= Not doing photo filtering in 1.0 ================================
+
 }
