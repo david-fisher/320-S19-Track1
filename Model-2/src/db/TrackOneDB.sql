@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `TrackOneDB`.`Post` (
   `text` VARCHAR(512) NOT NULL,
   `explicit` TINYINT(1) NULL,
   `visible` TINYINT(1) NULL,
-  `photo` VARCHAR(45) NULL,
+  `photo` VARCHAR(MAX) NULL,
   `parentID` INT NULL,
   PRIMARY KEY (`postID`),
   UNIQUE INDEX `postID_UNIQUE` (`postID` ASC) VISIBLE);

@@ -62,15 +62,16 @@ public class DBAdapter {
                 if (this.updateUser(usr.email, "ccv", usr.ccv)== false) return false;
                 if (this.updateUser(usr.email, "ccExpMon", usr.expM)== false) return false;
                 if (this.updateUser(usr.email, "ccExpYr", usr.expY)== false) return false;
-                //this.updateUser(usr.email, "stripeID", usr.creditCard.getId());
+                if (this.updateUser(usr.email, "stripeID", usr.creditCard.getId())==false) return false;
                 if (this.updateUser(usr.email, "phone", usr.phone)== false) return false;
                 if (this.updateUser(usr.email, "birthday", usr.birthday)== false) return false;
                 if (this.updateUser(usr.email, "profilePic", usr.profilePic)== false) return false;
                 if (this.updateUser(usr.email, "points", usr.points)== false) return false;
                 if (this.updateUser(usr.email, "inviter", usr.invitedBy)== false) return false;
                 if (this.updateUser(usr.email, "hasInvited", (usr.hasInvited) ? 1 : 0)== false) return false;
-                if (this.updateUser(usr.email, "validAccount", (usr.hasInvited) ? 1 : 0)== false) return false;
+                if (this.updateUser(usr.email, "validAccount", (usr.isValidated) ? 1 : 0)== false) return false;
                 if (this.updateUser(usr.email, "private", (usr.privacy) ? 1 : 0)== false) return false;
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -112,6 +113,8 @@ public class DBAdapter {
                     usr.hasInvited = (rs.getInt("hasInvited") == 1);
                     usr.isValidated = (rs.getInt("validAccount") == 1);
                     usr.privacy = rs.getBoolean("private");
+                    usr.creditCard = new StripeCreditCard(usr.email, usr.ccNum, usr.zip,
+							usr.ccv, usr.expM, usr.expY);
                     return usr;
                 }
                 return usr;
@@ -439,7 +442,7 @@ public class DBAdapter {
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE type != 'comment'");
             ArrayList<Post> posts = new ArrayList<Post>();
             while(rs.next()) { posts.add(this.getPost(Integer.toString(rs.getInt("postID")))); }
-            //Collections.sort(posts, new SortByComments()); //TODO FIGURE OUT SORTBYCOMMENTS
+            Collections.sort(posts, new SortByComments()); 
             if (posts.size() <= postsFetched) return posts;
             ArrayList<Post> returnPosts = new ArrayList<Post>();
             for (int i = 0; i < postsFetched; i++) { returnPosts.add(posts.get(i)); }

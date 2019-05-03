@@ -220,8 +220,3 @@ public class Post {
 
 	public void sendToDB() { if(Database.adapter.getPost(postID)==null) Database.adapter.createPost(this); }
 }
-
-class SortbyComments implements Comparator<Post> {
-	// Used for sorting in ascending order of roll number
-	public int compare(Post a, Post b) { return b.comments.size() - a.comments.size(); }
-}
