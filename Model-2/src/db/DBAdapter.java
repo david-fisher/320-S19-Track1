@@ -92,7 +92,7 @@ public class DBAdapter {
                 String lastName = rs.getString("lastName");
                 String inviter = rs.getString("inviter");
                 int points = rs.getInt("points");
-                usr = new User (email, firstName, lastName, "", points, inviter); //fix when cc is implemented back in
+                usr = new User (email, firstName, lastName, points, "", inviter, creditCard); // TODO alex how do you make it do it
                 if (type == "member") { //set member fields
                     usr.type = type;
                     usr.address = rs.getString("address");
@@ -110,7 +110,7 @@ public class DBAdapter {
                     usr.phone = rs.getString("phone");
                     usr.password = rs.getString("password");
                     usr.profilePic = rs.getString("profilePic");
-                    usr.blurb = rs.getString("blurb");
+                    usr.description = rs.getString("blurb");
                     usr.loggedIn = true;
                     usr.hasInvited = (rs.getInt("hasInvited") == 1);
                     usr.isValidated = (rs.getInt("validAccount") == 1);
@@ -213,7 +213,7 @@ public class DBAdapter {
         return true;
     }
 
-    public Photo getPhoto(String id) {
+    public ImagePost getPhoto(String id) {
         int ID = Integer.parseInt(id);
         try {
             this.getConnection();
@@ -225,7 +225,7 @@ public class DBAdapter {
         return null;
     }
 
-    public boolean deletePhoto(Photo photo) {
+    public boolean deletePhoto(ImagePost photo) {
         try {
             this.getConnection();
             int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Photo WHERE original = '" +photo.photoPath+ "'");
@@ -236,7 +236,9 @@ public class DBAdapter {
         return true;
     }
 
-    public boolean insertFilter(Filter filter) {
+    // ========================= Not doing photo filtering ================================
+
+    /*public boolean insertFilter(Filter filter) {
         try {
             this.getConnection();
             ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.photoPath+"'");
@@ -251,10 +253,10 @@ public class DBAdapter {
             return false;
         }
         return true;
-    }
+    }*/
     //assuming the photoID is the original photo, and the path is the filter.
 
-    public boolean deleteFilter(Filter filter) {
+    /*public boolean deleteFilter(Filter filter) {
         try {
             this.getConnection();
             ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.photoPath+"'");
@@ -268,11 +270,11 @@ public class DBAdapter {
             return false;
         }
         return true;
-    }
+    }*/
     //I am being creative here about the format and I am not sure the format of matching two columns in the table.
     //I will fix it after asking Caroline.
 
-    public int[] getFilters(Photo photo) {
+    /*public int[] getFilters(Photo photo) {
         try {
             this.getConnection();
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.FilterPhoto WHERE photoID = '"+photo.photoId+"'");
@@ -292,9 +294,10 @@ public class DBAdapter {
             return null;
         }
 
-    }
+    }*/
     //return a list of filterID. I have this structure in case they want us to return the path.
 
+    // ========================= Not doing photo filtering ================================
 
 
     public boolean createURL(String original, String shortened) {
@@ -395,8 +398,7 @@ public class DBAdapter {
                 ArrayList<Comment> coms = new ArrayList<Comment>();
                 while(comments.next()) { //populate comments
                     Post parent = this.getPost(Integer.toString(comments.getInt("childID")));
-                    Comment c = new Comment(parent.poster,"comment",Integer.toString(comments.getInt("childID")),
-                            parent.text, parent);
+                    Comment c = new Comment(parent.poster,"comment",Integer.toString(comments.getInt("childID")), parent.text, parent);
                     coms.add(c);
                 }
                 if (type == "imagePost") { //do later

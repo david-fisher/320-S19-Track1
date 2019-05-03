@@ -21,7 +21,7 @@ public class User {
 	public boolean isValidated; // Is User currently verified by CC?
 	public String type;
 	public String description;
-	public BufferedImage photo;
+	public String profilePic;
 
 	//Additional fields made by DB team
 	public String address;
@@ -112,9 +112,9 @@ public class User {
 		return true;
 	}
 
-	public boolean updateProfilePhoto(BufferedImage photo) {
+	public boolean updateProfilePhoto(String photo) {
 		//Database.adapter.updateProfilePhoto(photo);
-		//this.photo = photo;
+		//this.profilePic = photo;
 		return true;
 	}
 
