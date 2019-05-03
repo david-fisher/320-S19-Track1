@@ -3,11 +3,13 @@
     <div class="ui inverted segment">
       <div class="ui inverted secondary menu">
         <div class="ui icon input">
-          <input type="text" placeholder="Search members...">
-          <i class="search icon"></i>
+          <form v-on:submit="search($event)">
+            <input type="text" v-model="search" placeholder="Search members...">
+            <i class="search icon"></i>
+          </form>
         </div>
         <img class="item right" src="../assets/dark_logo.png" alt="Smiley face" height="60" width="60">
-        <a class="item right">
+        <a class="item right" >
           <i class="user circle outline icon"></i>
         </a>
         <a class="active item">
@@ -16,21 +18,22 @@
       </div>
     </div>
     <div class="makePost">
-        <form class="ui form"><textarea cols="7" rows="5" charswidth="23" name="text_body" placeholder="Post"></textarea>
-            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
-            <input type="submit" value="Post">
+        <form v-on:submit="postImage($event)" class="ui form">
+          <input type="file" id="imageLoader" @change="onFileChanged"/>
+          <canvas id="imageCanvas" ref="imageCanvas"></canvas>
+          <input  style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button" type="submit" value="Post"> 
         </form>
+        <form v-on:submit="postText($event)" class="ui form">
+          <textarea v-model="postTextJSON.message" cols="7" rows="5" charswidth="23" name="text_body" placeholder="Post"></textarea>
+          <input  style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button" type="submit" value="Post"> 
+        </form>
+
     </div>
-
-
-
-
 
 
     <div id="feedHolder">
       <div id="feed" style="float:left"  >
-        <!--<% (1..10).each do %> -->
-        <div v-for="item in items" v-bind:key="item.postID">
+        <div v-for="item in jsonData.items1" v-bind:key="item.postID">
           <div class="item">
             <div class="header-container">
               <div class="header">
@@ -38,81 +41,63 @@
                 <div class="username"> {{ item.poster.firstName + " " + item.poster.lastName }}  </div>
               </div>
             </div>
-            <!--<div class="photo"> -->
-            <img src="../assets/picture.jpg" alt="Smiley face" width="600">
-            <!-- </div> -->
+            <div v-if="item.imageOrText">
+              <img src="../assets/picture.jpg" alt="Smiley face" width="600">
+            </div>
+            <div v-else>
+              <h5>{{item.text}}</h5>
+            </div>
             <div class="content">
-              <ul class="comments" style="padding-left: 20px;">
-              <!-- <% (1..3).each do %> -->
-                <li>
-                  <div class="name"></div>
-                  <div class="comment"></div>
-                </li>
-              <!-- <% end %> -->
-              </ul>
+              <div class="comments" style="padding-left: 20px;">
+                <div v-for="comment in item.comments" v-bind:key="comment.postID">
+                  <div class="name">{{ comment.poster.firstName + " " + comment.poster.lastName }}</div>
+                  <div class="comment">{{ comment.text }}</div>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <div class="ui fluid input">
+              <form>
+                <input type="text" style="width: 300px;" placeholder="Comment">
+                <button type="submit" class="ui button">Post</button>
+              </form>
             </div>
           </div>
         </div>
-
-
-
-
-        <!--<div class="item">
-          <div class="header-container">
-            <div class="header">
-              <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
-              <div class="username"> Dhruv </div>
-            </div>
-          </div>
-          <img src="../assets/picture.jpg" alt="Smiley face" width="600">
-          
-          <div class="content">
-            <ul class="comments" style="padding-left: 20px;">
-          
-              <li>
-                <div class="name"></div>
-                <div class="comment"></div>
-              </li>
-            </ul>
-          </div>
-        </div> -->
       </div>
-      <!-- <% end %> -->
-      
-      
-      
-      
-      
-      
-      
+
       <div id="feed2" style="float:right">
-        <!--<% (1..10).each do %> -->
-        <div class="item">
-          <div class="header-container">
-            <div class="header">
-              <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
-              <div class="username"> Dhruv </div>
+        <div v-for="item in jsonData.items2" v-bind:key="item.postID">
+          <div class="item">
+            <div class="header-container">
+              <div class="header">
+                <div class="avatar"> <img src="../assets/profile.jpg" alt="Smiley face" height="33" width="33"> </div>
+                <div class="username"> {{ item.poster.firstName + " " + item.poster.lastName }}  </div>
+              </div>
+            </div>
+            <div v-if="item.imageOrText">
+              <img src="../assets/picture.jpg" alt="Smiley face" width="600">
+            </div>
+            <div v-else>
+              <h5>{{item.text}}</h5>
+            </div>
+            <div class="content">
+              <div class="comments" style="padding-left: 20px;">
+                <div v-for="comment in item.comments" v-bind:key="comment.postID">
+                  <div class="name">{{ comment.poster.firstName + " " + comment.poster.lastName }}</div>
+                  <div class="comment">{{ comment.text }}</div>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <div class="ui fluid input">
+              <form v-on:submit="postComment($event, item.postID)">
+                <input type="text" style="width: 300px;" placeholder="Comment" v-model="comment.message" v-bind="item.postID">
+                <button type="submit" class="ui button">Post</button>
+              </form>
             </div>
           </div>
-            
-          <img src="../assets/logo.png" alt="Smiley face" width="600">
-            
-          <div class="content">
-            <ul class="comments" style="padding-left:10px;">
-              <!-- <% (1..3).each do %> -->
-              <li style="padding-left:0px">
-                <div class="name" > dkhurana1999 </div>
-                <div class="comment">adasdadsada</div>
-              </li>
-              <!-- <% end %> -->
-            </ul>
-          </div>
-          <div class="ui fluid input">
-            <input type="text" style="width: 300px;" placeholder="Comment">
-            <div class="ui button">Post</div>
-          </div>
         </div>
-        <!-- <% end %> -->
       </div>
     </div>
   </div>
@@ -123,6 +108,28 @@
 export default {
   name : "Feed",
   data() {
+    return{
+      search : "",
+      comment: {
+        email : "",
+        message: "",
+        postid : ""
+      },
+      postTextJSON: {
+        message: "",
+        email : ""
+      },
+      jsonData : {}
+    }
+  },
+
+
+
+  beforeCreate: function(){
+    if(!this.$session.exists()){
+      this.$router.push('/')
+      return;
+    }
     const path = this.ip + '/getFeed';
     var jsonObj = {};
     this.$http.get(path)
@@ -131,10 +138,118 @@ export default {
       jsonObj = response;
     })
     .catch(error => {
-      console.log("Yeah nope");
+      console.log("you're a failure");
     });
-    return jsonObj;
+    this.jsonData = jsonObj;
+  },
+  mounted: function(){
+    var canvas = this.$refs.imageCanvas
+    canvas.width = 0
+    canvas.height = 0
+    console.log(canvas.width)
+  },
+
+
+  postComment : function(event, postTheId) {
+    event.preventDefault();
+
+    const path = this.ip + '/postComment';
+    this.comment.email = this.$session.get('email');
+    this.comment.postid = postTheId;
+    
+    this.$http.post(path, this.comment)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log("comment failed");
+    });
+  },
+
+
+  postImage: function(event) {
+    event.preventDefault();
+
+    var canvas = this.$refs.imageCanvas
+    var thing = {
+      photo: canvas.toDataURL()
+    }
+
+    const path = this.ip + '/postImage'
+    
+    console.log(thing.photo)
+
+    const data = {
+      form: thing,
+      email: this.$session.get('email'),
+      password: this.$session.get('password'),
+    }
+
+    this.$http.post(path, data)
+    .then(response => {
+      console.log(response)
+      var retVal = JSON.parse('{' + response.bodyText)
+      if(retVal.result.length == 0) {
+        console.log("yeet");
+      } else {
+        console.log("you are a failure");
+      }
+    })
+    .catch(error => {
+      console.log("Yeah nope")
+      console.log(error)
+    })
+
+  },
+
+
+  postText : function(event) {
+    event.preventDefault();
+    this.postTextJSON.email = this.$session.get('email');
+
+    var path = this.ip + "/postText";
+
+    this.$http.post(path, postTextJSON)
+    .then(response => {
+      console.log(response);
+      this.$router.push('/feed')
+    })
+    .catch(error => {
+      console.log("Yeah nope")
+      console.log(error)
+    })
+
+
+  },
+
+
+  drawCanvasImage: function(img) {
+    var canvas = this.$refs.imageCanvas;
+
+    if(img.width < img.height){
+      canvas.width = this.maxImageWidth
+      canvas.height = this.maxImageWidth
+    } else {
+      canvas.width = this.maxImageHeight
+      canvas.height = this.maxImageHeight
+    }
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, this.maxImageWidth, this.maxImageHeight);
+  },
+  onFileChanged: function(e){
+    var self = this;
+    var reader, files = e.target.files;
+    var reader = new FileReader();
+    reader.onload = (e) => {
+        var img = new Image();
+        img.onload = function() {
+            self.drawCanvasImage(img)
+        }
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(files[0]);
   }
+
 }
 </script>
 
