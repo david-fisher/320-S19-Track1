@@ -256,6 +256,25 @@ class DBTestSuite {
 		ArrayList<Post> postz = db.getUserPosts(author.email);
 		for (int i = 0; i < postz.size(); i++) {System.out.println(postz.get(i).text); }
 	}
+	
+	public void testFlaggedPosts() {
+		db.deletePost("1");
+		db.deletePost("2");
+		db.deletePost("3");
+		db.deleteUser("email");
+		User author = new User("email", "joe", "aaaa", "I want 2 die", 420, "jeff");
+		author.type = "member";
+		Post post1 = new Post(author, "textPost", "1", "hi1");
+		Post post2 = new Post(author, "textPost", "2", "hi2");
+		Post post3 = new Post(author, "textPost", "3", "hi3");
+		db.createUser(author);
+		db.createPost(post1);
+		db.createPost(post2);
+		db.createPost(post3);
+		db.updatePost(1, "explicit", 1);
+		ArrayList<Post> postz = db.getFlaggedPosts();
+		for (int i = 0; i < postz.size(); i++) {System.out.println(postz.get(i).text); }
+	}
 //	@Test
 //	public void testPostModification() {
 //		DBAdapter db = new DBAdapter();
@@ -377,7 +396,8 @@ class DBTestSuite {
 //		test.testUserCreation();
 //		test.testPostCreation();
 		//test.testFollowUser();
-		test.testUserPosts();
+		//test.testUserPosts();
+		test.testFlaggedPosts();
 		//test.testUnFollowUser();
 		//System.out.println(test.testURLCreation());
 	}

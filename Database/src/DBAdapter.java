@@ -153,7 +153,7 @@ public class DBAdapter {
 		    statement.setObject(1, newValue);
 		    statement.setString(2, email);
 		    statement.executeUpdate();
-		    System.out.println(statement.toString());
+		    //System.out.println(statement.toString());
 		    return true;
 			//int rs = conn.createStatement().executeUpdate(query);
 		} catch (SQLException e) {
@@ -451,12 +451,6 @@ public class DBAdapter {
 	public ArrayList<Post> getUserPosts(String email) {
 		//returns post IDs, not post
 		try {
-//			this.getConnection();
-//			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.User WHERE email = '"+email+"'");
-//			int userID=0;
-//			while(rs.next()) {
-//				userID = rs.getInt("userID");	
-//			}
 			this.getConnection();
 			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE userID ='"+email+"'");
 			ArrayList<String> ids = new ArrayList<String>();
@@ -471,6 +465,24 @@ public class DBAdapter {
 			return null;
 		}
 	}
+	
+	public ArrayList<Post> getFlaggedPosts() {
+		//returns post IDs, not post
+		try {
+			this.getConnection();
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE explicit > 0");
+			ArrayList<String> ids = new ArrayList<String>();
+			while(rs.next()) { ids.add(rs.getString("postID")); }
+			ArrayList<Post> posts = new ArrayList<Post>();
+			for(int i = 0; i < ids.size(); i++) { posts.add(this.getPost(ids.get(i))); }
+			return posts;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public boolean unfollowUser(String follower,String followee) {
 		try {
 			this.getConnection();
