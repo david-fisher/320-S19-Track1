@@ -6,12 +6,12 @@ import db.*;
 public class LoginProcessor {
 
 	/**
-	 * Checks the credentials of the user trying to log in
+	 *  Checks the credentials of the user trying to log in
 	 *
-	 * @param email		user's inputted email
-	 * @param password	user's inputted password
+	 *  @param email	user's inputted email
+	 *  @param password	user's inputted password
 	 *
-	 * @return boolean indicating if the user can been logged in
+	 *  @return boolean indicating if the user can been logged in
 	 */
 
 	public static boolean checkCredentials(String email, String password) {

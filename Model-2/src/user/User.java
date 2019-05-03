@@ -118,8 +118,9 @@ public class User {
 		return true;
 	}
 
-	/*
-	 * Admin Functionality //TODO because none of these work
+	/** ========================================================================
+	 *  Admin Functionality | TODO because none of these work
+	 *  ========================================================================
 	 */
 
 	//edit image

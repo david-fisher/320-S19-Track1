@@ -129,10 +129,10 @@ public class Registration {
 	}
 
 	/**
-	 * Returns a boolean value indicating whether the password fields
-	 * for password and verifyPassword are identical.
+	 *  Returns a boolean value indicating whether the password fields
+	 *  for password and verifyPassword are identical.
 	 *
-	 * @return boolean indicating if the checks pass
+	 *  @return boolean indicating if the checks pass
 	 */
 
 	private boolean passwordCheck()
@@ -149,11 +149,11 @@ public class Registration {
 	}
 
 	/**
-	 * Sends the credentials to the database for new User
-	 * creation and storage. Returns boolean indicating
-	 * whether it is successful, as determined by the DB.
+	 *  Sends the credentials to the database for new User
+	 *  creation and storage. Returns boolean indicating
+	 *  whether it is successful, as determined by the DB.
 	 *
-	 * @return boolean indicating if the DB has stored the data
+	 *  @return boolean indicating if the DB has stored the data
 	 */
 
 	public boolean storeData() {
