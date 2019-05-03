@@ -4,10 +4,10 @@
   
   <div class="ui true grey fixed inverted menu">
     <div class="ui container">
-      <div class="header item">
+      <a class="header item" href="#">
         <img src="../assets/light_logo.png" class="logo">
           Members Only
-      </div> 
+      </a> 
 
       <a class="item" href="#TODOGETFEEDHERE">
         Feed
