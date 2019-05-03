@@ -65,6 +65,9 @@ public class Post
 			return "[" + shortened + "]" + "(" + url + ")";
 		}else{
 			int startdom = url.indexOf("/")+2;
+			if(startdom == 1){
+			    startdom = 0;
+            }
 			int lastdom = url.lastIndexOf(".");
 			String shortened = url.substring(startdom, lastdom);
 			return "[" + shortened + "]" + "(" + url + ")";
