@@ -122,6 +122,10 @@ public class User {
 	 * Admin Functionality
 	 */
 
+	//edit image
+	//edit post hashtag
+	//edit comment hashtag
+
 	public String editPost(Post post, String text) {
 		if(this.type.equals("admin")) {
 			Database.adapter.updatePost(Integer.parseInt(post.postID),"text",text);
