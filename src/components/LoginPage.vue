@@ -3,9 +3,9 @@
 
     <div class="ui true grey fixed inverted menu">
       <div class="ui container">
-        <a class="header item" href="#">
+        <a class="header item" v-on:click="potato()">
           <img src="../assets/light_logo.png" class="logo">
-            Members Only
+          Members Only
         </a> 
       </div>
     </div>
@@ -66,6 +66,9 @@ export default {
     console.log('started: ' + this.$session.exists())
   },
   methods: {
+    potato: function(){
+      this.$router.push('/')
+    },
     verifyForm: function(event){
       event.preventDefault()
       

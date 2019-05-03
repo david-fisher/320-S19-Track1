@@ -14,6 +14,8 @@ Vue.use(sui)
 Vue.use(VueResource)
 Vue.use(VueSession)
 Vue.prototype.ip = 'http://824e01d8.ngrok.io/members-only'
+Vue.prototype.maxImageWidth = 400
+Vue.prototype.maxImageHeight = 400
 
 Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
 

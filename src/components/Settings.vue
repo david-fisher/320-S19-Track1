@@ -57,6 +57,21 @@
       </div>
       <br>
     </form>
+    <form class="form" v-on:submit="changePhoto($event)">
+      <div class="field">
+        <label class="label">Profile Photo:</label>
+      </div>
+      
+      <input type="file" id="imageLoader" @change="onFileChanged"/>
+      <canvas id="imageCanvas" ref="imageCanvas"></canvas>
+      
+      <br>
+      <button type="submit" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button">Submit</button>
+      <div class="submission check">
+        <p style="color:#FF0000">{{ form4SubmitText }}</p>
+      </div>
+      <br>
+    </form>
     <br>
     <div>
       <button type="button" style="width:150px; margin-bottom:5px; color:#D6A200" class="ui black button" v-on:click="generateInvite()">Generate Invite</button>
@@ -75,6 +90,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Settings',
   data () {
@@ -94,6 +110,10 @@ export default {
         whoDoISee: ''
       },
       form3SubmitText: '',
+      form4: {
+        photo: null
+      },
+      form4SubmitText: '',
       inviteLink: ''
     }
   },
@@ -104,6 +124,61 @@ export default {
     }
   },
   methods: {
+    changePhoto: function(){
+      var canvas = this.$refs.imageCanvas;
+      var thing = {
+        photo: canvas.toDataURL()
+      }
+
+      const path = this.ip + '/changePhoto'
+        
+      const data = {
+        form: thing,
+        email: this.$session.get('email'),
+        password: this.$session.get('password'),
+      }
+
+      this.$http.post(path, data)
+      .then(response => {
+        console.log(response)
+        var retVal = JSON.parse('{' + response.bodyText)
+        if(retVal.result.length == 0){
+          this.form1SubmitText = "Updated!"
+        } else {
+          this.form1SubmitText = retVal.result + " is incorrect or blank. Plox Fix."
+        }
+      })
+      .catch(error => {
+        console.log("Yeah nope")
+        console.log(error)
+      })
+    },
+    drawCanvasImage: function(img) {
+      var canvas = this.$refs.imageCanvas;
+
+      if(img.width < img.height){
+        canvas.width = this.maxImageWidth
+        canvas.height = this.maxImageWidth
+      } else {
+        canvas.width = this.maxImageHeight
+        canvas.height = this.maxImageHeight
+      }
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, this.maxImageWidth, this.maxImageHeight);
+    },
+    onFileChanged: function(e){
+      var self = this;
+      var reader, files = e.target.files;
+      var reader = new FileReader();
+      reader.onload = (e) => {
+          var img = new Image();
+          img.onload = function() {
+              self.drawCanvasImage(img)
+          }
+          img.src = event.target.result;
+      };
+      reader.readAsDataURL(files[0]);
+    },
     verifyFormCC: function(event){
       event.preventDefault()
       if(this.form1.creditCardNumber.length == 0){
@@ -142,7 +217,14 @@ export default {
       event.preventDefault()
 
       const path = this.ip + '/updateProfileDescription'
-      this.$http.post(path, this.form2)
+      
+        const data = {
+          form: this.form2,
+          email: this.$session.get('email'),
+          password: this.$session.get('password'),
+        }
+
+        this.$http.post(path, data)
       .then(response => {
         console.log(response)
         var retVal = JSON.parse('{' + response.bodyText)
@@ -162,7 +244,13 @@ export default {
 
       const path = this.ip + '/updateVisibility'
 
-      this.$http.post(path, this.form3)
+      const data = {
+        form: this.form3,
+        email: this.$session.get('email'),
+        password: this.$session.get('password'),
+      }
+
+      this.$http.post(path, data)
       .then(response => {
         console.log(response)
         var retVal = JSON.parse('{' + response.bodyText)
