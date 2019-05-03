@@ -88,7 +88,7 @@ public class PostService {
 					}
 					jsonObj.put("imgPath", scan.nextLine());
 				}
-				/*Scanner scan = null;
+				Scanner scan = null;
 				try {
 					scan = new Scanner(new File(post.poster.profilePic));
 					System.out.println("made scanner");
@@ -96,7 +96,7 @@ public class PostService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				jsonObj.put("avatar", scan.nextLine());*/
+				jsonObj.put("avatar", scan.nextLine());
 				if(i%2 == 0) {
 					items.put(jsonObj);
 				} else {
