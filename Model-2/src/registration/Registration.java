@@ -84,11 +84,8 @@ public class Registration {
 		CreditCard card = new StripeCreditCard(this.email, this.creditCardNumber, this.zipCode , this.cvv, this.expirationMonth , this.expirationYear);
 		String resultCardValidation = card.verify();
 
-		if(resultCardValidation == null){
-			return "Invalid credit card";
-		}else{
-			this.card = card;
-		}
+		if(resultCardValidation == null) return "Invalid credit card";
+		else this.card = card;
 
 		//Create a User object in the database.
 		//NOTE: This user will still be invalid until they verify their charge.
@@ -110,20 +107,13 @@ public class Registration {
 		Pattern p = Pattern.compile("^(.+)@(.+)$"); // https://howtodoinjava.com/regex/java-regex-validate-email-address/
 		Matcher m = p.matcher(this.email);
 		boolean b = m.matches();
-		if(b){
-			//Go do the next check
-		}else{
-			return false;
-		}
+		if(!b) return false;
 
 		// Check if this email is already use by calling DB.getUser():
 		// If the provided email is not associated with a user (eg. returns null),
 		// Then we know the email is unique
-		if(null == Database.adapter.getUser(this.email) ){
-			return false;
-		}else {
-			return true;
-		}
+		if(null == Database.adapter.getUser(this.email) )return false;
+		else return true;
 	}
 
 	/**
@@ -138,8 +128,7 @@ public class Registration {
 		return this.choosePassword.equals(this.verifyPassword);
 	}
 
-	private boolean zipCheck()
-	{
+	private boolean zipCheck() {
 		Pattern p = Pattern.compile("^[0-9]{5}(?:-[0-9]{4})?$"); //https://howtodoinjava.com/regex/java-regex-validate-us-postal-zip-codes/
 		Matcher m = p.matcher(this.zipCode);
 		boolean b = m.matches();
