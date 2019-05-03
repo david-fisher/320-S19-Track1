@@ -13,16 +13,18 @@ public class ImagePost extends Post
 	File file;
 	BufferedImage image;
 	public String path;
+	public String type;
 
 
-	public ImagePost(User poster, String postID, String path) { //used to return objects from DB
-		super(poster, postID, "");
+	public ImagePost(User poster, String type, String postID, String path) { //used to return objects from DB
+		super(poster, type, postID, "");
 		this.path = path;
+		this.type = type;
 	}
 
-	public ImagePost(User poster, String postID, File file)
+	public ImagePost(User poster, String type, String postID, File file)
 	{
-		super(poster, postID, "");
+		super(poster, type, postID, "");
 		this.file = file;
 
 		String extension = "";

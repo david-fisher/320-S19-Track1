@@ -8,6 +8,7 @@ import java.awt.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import java.util.Comparator;
 import java.util.regex.*;
 
 public class Post
@@ -21,6 +22,7 @@ public class Post
 	public ArrayList<Comment> comments;
 	public ArrayList<String> hashtags;
 	public ArrayList<String> adminHashtags;
+	public String type;
 
 	/* The constructor for test.post will take in a User class variable, a String that
 	 * is the unique test.post id of that test.post and the string of text associated with
@@ -29,7 +31,7 @@ public class Post
 	 * @param postID the unique test.post ID associated with this test.post
 	 * @param text the text to be populated in the UI
 	 */
-	public Post(User poster, String postID, String text) {
+	public Post(User poster, String type, String postID, String text) {
 		this.poster = poster;
 		this.postID = postID;
 		this.text = text;
@@ -43,6 +45,7 @@ public class Post
 		this.addPoints();
 		this.parseForHashtags();
 		this.sendToDB();
+		this.type = type;
 	}
 
    /* This function will parse the text for hashtags
@@ -258,5 +261,13 @@ public class Post
 		{
 			Database.adapter.createPost(this);
 		}
+	}
+}
+
+class SortbyComments implements Comparator<Post> {
+	// Used for sorting in ascending order of
+	// roll number
+	public int compare(Post a, Post b) {
+		return b.comments.size() - a.comments.size();
 	}
 }

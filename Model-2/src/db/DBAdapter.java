@@ -6,12 +6,10 @@ import registration.*;
 import stripe.*;
 import user.*;
 
-import java.util.Collections;
-import javax.imageio.ImageIO;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.imageio.ImageIO;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -92,7 +90,7 @@ public class DBAdapter {
                 String lastName = rs.getString("lastName");
                 String inviter = rs.getString("inviter");
                 int points = rs.getInt("points");
-                usr = new User (email, firstName, lastName, points, "", inviter, creditCard); // TODO alex how do you make it do it
+                usr = new User (email, firstName, lastName, points, "", inviter, null); // TODO NULL SHOULD BE CC
                 if (type == "member") { //set member fields
                     usr.type = type;
                     usr.address = rs.getString("address");
@@ -228,7 +226,7 @@ public class DBAdapter {
     public boolean deletePhoto(ImagePost photo) {
         try {
             this.getConnection();
-            int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Photo WHERE original = '" +photo.photoPath+ "'");
+            int rs = conn.createStatement().executeUpdate("DELETE FROM TrackOneDB.Photo WHERE original = '" +photo.path+ "'");
         } catch(SQLException e) {
             e.printStackTrace();
             return false;
@@ -241,7 +239,7 @@ public class DBAdapter {
     /*public boolean insertFilter(Filter filter) {
         try {
             this.getConnection();
-            ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.photoPath+"'");
+            ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.path+"'");
             int filterID=0;
             while(rs0.next()) {
                 filterID = rs0.getInt("photoID");
@@ -259,7 +257,7 @@ public class DBAdapter {
     /*public boolean deleteFilter(Filter filter) {
         try {
             this.getConnection();
-            ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.photoPath+"'");
+            ResultSet rs0 = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Photo WHERE original = '"+filter.path+"'");
             int filterID=0;
             while(rs0.next()) {
                 filterID = rs0.getInt("photoID");
@@ -402,8 +400,8 @@ public class DBAdapter {
                     coms.add(c);
                 }
                 if (type == "imagePost") { //do later
-                    String path = this.getPhoto(rs.getString("photoID")).photoPath;
-                    ImagePost imgP = new ImagePost(this.getUser(author), "imagePost",postID, path);
+                    String path = this.getPhoto(rs.getString("photoID")).path;
+                    ImagePost imgP = new ImagePost(this.getUser(author), "imagePost", postID, path);
                     imgP.comments = coms;
                     imgP.timestamp = time;
                     imgP.flag = rs.getInt("explicit");
@@ -506,7 +504,7 @@ public class DBAdapter {
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM TrackOneDB.Post WHERE type != 'comment'");
             ArrayList<Post> posts = new ArrayList<Post>();
             while(rs.next()) { posts.add(this.getPost(Integer.toString(rs.getInt("postID")))); }
-            Collections.sort(posts, new SortbyComments());
+            //Collections.sort(posts, new SortByComments()); //TODO FIGURE OUT SORTBYCOMMENTS
             if (posts.size() <= postsFetched) return posts;
             ArrayList<Post> returnPosts = new ArrayList<Post>();
             for (int i = 0; i < postsFetched; i++) { returnPosts.add(posts.get(i)); }

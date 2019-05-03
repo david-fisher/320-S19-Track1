@@ -7,19 +7,21 @@ public class Comment extends Post
 {
 	public Post associatedPostID;
 	int pointsForComment = 5;
+	public String type;
 
 	/* The constructor for comment will extend from Post
 	 *
 	 * @param Post is the Post that this comment is associated with
 	 */
-	public Comment(User poster, String ID, String text, Post associatedPost)
+	public Comment(User poster, String type, String ID, String text, Post associatedPost)
 	{
-		super(poster, ID, text);
+		super(poster, type, ID, text);
 		this.associatedPostID = associatedPost;
 		super.pointsForPost = pointsForComment;
 		this.linkPostToComment();
 		this.addPoints();
 		this.sendToDB();
+		this.type = type;
 	}
 
 	/* This function will get the associated posts unique id
