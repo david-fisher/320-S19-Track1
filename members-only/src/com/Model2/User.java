@@ -56,14 +56,15 @@ public class User {
 				String expirationMonth,
 				String expirationYear,
 				String CVV,
-				String zipcode) {
+				String zipcode,
+				String profilePic) {
 		this.creditCard = new StripeCreditCard(email, creditCardNumber, zipcode, CVV, expirationMonth, expirationYear);
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.points = points;
 		this.password = "";
-		
+		this.profilePic = profilePic;
 		this.stripeCreditCardID = creditCard.getId();
 		this.invitedBy = invitedBy;
 		this.isValidated = false;

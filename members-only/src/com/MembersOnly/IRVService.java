@@ -5,9 +5,15 @@ import javax.ws.rs.core.Response;
 import org.json.*;
 import com.Model2.*;
 import java.util.UUID;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.*;
 
 @Path("/")
 public class IRVService {
+	
+	private static HashMap<String, Registration> mappo = new HashMap<String, Registration>();
+	
 	@POST
 	@Path("/storeInfo")
 	@Produces("application/json")
@@ -41,12 +47,18 @@ public class IRVService {
         		                 confPassword,creditCardNumber,
         		                 CVV, exp_month, exp_year, registrationCode);
         
-        String registration_result = register.verify();
+        Registration registration_result = register.verify();
+        String retStr = "";
         
-
+        if(registration_result == null) {
+        	retStr = "Yeah that's an error lmao";
+        } else {
+        	mappo.put(email, registration_result);
+        }
+        
         JSONObject store_result = new JSONObject();
    
-        store_result.put("result", registration_result);
+        store_result.put("result", retStr);
         
         return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
@@ -57,18 +69,31 @@ public class IRVService {
 	@Produces("application/json")
 	public Response chargeVerify(String payload) {
 		
+		JSONObject jsonPayload = new JSONObject(payload);
+		
 		double charge = 0.0;
+		
+
 		try {
-		    charge = Double.parseDouble(payload);
+		    charge = Double.parseDouble(jsonPayload.getString("charge"));
 		}
 		catch(Exception e) {
 			return Response.status(200).entity("error").build();
 		}
-		
+		String email = jsonPayload.getString("email");
+		String password = jsonPayload.getString("password");
 		//TODO: INSERT MODEL2 CODE TO VERIFY THE CHARGE
+		Registration reg = mappo.get(email);
+		StripeCreditCard card = (StripeCreditCard)reg.card;
+		boolean correct = card.verifyCharge(charge);
 		
         JSONObject store_result = new JSONObject();
-        store_result.put("result", "");
+        if(correct) {
+        	Database.adapter.updateUser(email, "password", password);
+        	store_result.put("result", "");
+        } else {
+        	store_result.put("result", "Eyyy fuck you");
+        }
         return Response.status(200).entity(store_result.toString().substring(1)).build();
 	}
 	
@@ -90,6 +115,10 @@ public class IRVService {
 		if(isLoggedIn) {
 			
 			//TODO: SEND OUT UPDATED CC DATA TO BACKEND
+			Database.adapter.updateUser(email, "ccNum", cc_number);
+			Database.adapter.updateUser(email, "ccExpMon", expiration.substring(0,2));
+			Database.adapter.updateUser(email, "ccExpYr", expiration.substring(3));
+			Database.adapter.updateUser(email, "ccv", CVV);
 			
 			response = "";
 		}
@@ -112,19 +141,19 @@ public class IRVService {
 	public Response updateProfileDescription(String payload) {
 		System.out.println(payload);
 		JSONObject jsonPayload = new JSONObject(payload);
-		String email = jsonPayload.getString("username");
+		String email = jsonPayload.getString("email");
 		String password = jsonPayload.getString("password");
+		String description = jsonPayload.getString("desc");
 		boolean isLoggedIn = LoginProcessor.checkCredentials(email, password);
 		String response;
+		
 		if(isLoggedIn) {
-		JSONObject formData = (JSONObject)jsonPayload.get("form");
-		formData.getString("description");
-		
-		
-		//TODO: SEND DESCRIPTION TO BACKEND TO VALIDATE
-		
-		
-		response = "";
+			//JSONObject formData = (JSONObject)jsonPayload.get("form");
+			//formData.getString("desc");
+			
+			//TODO: SEND DESCRIPTION TO BACKEND TO VALIDATE
+			Database.adapter.updateUser(email, "blurb", description);
+			response = "";
 		}
 		else {
 			response = "User not authenticated";
@@ -170,9 +199,7 @@ public class IRVService {
 		String email = jsonPayload.getString("email");
 		String password = jsonPayload.getString("password");
 		String inviteCode = UUID.randomUUID().toString().substring(0,8);
-		
-		//TODO: Send email and invite code to backend to store for later use.
-		
+				
 		boolean invite = Database.adapter.logUserInvite(email, inviteCode);
 		JSONObject result = new JSONObject();
 		result.put("result", inviteCode);
@@ -187,11 +214,24 @@ public class IRVService {
 		JSONObject jsonPayload = new JSONObject(payload);
 		String email = jsonPayload.getString("email");
 		String password = jsonPayload.getString("password");
-		//boolean isLoggedIn = LoginProcessor.checkCredentials(email, password);
+		String pic = jsonPayload.getString("pic");
+		boolean isLoggedIn = LoginProcessor.checkCredentials(email, password);
 		String response;
-		if(true) {
+		if(isLoggedIn) {
 			//TODO: CALL The code to backend to change profile picture.
+			String path = "C:/Users/Chigozie/Desktop/memOnlyPics/";
+			String fileName = UUID.randomUUID().toString();
+			String concat = path + fileName;
+			try (PrintWriter out = new PrintWriter(path + fileName)) {
+			    out.println(pic);
+			}
+			catch(FileNotFoundException e) {
+				System.out.println("File Not found");
+				response = "Write error";
+			}
+			
 			response = "";
+			Database.adapter.updateUser(email, "profilePic", concat);
 		}
 		else {
 			response = "Not logged in";

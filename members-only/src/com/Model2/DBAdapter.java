@@ -101,7 +101,8 @@ public class DBAdapter {
                 String ccExpMon = rs.getString("ccExpMon");
                 String ccExpYr = rs.getString("ccExpYr");
                 String ccv = rs.getString("ccv");
-                usr = new User (email, firstName, lastName, points, inviter, "", ccNum, ccExpMon, ccExpYr, ccv, zipcode);
+                String profilePic = rs.getString("profilePic");
+                usr = new User (email, firstName, lastName, points, inviter, "", ccNum, ccExpMon, ccExpYr, ccv, zipcode, profilePic);
                 usr.password = password;
                 if (type.equals("member")) { //set member fields0
                     usr.type = type;
@@ -292,6 +293,8 @@ public class DBAdapter {
             //PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.URL(original, shortened) VALUES(?, ?)")
             PreparedStatement statement = conn.prepareStatement("INSERT INTO TrackOneDB.Post(postID, type, time, userId, text) VALUES(?,?,?,?,?)");
             statement.setInt(1, Integer.parseInt(pst.postID));
+            System.out.println(pst.type);
+            System.out.println("post type: " + pst.type);
             statement.setString(2, pst.type);
             statement.setTimestamp(3, pst.timestamp);
             statement.setString(4, pst.poster.email);
