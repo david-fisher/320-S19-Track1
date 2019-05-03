@@ -8,6 +8,8 @@ import java.awt.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import java.util.regex.*;
+
 public class Post
 {
 	public User poster;
@@ -36,6 +38,7 @@ public class Post
 		hashtags = new ArrayList<String>();
 		adminHashtags = new ArrayList<String>();
 
+		this.parseForURLs();
 		this.createTimeStamp();
 		this.addPoints();
 		this.parseForHashtags();
@@ -53,14 +56,56 @@ public class Post
 	  }
 	}
 
-	/* This function will parse the text for hashtags
-	 * @param none
-	 * @return an array of the hashtags found in the text
-	 */
-	public boolean parseForURLs() {
+	public String extractAndFormat(String url){
+		// Parses for the shortened text.  Text between first and last .
+		if(url.contains("www")){
+			int startdom = url.indexOf(".")+1;
+			int lastdom = url.lastIndexOf(".");
+			String shortened = url.substring(startdom, lastdom);
+			return "[" + shortened + "]" + "(" + url + ")";
+		}else{
+			int startdom = url.indexOf("/")+2;
+			int lastdom = url.lastIndexOf(".");
+			String shortened = url.substring(startdom, lastdom);
+			return "[" + shortened + "]" + "(" + url + ")";
+		}
+	}
+
+	// Approved pattern from Stack Overflow
+	// Pattern for recognizing a URL, based off RFC 3986
+	private static final Pattern urlPattern = Pattern.compile(
+			"(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
+					+ "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+					+ "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+			Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+	public void parseForURLs() {
 		// look for URLs
-		//kLINK_DETECTION_REGEX = /(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi
-		return false;
+		// modify the post text so url turns from www.cnn.com/cnnPost to [cnn](www.cnn.com/cnnPost)
+		// save to the global string text, then push to db using this updatePost(int id, String field, T newValue)
+
+		// New String
+		String newText = "";
+		int currPos = 0;
+
+		// Looks through text
+		Matcher matcher = urlPattern.matcher(this.text);
+		String url;
+		String formattedUrl;
+		while (matcher.find()) {
+			int matchStart = matcher.start(1);
+			int matchEnd = matcher.end();
+			url = this.text.substring(matchStart, matchEnd);
+			formattedUrl = this.extractAndFormat(url);
+			// System.out.println(url+ " " + formattedUrl);
+			// System.out.println();
+			if(currPos < matchStart){
+				newText += this.text.substring(currPos, matchStart);
+			}
+			newText += formattedUrl;
+			currPos = matchEnd;
+		}
+		newText += this.text.substring(currPos, this.text.length());
+		this.text = newText;
 	}
 
    /* Removes one hashtag from the arraylist of hashtags
