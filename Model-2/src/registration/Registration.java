@@ -1,10 +1,8 @@
 package registration;
 
-import db.DBAdapter;
-import db.Database;
-import stripe.CreditCard;
-import stripe.StripeCreditCard;
-import user.User;
+import db.*;
+import stripe.*;
+import user.*;
 import java.util.regex.*;
 
 import java.awt.*;
