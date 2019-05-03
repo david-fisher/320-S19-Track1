@@ -122,16 +122,50 @@ export default {
     if(!this.$session.exists()){
       this.$router.push('/')
     }
+    const path = this.ip + '/pullPicture'
+        
+    const data = {
+      email: this.$session.get('email'),
+      password: this.$session.get('password')
+    }
+
+    this.$http.post(path, data)
+    .then(response => {
+      console.log(response)
+      var retVal = JSON.parse('{' + response.bodyText)
+      if(retVal.result.length == 0){
+        //Error or something
+      } else if(retVal.result == "error"){
+        console.log('BAD')
+      }
+      else {
+        var canvas = this.$refs.imageCanvas
+        var ctx = canvas.getContext('2d')
+        var img = new Image
+        img.onload = function(){
+          ctx.drawImage(img,0,0)
+        }
+        canvas.width = this.maxImageWidth
+        canvas.height = this.maxImageHeight
+        img.src = retVal.result
+      }
+    })
+    .catch(error => {
+      console.log("Yeah nope")
+      console.log(error)
+    })
   },
   methods: {
     changePhoto: function(){
-      var canvas = this.$refs.imageCanvas;
+      var canvas = this.$refs.imageCanvas
       var thing = {
         photo: canvas.toDataURL()
       }
 
       const path = this.ip + '/changePhoto'
-        
+      
+      console.log(thing.photo)
+
       const data = {
         form: thing,
         email: this.$session.get('email'),
@@ -143,9 +177,9 @@ export default {
         console.log(response)
         var retVal = JSON.parse('{' + response.bodyText)
         if(retVal.result.length == 0){
-          this.form1SubmitText = "Updated!"
+          this.form4SubmitText = "Updated!"
         } else {
-          this.form1SubmitText = retVal.result + " is incorrect or blank. Plox Fix."
+          this.form4SubmitText = retVal.result + " is incorrect or blank. Plox Fix."
         }
       })
       .catch(error => {
