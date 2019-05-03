@@ -116,8 +116,7 @@ export default {
         postid : ""
       },
       postTextJSON: {
-        message: "",
-        email : ""
+        message: ""
       },
       jsonData : {}
     }
@@ -148,101 +147,106 @@ export default {
     console.log(canvas.width)
   },
 
+  methods: {
+    postComment : function(event, postTheId) {
+      event.preventDefault();
 
-  postComment : function(event, postTheId) {
-    event.preventDefault();
+      const path = this.ip + '/postComment';
+      this.comment.email = this.$session.get('email');
+      this.comment.postid = postTheId;
+      
+      this.$http.post(path, this.comment)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log("comment failed");
+      });
+    },
 
-    const path = this.ip + '/postComment';
-    this.comment.email = this.$session.get('email');
-    this.comment.postid = postTheId;
-    
-    this.$http.post(path, this.comment)
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log("comment failed");
-    });
-  },
+    postImage: function(event) {
+      event.preventDefault();
 
-  postImage: function(event) {
-    event.preventDefault();
+      var canvas = this.$refs.imageCanvas
+      var thing = canvas.toDataURL()
 
-    var canvas = this.$refs.imageCanvas
-    var thing = {
-      photo: canvas.toDataURL()
-    }
+      const path = this.ip + '/postImage'
+      
+      console.log(thing)
 
-    const path = this.ip + '/postImage'
-    
-    console.log(thing.photo)
-
-    const data = {
-      form: thing,
-      email: this.$session.get('email'),
-      password: this.$session.get('password'),
-    }
-
-    this.$http.post(path, data)
-    .then(response => {
-      console.log(response)
-      var retVal = JSON.parse('{' + response.bodyText)
-      if(retVal.result.length == 0) {
-        console.log("yeet");
-      } else {
-        console.log("you are a failure");
+      const data = {
+        photo: thing,
+        email: this.$session.get('email'),
+        password: this.$session.get('password'),
       }
-    })
-    .catch(error => {
-      console.log("Yeah nope")
-      console.log(error)
-    })
 
-  },
-
-  postText : function(event) {
-    event.preventDefault();
-    this.postTextJSON.email = this.$session.get('email');
-
-    var path = this.ip + "/postText";
-
-    this.$http.post(path, postTextJSON)
-    .then(response => {
-      console.log(response);
-      this.$router.push('/feed')
-    })
-    .catch(error => {
-      console.log("Yeah nope")
-      console.log(error)
-    })
-  },
-
-
-  drawCanvasImage: function(img) {
-    var canvas = this.$refs.imageCanvas;
-
-    if(img.width < img.height){
-      canvas.width = this.maxImageWidth
-      canvas.height = this.maxImageWidth
-    } else {
-      canvas.width = this.maxImageHeight
-      canvas.height = this.maxImageHeight
-    }
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, this.maxImageWidth, this.maxImageHeight);
-  },
-  onFileChanged: function(e){
-    var self = this;
-    var reader, files = e.target.files;
-    var reader = new FileReader();
-    reader.onload = (e) => {
-        var img = new Image();
-        img.onload = function() {
-            self.drawCanvasImage(img)
+      this.$http.post(path, data)
+      .then(response => {
+        console.log(response)
+        var retVal = JSON.parse('{' + response.bodyText)
+        if(retVal.result.length == 0) {
+          console.log("yeet");
+        } else {
+          console.log("you are a failure");
         }
-        img.src = event.target.result;
-    };
-    reader.readAsDataURL(files[0]);
+      })
+      .catch(error => {
+        console.log("Yeah nope")
+        console.log(error)
+      })
+
+    },
+
+    postText : function(event) {
+      event.preventDefault();
+      this.postTextJSON.email = this.$session.get('email');
+      this.postTextJSON.password = this.$session.get('password');
+
+      var path = this.ip + "/postText";
+
+      this.$http.post(path, this.postTextJSON)
+      .then(response => {
+        var retVal = JSON.parse('{' + response.bodyText)
+        console.log(retVal);
+        if(retVal.result.length == 0){
+          this.$router.push('/feed')
+        } else {
+          console.log("Not happening sorry")
+        }
+      })
+      .catch(error => {
+        console.log("Yeah nope")
+        console.log(error)
+      })
+    },
+
+
+    drawCanvasImage: function(img) {
+      var canvas = this.$refs.imageCanvas;
+
+      if(img.width < img.height){
+        canvas.width = this.maxImageWidth
+        canvas.height = this.maxImageWidth
+      } else {
+        canvas.width = this.maxImageHeight
+        canvas.height = this.maxImageHeight
+      }
+      var ctx = canvas.getContext('2d')
+      ctx.drawImage(img, 0, 0, this.maxImageWidth, this.maxImageHeight)
+    },
+    onFileChanged: function(e){
+      var self = this;
+      var reader, files = e.target.files;
+      var reader = new FileReader();
+      reader.onload = (e) => {
+          var img = new Image();
+          img.onload = function() {
+              self.drawCanvasImage(img)
+          }
+          img.src = event.target.result;
+      };
+      reader.readAsDataURL(files[0]);
+    }
   }
 
 }

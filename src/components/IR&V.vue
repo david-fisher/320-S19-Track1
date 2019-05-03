@@ -154,7 +154,14 @@ export default {
       event.preventDefault()
       if(/^0?.[0-9]{2}$/.test(this.charge)){
         const path = this.ip + '/chargeVerify'
-        this.$http.post(path, this.charge)
+
+        const data = {
+          charge: this.charge,
+          email: this.form.email,
+          password: this.form.password
+        }
+
+        this.$http.post(path, data)
         .then(response => {
           var retVal = JSON.parse('{' + response.bodyText)
           if(retVal.result.length == 0){
@@ -199,7 +206,7 @@ export default {
     storeInfo: function(){
       if(!this.passwordsEqual()){
         this.submitText = "Yeah, those passwords don't match. Try again." 
-      } else if(this.pass.length < 8){
+      } else if(this.form.password.length < 8){
         this.submitText = "Nuh uh. Your password must be at least eight characters"
       } else {
 

@@ -301,7 +301,13 @@ export default {
     },
     generateInvite: function(){
       const path = this.ip + '/generateInvite'
-      this.$http.post(path)
+
+      const data = {
+        email: this.$session.get('email'),
+        password: this.$session.get('password')
+      }
+
+      this.$http.post(path, data)
       .then(response => {
         console.log(response)
         var retVal = JSON.parse('{' + response.bodyText)
