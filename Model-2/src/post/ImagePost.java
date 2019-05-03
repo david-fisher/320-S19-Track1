@@ -7,8 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import user.*;
 
-public class ImagePost extends Post
-{
+public class ImagePost extends Post {
 	int pointsForPhoto = 10;
 	File file;
 	BufferedImage image;
@@ -22,22 +21,16 @@ public class ImagePost extends Post
 		this.type = type;
 	}
 
-	public ImagePost(User poster, String type, String postID, File file)
-	{
+	public ImagePost(User poster, String type, String postID, File file) {
 		super(poster, type, postID, "");
 		this.file = file;
 
 		String extension = "";
 		int i = file.getName().lastIndexOf('.');
-		if (i >= 0)
-		{
-			extension = file.getName().substring(i+1);
-		}
+		if (i >= 0) extension = file.getName().substring(i+1);
 
-		if(this.checkFile(extension))
-		{
-			if(!CP(file.getName()))
-			{
+		if(this.checkFile(extension)) {
+			if(!CP(file.getName())) {
 				try {
 					BufferedImage image = ImageIO.read(file);
 					String newPhotoPath = "images/src/" + file.getName();
@@ -50,10 +43,7 @@ public class ImagePost extends Post
 				}
 			}
 		}
-		else
-    {
-		 System.out.println("wrong file type");
-    }
+		else System.out.println("wrong file type");
 		this.sendToDB();
 	}
 
@@ -61,12 +51,8 @@ public class ImagePost extends Post
    *@param String the extention
    *@return boolean true if png false if other;
    */
-	public boolean checkFile(String extension)
-	{
-		if(extension.equals("png"))
-    {
-			return true;
-		}
+	public boolean checkFile(String extension) {
+		if(extension.equals("png")) return true;
 		return false;
 	}
 
@@ -80,8 +66,7 @@ public class ImagePost extends Post
 	* @params none
 	* @return a boolean indicating success or failure
 	*/
-	void addPoints()
-	{
+	void addPoints() {
 		this.poster.addPoints(this.pointsForPhoto);
 		return;
 	}
@@ -91,12 +76,8 @@ public class ImagePost extends Post
 	 * Please don't expect this to be anything but a stub
 	 * Because that will send me to prison
 	 */
-	public boolean CP(String filename)
-	{
-		if(filename.equals("shrek.jpg"))
-		{
-			return true;
-		}
+	public boolean CP(String filename) {
+		if(filename.equals("shrek.jpg")) return true;
 		return false;
 	}
 }

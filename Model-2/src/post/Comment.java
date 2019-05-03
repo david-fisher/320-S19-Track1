@@ -3,8 +3,7 @@ package post;
 import db.DBAdapter;
 import user.*;
 
-public class Comment extends Post
-{
+public class Comment extends Post {
 	public Post associatedPostID;
 	int pointsForComment = 5;
 	public String type;
@@ -13,8 +12,7 @@ public class Comment extends Post
 	 *
 	 * @param Post is the Post that this comment is associated with
 	 */
-	public Comment(User poster, String type, String ID, String text, Post associatedPost)
-	{
+	public Comment(User poster, String type, String ID, String text, Post associatedPost) {
 		super(poster, type, ID, text);
 		this.associatedPostID = associatedPost;
 		super.pointsForPost = pointsForComment;
@@ -38,10 +36,7 @@ public class Comment extends Post
 	 * @param none
 	 * @return none
 	 */
-	public void linkPostToComment()
-    {
-      associatedPostID.addComment(this);
-    }
+	public void linkPostToComment() { associatedPostID.addComment(this); }
 
 
 
@@ -49,10 +44,8 @@ public class Comment extends Post
 	* @params none
 	* @return a boolean indicating success or failure
     */
-	void addPoints()
-	{
+	void addPoints() {
 		this.poster.addPoints(this.pointsForComment);
 		return;
 	}
-
 }
